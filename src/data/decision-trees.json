@@ -1,0 +1,426 @@
+{
+  "steps": [
+    {
+      "id": "buildMethod",
+      "title": "How do you want to build?",
+      "description": "This is the most important decision - it affects everything else. Choose based on your skill level, tools available, and desired customization.",
+      "order": 1,
+      "options": [
+        {
+          "id": "handwired",
+          "name": "Handwired",
+          "shortDesc": "Wire the matrix yourself using a microcontroller and individual wires",
+          "image": "/images/methods/handwired.jpg",
+          "costDelta": 0,
+          "complexityDelta": 4,
+          "timeHours": 15,
+          "skillLevel": "Intermediate",
+          "requiredTools": [
+            "Soldering iron",
+            "Wire cutters",
+            "Multimeter",
+            "30 AWG wire",
+            "Diodes (1N4148)"
+          ],
+          "downstreamEffects": [
+            "You'll need to plan the matrix wiring layout",
+            "More flexible for modifications and repairs",
+            "Requires careful documentation of your wiring",
+            "No PCB manufacturing wait time",
+            "Great for one-off custom shapes"
+          ]
+        },
+        {
+          "id": "custom-pcb",
+          "name": "Custom PCB",
+          "shortDesc": "Design your own PCB in KiCad, order from JLCPCB or similar",
+          "image": "/images/methods/custom-pcb.jpg",
+          "costDelta": 45,
+          "complexityDelta": 5,
+          "timeHours": 40,
+          "skillLevel": "Advanced",
+          "requiredTools": [
+            "KiCad software (free)",
+            "Soldering iron",
+            "Multimeter",
+            "PCB design knowledge"
+          ],
+          "downstreamEffects": [
+            "Must design schematic and PCB layout in KiCad",
+            "Need to export Gerber files for manufacturing",
+            "Wait 2-4 weeks for PCB manufacturing and shipping",
+            "Repeatable builds (you typically get 5 PCBs minimum)",
+            "Professional appearance",
+            "Can add hot-swap, RGB, and other features to PCB"
+          ]
+        },
+        {
+          "id": "pcb-kit",
+          "name": "PCB Kit",
+          "shortDesc": "Buy a pre-designed PCB kit from vendors",
+          "image": "/images/methods/pcb-kit.jpg",
+          "costDelta": 60,
+          "complexityDelta": 2,
+          "timeHours": 5,
+          "skillLevel": "Beginner",
+          "requiredTools": [
+            "Soldering iron (if not pre-soldered)",
+            "Screwdriver"
+          ],
+          "downstreamEffects": [
+            "Limited to pre-designed layout and features",
+            "Easier assembly with instructions provided",
+            "Good for first build to learn process",
+            "Faster time to completion",
+            "Usually includes case and all necessary parts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout",
+      "title": "Choose Your Layout Style",
+      "description": "The physical arrangement and ergonomics of your keyboard. This affects comfort, portability, and build complexity.",
+      "order": 2,
+      "options": [
+        {
+          "id": "ergonomic-3d",
+          "name": "Ergonomic 3D (Dactyl Manuform)",
+          "shortDesc": "Curved, sculpted design with thumb clusters",
+          "image": "/images/layouts/dactyl.jpg",
+          "costDelta": 50,
+          "complexityDelta": 5,
+          "timeHours": 20,
+          "skillLevel": "Advanced",
+          "requiredTools": [
+            "3D printer or printing service",
+            "Handwiring skills"
+          ],
+          "downstreamEffects": [
+            "Requires 3D printed case (expensive if outsourced)",
+            "Usually handwired (no PCB option)",
+            "Maximum ergonomic comfort",
+            "Bulky and not portable",
+            "Steep learning curve for typing"
+          ]
+        },
+        {
+          "id": "flat-splay",
+          "name": "Flat Splay Layout",
+          "shortDesc": "Flat PCB with splayed columns for ergonomics",
+          "image": "/images/layouts/splay.jpg",
+          "costDelta": 0,
+          "complexityDelta": 3,
+          "timeHours": 10,
+          "skillLevel": "Intermediate",
+          "requiredTools": [
+            "Soldering iron"
+          ],
+          "downstreamEffects": [
+            "PCB-friendly design (easier to manufacture)",
+            "Good ergonomics without 3D printing",
+            "More portable than 3D layouts",
+            "Can use standard cases or custom designs",
+            "Easier learning curve than Dactyl"
+          ]
+        },
+        {
+          "id": "standard-split",
+          "name": "Standard Split",
+          "shortDesc": "Straight columns, simple split design",
+          "image": "/images/layouts/standard.jpg",
+          "costDelta": 0,
+          "complexityDelta": 2,
+          "timeHours": 5,
+          "skillLevel": "Beginner",
+          "requiredTools": [
+            "Soldering iron"
+          ],
+          "downstreamEffects": [
+            "Simplest to design and build",
+            "Familiar typing experience",
+            "Easy PCB design",
+            "Wide compatibility with existing designs",
+            "Good first split keyboard"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "controller",
+      "title": "Choose Your Controller",
+      "description": "The brain of your keyboard. Consider pins needed for your layout + features, USB type, and firmware compatibility.",
+      "order": 3,
+      "options": [
+        {
+          "id": "pro-micro",
+          "name": "Arduino Pro Micro",
+          "shortDesc": "Cheapest, most common option",
+          "image": "/images/controllers/pro-micro.jpg",
+          "costDelta": 5,
+          "complexityDelta": 1,
+          "timeHours": 0,
+          "skillLevel": "Beginner",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "Limited to 12 usable pins (check your matrix size)",
+            "QMK or Vial firmware supported",
+            "Micro-USB connector (can be fragile)",
+            "May not support complex features like RGB + OLED + Encoder"
+          ]
+        },
+        {
+          "id": "elite-c",
+          "name": "Elite-C",
+          "shortDesc": "Pro Micro upgrade with USB-C",
+          "image": "/images/controllers/elite-c.jpg",
+          "costDelta": 18,
+          "complexityDelta": 1,
+          "timeHours": 0,
+          "skillLevel": "Beginner",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "Drop-in replacement for Pro Micro",
+            "USB-C connector (more durable)",
+            "Same pin limitations as Pro Micro",
+            "QMK/Vial support"
+          ]
+        },
+        {
+          "id": "nice-nano",
+          "name": "nice!nano",
+          "shortDesc": "Wireless Bluetooth support",
+          "image": "/images/controllers/nice-nano.jpg",
+          "costDelta": 25,
+          "complexityDelta": 3,
+          "timeHours": 3,
+          "skillLevel": "Intermediate",
+          "requiredTools": [
+            "Battery management knowledge"
+          ],
+          "downstreamEffects": [
+            "Enables wireless builds",
+            "Requires ZMK firmware (no QMK)",
+            "Need to add battery and power switch",
+            "More complex power management",
+            "Charging routine required"
+          ]
+        },
+        {
+          "id": "rp2040",
+          "name": "RP2040 (KB2040, Pico)",
+          "shortDesc": "More pins, modern processor",
+          "image": "/images/controllers/rp2040.jpg",
+          "costDelta": 8,
+          "complexityDelta": 2,
+          "timeHours": 1,
+          "skillLevel": "Intermediate",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "20+ pins available (supports complex features)",
+            "Faster processor",
+            "QMK, Vial, and KMK supported",
+            "Larger footprint than Pro Micro",
+            "Newer platform (less documentation)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "switches",
+      "title": "Choose Your Switches",
+      "description": "The mechanical switches that register your keypresses. Affects feel, sound, and keycap compatibility.",
+      "order": 4,
+      "options": [
+        {
+          "id": "mx",
+          "name": "Cherry MX / MX-compatible",
+          "shortDesc": "Standard height, huge keycap selection",
+          "image": "/images/switches/mx.jpg",
+          "costDelta": 35,
+          "complexityDelta": 1,
+          "timeHours": 0,
+          "skillLevel": "Beginner",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "Widest keycap availability",
+            "Many switch variants (tactile, linear, clicky)",
+            "Taller profile keyboard",
+            "Can use plate or PCB mount"
+          ]
+        },
+        {
+          "id": "choc-v1",
+          "name": "Kailh Choc v1 (Low Profile)",
+          "shortDesc": "Compact, low profile switches",
+          "image": "/images/switches/choc-v1.jpg",
+          "costDelta": 60,
+          "complexityDelta": 2,
+          "timeHours": 0,
+          "skillLevel": "Beginner",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "Very compact keyboard",
+            "Limited keycap options",
+            "PCB-mount only (no plate support)",
+            "Great for portable builds"
+          ]
+        },
+        {
+          "id": "choc-v2",
+          "name": "Kailh Choc v2",
+          "shortDesc": "Low profile with MX keycap compatibility",
+          "image": "/images/switches/choc-v2.jpg",
+          "costDelta": 65,
+          "complexityDelta": 2,
+          "timeHours": 0,
+          "skillLevel": "Beginner",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "Compatible with MX keycaps",
+            "Low profile feel",
+            "Less common than v1 or MX",
+            "Moderate switch selection"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connectivity",
+      "title": "How Will the Halves Connect?",
+      "description": "Wired or wireless connection between keyboard halves. Affects portability, complexity, and cost.",
+      "order": 5,
+      "options": [
+        {
+          "id": "trrs",
+          "name": "TRRS Cable (Wired)",
+          "shortDesc": "Simple 3.5mm audio cable",
+          "image": "/images/connectivity/trrs.jpg",
+          "costDelta": 5,
+          "complexityDelta": 1,
+          "timeHours": 0,
+          "skillLevel": "Beginner",
+          "requiredTools": [],
+          "downstreamEffects": [
+            "Cable between halves (cable management)",
+            "No battery needed",
+            "Zero latency",
+            "Simplest and most reliable option"
+          ]
+        },
+        {
+          "id": "wireless",
+          "name": "Wireless Bluetooth",
+          "shortDesc": "No cables, battery powered",
+          "image": "/images/connectivity/wireless.jpg",
+          "costDelta": 40,
+          "complexityDelta": 4,
+          "timeHours": 5,
+          "skillLevel": "Advanced",
+          "requiredTools": [
+            "Battery knowledge",
+            "Soldering iron"
+          ],
+          "downstreamEffects": [
+            "Requires nice!nano controller (ZMK firmware)",
+            "Need batteries and power switches",
+            "Charging routine required",
+            "No cables (clean desk)",
+            "Potential for minimal latency",
+            "More complex troubleshooting"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "firmware",
+      "title": "Choose Your Firmware",
+      "description": "The software that runs on your keyboard. Affects features, customization, and ease of configuration.",
+      "order": 6,
+      "options": [
+        {
+          "id": "qmk",
+          "name": "QMK Firmware",
+          "shortDesc": "Most feature-rich, requires compiling",
+          "image": "/images/firmware/qmk.jpg",
+          "costDelta": 0,
+          "complexityDelta": 3,
+          "timeHours": 2,
+          "skillLevel": "Intermediate",
+          "requiredTools": [
+            "Command line knowledge",
+            "QMK toolbox or CLI"
+          ],
+          "downstreamEffects": [
+            "Requires compiling firmware for changes",
+            "Extensive features and community",
+            "Best documentation",
+            "Wired keyboards only"
+          ]
+        },
+        {
+          "id": "vial",
+          "name": "Vial (QMK + GUI)",
+          "shortDesc": "QMK with real-time GUI configuration",
+          "image": "/images/firmware/vial.jpg",
+          "costDelta": 0,
+          "complexityDelta": 1,
+          "timeHours": 1,
+          "skillLevel": "Beginner",
+          "requiredTools": [
+            "Vial configurator app"
+          ],
+          "downstreamEffects": [
+            "No compiling needed - GUI configuration",
+            "Real-time keymap changes",
+            "Beginner friendly",
+            "Based on QMK (most features available)",
+            "Wired keyboards only"
+          ]
+        },
+        {
+          "id": "kmk",
+          "name": "KMK Firmware",
+          "shortDesc": "Python-based firmware with live editing",
+          "image": "/images/firmware/kmk.jpg",
+          "costDelta": 0,
+          "complexityDelta": 2,
+          "timeHours": 2,
+          "skillLevel": "Beginner",
+          "requiredTools": [
+            "Text editor",
+            "CircuitPython-compatible board (RP2040)"
+          ],
+          "downstreamEffects": [
+            "Written in Python (easy to understand and modify)",
+            "Live editing without compilation",
+            "Requires RP2040-based controller",
+            "Great for learning firmware programming",
+            "Active community with good documentation"
+          ]
+        },
+        {
+          "id": "zmk",
+          "name": "ZMK Firmware",
+          "shortDesc": "Modern firmware for wireless keyboards",
+          "image": "/images/firmware/zmk.jpg",
+          "costDelta": 0,
+          "complexityDelta": 4,
+          "timeHours": 3,
+          "skillLevel": "Advanced",
+          "requiredTools": [
+            "GitHub account",
+            "GitHub Actions knowledge"
+          ],
+          "downstreamEffects": [
+            "Required for wireless builds",
+            "Configuration via GitHub repository",
+            "Automatic builds via GitHub Actions",
+            "Smaller feature set than QMK",
+            "Growing community"
+          ]
+        }
+      ]
+    }
+  ]
+}

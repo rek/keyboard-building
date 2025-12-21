@@ -1,0 +1,33 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+
+  <!-- Switch Housing (Low Profile) -->
+  <rect x="275" y="220" width="250" height="150" fill="#3a3a3a" rx="10"/>
+
+  <!-- Top Housing -->
+  <rect x="285" y="230" width="230" height="60" fill="#505050" rx="8"/>
+
+  <!-- LED Window -->
+  <circle cx="400" cy="260" r="15" fill="#1a1a1a" opacity="0.5"/>
+
+  <!-- Stem (Smaller for Choc) -->
+  <rect x="395" y="245" width="10" height="30" fill="#9b59b6" rx="2"/>
+  <rect x="388" y="258" width="24" height="12" fill="#9b59b6" rx="2"/>
+
+  <!-- Bottom Housing -->
+  <rect x="285" y="290" width="230" height="70" fill="#2a2a2a" rx="8"/>
+
+  <!-- Pins -->
+  <g fill="#d4af37">
+    <rect x="360" y="360" width="10" height="30" rx="1"/>
+    <rect x="430" y="360" width="10" height="30" rx="1"/>
+  </g>
+
+  <!-- Low Profile Indicator -->
+  <text x="400" y="430" text-anchor="middle" fill="#9b59b6" font-family="Arial, sans-serif" font-size="20" font-weight="bold">LOW PROFILE</text>
+
+  <!-- Label -->
+  <text x="400" y="480" text-anchor="middle" fill="#333333" font-family="Arial, sans-serif" font-size="28" font-weight="bold">Kailh Choc v1</text>
+  <text x="400" y="510" text-anchor="middle" fill="#666666" font-family="Arial, sans-serif" font-size="16">Low-Profile Mechanical Switch</text>
+</svg>

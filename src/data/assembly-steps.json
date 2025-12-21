@@ -1,0 +1,966 @@
+{
+  "phases": [
+    {
+      "id": "planning",
+      "title": "Planning & Preparation",
+      "order": 1,
+      "description": "Get organized before you start building",
+      "icon": "clipboard",
+      "estimatedTime": "30-60 minutes",
+      "steps": [
+        {
+          "id": "verify-components",
+          "title": "Verify All Components",
+          "description": "Check that you have all required parts before starting",
+          "content": "Lay out all your components and compare them against your build plan. This prevents mid-build delays and helps you understand what you're working with.\n\n**What to verify:**\n1. **Switches** - Count them. You need enough for both keyboard halves plus a few spares\n2. **Microcontrollers** - Verify you have 2 (one for each half)\n3. **Diodes** - Should match switch count (1N4148 through-hole or SMD)\n4. **PCB or wiring materials** - PCB boards or 30AWG wire for handwiring\n5. **Connectors** - TRRS jacks and cable for wired, or batteries for wireless\n6. **Case components** - Plates, bottom plates, screws, standoffs\n7. **Optional features** - RGB LEDs, OLED displays, rotary encoders if chosen\n8. **Keycaps** - Verify correct profile and count\n\n**Take photos** of your organized workspace - it helps when you need to remember where things are.",
+          "order": 1,
+          "estimatedTime": "15 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Missing components will delay your build by days or weeks",
+            "Verify microcontroller pin compatibility with your firmware choice before soldering"
+          ],
+          "tips": [
+            "Create a physical checklist and mark off items as you verify them",
+            "Test microcontrollers before soldering - flash a blink sketch to verify they work",
+            "Order 10-20% extra switches and diodes in case of failures"
+          ],
+          "requiredTools": [
+            "Build plan from cost estimator",
+            "Phone/camera for documentation"
+          ],
+          "externalLinks": []
+        },
+        {
+          "id": "workspace-setup",
+          "title": "Set Up Your Workspace",
+          "description": "Prepare a safe, organized workspace for building",
+          "content": "A proper workspace makes building safer and more enjoyable. You'll be here for several hours, so get comfortable.\n\n**Essential setup:**\n1. **Work surface** - Clean, flat, well-lit table or desk. Use a cutting mat or silicone mat to protect the surface\n2. **Lighting** - Bright overhead light plus a desk lamp for detail work. LED work lights are ideal\n3. **Ventilation** - Soldering produces fumes. Work near a window or use a small fan to direct fumes away\n4. **Organization** - Small containers or compartmented trays for sorting screws, diodes, resistors\n5. **Reference materials** - Keep this guide, your build plan, and component datasheets accessible on a tablet or second monitor\n\n**Comfort:**\n- Adjustable chair at proper height\n- Take breaks every 45-60 minutes\n- Keep water nearby\n- Have snacks ready for longer sessions",
+          "order": 2,
+          "estimatedTime": "15 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Never solder in an enclosed space without ventilation",
+            "Keep flammable materials away from soldering iron",
+            "Have a fire extinguisher nearby (kitchen ABC type is fine)"
+          ],
+          "tips": [
+            "Use anti-static mats or wrist straps when handling electronics",
+            "Label containers with painter's tape for easy identification",
+            "Take photos at each major step - helps with troubleshooting later"
+          ],
+          "requiredTools": [
+            "Work table",
+            "Desk lamp",
+            "Small containers for parts",
+            "Cutting mat or silicone mat"
+          ],
+          "externalLinks": []
+        },
+        {
+          "id": "tool-preparation",
+          "title": "Prepare Your Tools",
+          "description": "Gather and prepare all tools you'll need",
+          "content": "Having all tools ready prevents workflow interruptions. Here's what you'll need based on your build method.\n\n**Universal tools (all builds):**\n- Soldering iron (60W temperature-controlled recommended, 300-350°C for electronics)\n- Solder (60/40 or 63/37 rosin core, 0.8mm diameter)\n- Flush cutters for trimming component leads\n- Tweezers (fine-tipped for SMD work)\n- Multimeter for continuity testing\n- USB cable (USB-C or Micro-USB depending on controller)\n\n**Handwired builds add:**\n- Wire strippers (for 30AWG wire)\n- 30AWG solid core wire (multiple colors for rows/columns)\n- Helping hands or PCB holder\n- Diagonal cutters\n\n**PCB builds add:**\n- Solder wick or desoldering pump (for mistakes)\n- Flux pen\n- Isopropyl alcohol (90%+) and brush for cleaning\n\n**Testing tools:**\n- Keyboard testing website (bookmark: keyboardchecker.com)\n- Firmware flashing software ready to install\n\n**Prepare your soldering iron:**\n1. Clean the tip with brass wire or damp sponge\n2. Tin the tip with fresh solder\n3. Set temperature to 300-350°C (575-660°F)\n4. Let it fully heat before starting work",
+          "order": 3,
+          "estimatedTime": "20 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Hot soldering irons can cause serious burns - always use a proper stand",
+            "Lead solder contains lead - wash hands after soldering, never eat while soldering",
+            "Keep soldering iron tip tinned to prevent oxidation"
+          ],
+          "tips": [
+            "Buy a temperature-controlled iron if you plan to build more keyboards - it's worth it",
+            "Keep a damp sponge or brass wire tip cleaner handy and clean often",
+            "If you've never soldered, practice on scrap wire first"
+          ],
+          "requiredTools": [],
+          "externalLinks": [
+            {
+              "title": "How to Solder - Complete Beginner's Guide",
+              "url": "https://www.youtube.com/watch?v=Qps9woUGkvI",
+              "type": "video",
+              "description": "15-minute tutorial covering soldering basics, tools, and techniques"
+            },
+            {
+              "title": "Adafruit Soldering Guide",
+              "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering",
+              "type": "article",
+              "description": "Comprehensive written guide with photos"
+            }
+          ]
+        },
+        {
+          "id": "review-build-plan",
+          "title": "Review Your Build Strategy",
+          "description": "Understand the assembly sequence before starting",
+          "content": "Take 15 minutes to read through all the steps ahead. This helps you understand the workflow and spot potential issues before they become problems.\n\n**Understanding your build path:**\nYour build method determines your assembly approach. Review the steps specific to your choice:\n\n- **Handwired:** You'll wire the switch matrix manually, giving maximum flexibility but requiring careful planning\n- **Custom PCB:** You designed the PCB, so you'll solder components to it following your schematic\n- **PCB Kit:** The PCB is pre-designed, making assembly straightforward - just follow the kit instructions\n\n**Build order overview:**\n1. Build the key matrix (switches + diodes)\n2. Connect the microcontroller\n3. Add optional features (RGB, OLED, encoders)\n4. Flash firmware\n5. Test every key\n6. Final assembly into case\n\n**Common first-time mistakes to avoid:**\n- Soldering controller before testing matrix\n- Wrong diode orientation (very common!)\n- Forgetting to test before case assembly\n- Flashing wrong firmware for controller type\n\n**Time management:**\nPlan for these approximate times:\n- Matrix assembly: 3-8 hours (depends on method)\n- Wiring controller: 1-2 hours\n- Firmware setup: 1-3 hours (first time)\n- Testing and troubleshooting: 1-2 hours\n- Case assembly: 30-60 minutes\n\nDon't rush. Taking your time prevents expensive mistakes.",
+          "order": 4,
+          "estimatedTime": "15 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [],
+          "tips": [
+            "Read all warnings in red before starting each phase",
+            "Bookmark this page or save the PDF for offline reference",
+            "Join the keyboard building Discord communities - they're helpful for real-time questions"
+          ],
+          "requiredTools": [],
+          "externalLinks": [
+            {
+              "title": "Keyboard Layout Editor",
+              "url": "http://www.keyboard-layout-editor.com/",
+              "type": "tool",
+              "description": "Visualize and plan your key layout"
+            },
+            {
+              "title": "ErgoПад Calculator",
+              "url": "https://pashutk.com/ergopad/",
+              "type": "tool",
+              "description": "Calculate ergonomic positioning for split keyboards"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "build-matrix",
+      "title": "Build Key Matrix",
+      "order": 2,
+      "description": "Wire or solder your switches into a matrix",
+      "icon": "grid",
+      "estimatedTime": "Varies by method: 3-15 hours",
+      "steps": [
+        {
+          "id": "handwire-prep-switches",
+          "title": "Prepare Switches for Handwiring",
+          "description": "Mount switches in plates and prepare for wiring",
+          "content": "Handwiring gives you complete freedom in layout but requires careful planning. Let's get your switches ready.\n\n**Switch mounting:**\n1. **Test fit** - Insert a few switches into your plate or case to verify they snap in securely\n2. **Plan your layout** - Use keyboard-layout-editor.com to finalize your key positions\n3. **Mount all switches** - Press switches firmly into plate until they click. They should be flush and not wobble\n4. **Verify alignment** - Look at your keyboard from the side. All switches should be at the same height\n\n**Matrix planning:**\nYou need to understand how keyboard matrices work:\n- Switches are arranged in ROWS and COLUMNS\n- Each switch connects one row to one column\n- Diodes prevent ghosting and allow n-key rollover\n- Typical split keyboard: 3-4 rows, 6-7 columns per half\n\n**Prepare your diodes:**\n1. **Check orientation** - Diodes have a cathode (marked with black line) and anode (unmarked end)\n2. **Bend leads** - Bend diode legs 90° about 3mm from the body for easier soldering\n3. **Sort and organize** - Keep diodes in a container where they won't get mixed up\n\n**Wire preparation:**\n- Cut wire into appropriate lengths (add 20% extra for routing flexibility)\n- Strip 2-3mm of insulation from wire ends\n- Pre-tin stripped ends with a small amount of solder\n- Use different colors for rows vs columns (e.g., red for rows, black for columns)",
+          "order": 1,
+          "estimatedTime": "1-2 hours",
+          "requirements": {
+            "buildMethod": ["handwired"]
+          },
+          "warnings": [
+            "CRITICAL: Plan your matrix before soldering. Fixing mistakes after is very difficult",
+            "Verify switch plate compatibility - some switches only work with specific plate thicknesses",
+            "Don't bend switch pins before insertion - this makes removal nearly impossible"
+          ],
+          "tips": [
+            "Take photos of your switch layout before wiring - you'll reference this constantly",
+            "Label rows and columns with painter's tape during assembly",
+            "Start with the most accessible row to build confidence"
+          ],
+          "requiredTools": [
+            "Switch plate or case",
+            "Switches (counted)",
+            "Diodes (1 per switch)",
+            "30AWG wire",
+            "Wire strippers",
+            "Helping hands"
+          ],
+          "externalLinks": [
+            {
+              "title": "Hand Wiring Guide",
+              "url": "https://wiki.ai03.com/books/pcb-design/page/matrices-and-duplex-matrix",
+              "type": "article",
+              "description": "Understand keyboard matrix wiring theory"
+            },
+            {
+              "title": "Handwiring a Custom Keyboard",
+              "url": "https://geekhack.org/index.php?topic=87689.0",
+              "type": "article",
+              "description": "Detailed photo guide to handwiring process"
+            }
+          ]
+        },
+        {
+          "id": "handwire-rows",
+          "title": "Wire Row Connections",
+          "description": "Connect switches horizontally using wire",
+          "content": "Rows connect all switches in a horizontal line. We'll wire these first, then add columns.\n\n**Wiring strategy:**\nRow wiring connects one pin of each switch in a horizontal line. This pin will later connect to a controller GPIO pin.\n\n**Step-by-step process:**\n1. **Identify row pins** - Usually the bottom-left or top-left pin of each switch\n2. **Route first wire** - String wire from the first switch to the last switch in the row, keeping it taut but not tight\n3. **Solder each connection** - Touch iron and solder to the switch pin and wire simultaneously. Hold for 2-3 seconds until solder flows\n4. **Inspect joints** - Good solder joints are shiny, smooth, and cone-shaped. Dull or blobby joints indicate cold solder\n5. **Trim excess wire** - Cut close to the last switch\n6. **Repeat for all rows** - Work methodically row by row\n\n**Quality checkpoints:**\n- Each solder joint should be mechanically strong (tug gently to test)\n- Wire routing should be clean and organized\n- No solder bridges between adjacent pins\n- No exposed wire that could short to other connections\n\n**Troubleshooting common issues:**\n- **Cold solder joint (dull gray):** Reheat and add a tiny bit more solder\n- **Too much solder (blob):** Use solder wick to remove excess\n- **Solder won't stick:** Clean the tip, add flux, try again",
+          "order": 2,
+          "estimatedTime": "2-3 hours",
+          "requirements": {
+            "buildMethod": ["handwired"]
+          },
+          "warnings": [
+            "Double-check which pin you're using for rows - mixing pins will break your matrix",
+            "Keep wires away from plate edges where they might get pinched during case assembly",
+            "Let each joint cool completely before moving to the next"
+          ],
+          "tips": [
+            "Work in good lighting - bad solder joints are easier to spot immediately",
+            "Clean your iron tip every 5-10 joints",
+            "Use flux if solder isn't flowing smoothly",
+            "Take breaks - fatigue leads to mistakes"
+          ],
+          "requiredTools": [
+            "Soldering iron",
+            "Solder",
+            "30AWG wire",
+            "Flush cutters",
+            "Flux pen (optional but helpful)"
+          ],
+          "externalLinks": []
+        },
+        {
+          "id": "handwire-diodes",
+          "title": "Install Diodes on Row Wires",
+          "description": "Solder diodes to enable n-key rollover",
+          "content": "Diodes are essential for proper keyboard function. They prevent ghosting and allow you to press multiple keys simultaneously.\n\n**Understanding diode orientation:**\nThis is the #1 mistake in handwired builds. Diodes MUST be oriented correctly:\n- **Cathode (black line)** connects to the row wire you just soldered\n- **Anode (plain end)** connects to the switch column pin\n- ALL diodes in your entire keyboard should point the same direction\n\n**Installation process:**\n1. **Verify orientation** - Look at the first diode. Black line should point toward the row wire\n2. **Attach cathode to row** - Wrap or solder the cathode (black line end) to the row wire\n3. **Position anode** - The anode (other end) should point toward the switch's column pin\n4. **Solder both ends** - Ensure good mechanical and electrical connection\n5. **Verify with multimeter** - In diode mode, meter should beep in only one direction\n6. **Repeat for every switch**\n\n**Working efficiently:**\n- Do all diodes in one row before moving to the next\n- Keep your orientation consistent (e.g., all cathodes pointing right)\n- Test every 5th diode with multimeter to catch orientation errors early\n\n**Visual check:**\nWhen done, all diodes should:\n- Point the same direction\n- Have shiny solder joints\n- Not touch any other wires or components\n- Be mechanically secure",
+          "order": 3,
+          "estimatedTime": "2-4 hours",
+          "requirements": {
+            "buildMethod": ["handwired"]
+          },
+          "warnings": [
+            "CRITICAL: Wrong diode orientation is hard to troubleshoot later. Test frequently!",
+            "Verify orientation on EVERY diode - even experienced builders make mistakes",
+            "Don't assume all diodes from one batch are marked the same way"
+          ],
+          "tips": [
+            "Use a multimeter in diode mode to verify orientation before soldering",
+            "Mark the cathode side with a Sharpie on your workbench as a reference",
+            "Take a photo of the first row - use it as reference for consistency",
+            "Pre-bend all diodes before starting for faster assembly"
+          ],
+          "requiredTools": [
+            "Diodes (1N4148)",
+            "Soldering iron",
+            "Solder",
+            "Multimeter with diode mode",
+            "Flush cutters"
+          ],
+          "externalLinks": [
+            {
+              "title": "How Diodes Work in Keyboards",
+              "url": "https://www.youtube.com/watch?v=xXvN2cjD86I",
+              "type": "video",
+              "description": "Visual explanation of diode function and orientation"
+            }
+          ]
+        },
+        {
+          "id": "handwire-columns",
+          "title": "Wire Column Connections",
+          "description": "Complete the matrix by wiring columns",
+          "content": "Column wiring completes your keyboard matrix. Each column connects vertically through the diodes.\n\n**Column wiring connects through diodes:**\nUnlike rows (which connected directly to switches), columns connect to the diode anodes. This completes the matrix circuit.\n\n**Installation process:**\n1. **Identify column path** - Follow the vertical line of diode anodes\n2. **Route wire** - Run wire vertically from top to bottom of the column\n3. **Solder to each diode anode** - Connect wire to the diode's plain end (not the black line end)\n4. **Keep wire taut** - Prevents tangling and shorts\n5. **Verify no shorts** - Use multimeter to check no columns are shorted together\n6. **Repeat for all columns**\n\n**Matrix testing:**\nBefore connecting to the controller, test your matrix:\n1. **Continuity test rows** - Each row should have continuity across all switches\n2. **Continuity test columns** - Each column should show continuity through diodes (one direction only)\n3. **No shorts between rows** - Adjacent rows should NOT have continuity\n4. **No shorts between columns** - Adjacent columns should NOT have continuity\n\n**Common issues:**\n- **Short circuits:** Usually caused by loose wire strands or solder bridges\n- **Open circuits:** Cold solder joints or broken wires\n- **Inconsistent results:** Intermittent connections from mechanical stress\n\n**Documentation:**\nCreate a matrix map showing:\n- Which row wire goes to which controller pin (document for later)\n- Which column wire goes to which controller pin\n- Take a photo of your finished matrix",
+          "order": 4,
+          "estimatedTime": "2-3 hours",
+          "requirements": {
+            "buildMethod": ["handwired"]
+          },
+          "warnings": [
+            "Test the matrix BEFORE connecting to controller - shorts can damage the controller",
+            "Don't skip continuity testing - finding problems now saves hours later",
+            "Label each row and column wire - you'll need this for firmware configuration"
+          ],
+          "tips": [
+            "Use different colored wire for each column to simplify troubleshooting",
+            "Create a wiring diagram as you go - your future self will thank you",
+            "Test each column immediately after wiring it",
+            "Strain relief: add a drop of hot glue where wires might flex"
+          ],
+          "requiredTools": [
+            "30AWG wire",
+            "Soldering iron",
+            "Solder",
+            "Multimeter",
+            "Labels or tape"
+          ],
+          "externalLinks": [
+            {
+              "title": "Matrix Testing Guide",
+              "url": "https://docs.qmk.fm/#/hand_wire",
+              "type": "docs",
+              "description": "QMK documentation on handwiring and testing"
+            }
+          ]
+        },
+        {
+          "id": "pcb-kit-inspect",
+          "title": "Inspect PCB Kit Components",
+          "description": "Verify PCB quality and identify components",
+          "content": "PCB kits simplify assembly, but you should still inspect everything before soldering.\n\n**PCB inspection:**\n1. **Visual check** - Look for cracks, scratches, or manufacturing defects\n2. **Check traces** - Ensure no broken traces or lifted pads\n3. **Verify holes** - All through-holes should be clean and open\n4. **Test continuity** - Use multimeter to verify key traces if you have the schematic\n\n**Component identification:**\nYour kit should include:\n- 2x PCBs (left and right halves)\n- Diodes (usually SMD or through-hole, pre-counted)\n- Resistors (if needed for certain features)\n- TRRS jacks or wireless components\n- Reset button\n- Controller sockets or controller itself\n\n**Organize before starting:**\n1. **Separate by type** - Diodes in one container, resistors in another\n2. **Verify quantities** - Count components against kit manifest\n3. **Read kit instructions** - Many kits have specific assembly orders\n4. **Identify orientation markers** - Note any polarity markings on PCB\n\n**Assembly order (typical):**\nMost PCB kits follow this sequence:\n1. SMD components (if any) - resistors, capacitors\n2. Diodes (observe polarity!)\n3. Controller socket or controller\n4. Reset button and TRRS jack\n5. Switches or hot-swap sockets\n6. Testing\n7. Optional features",
+          "order": 5,
+          "estimatedTime": "30 minutes",
+          "requirements": {
+            "buildMethod": ["pcb-kit"]
+          },
+          "warnings": [
+            "Don't assume the kit is complete - verify everything before starting",
+            "Some PCBs have top and bottom sides marked - verify before soldering",
+            "Follow the kit's specific instructions if they differ from this guide"
+          ],
+          "tips": [
+            "Take photos of the PCB before starting in case you need to reference later",
+            "Use a magnifying glass or phone camera to inspect SMD pads",
+            "Test the PCB with a multimeter if you're unsure about its condition"
+          ],
+          "requiredTools": [
+            "Multimeter",
+            "Magnifying glass",
+            "Kit instructions"
+          ],
+          "externalLinks": []
+        },
+        {
+          "id": "pcb-solder-diodes",
+          "title": "Solder Diodes to PCB",
+          "description": "Install diodes following PCB markings",
+          "content": "Diodes on PCBs are easier than handwiring, but orientation is still critical.\n\n**Diode types:**\nYour PCB will have either:\n- **Through-hole (THT):** Legs go through holes, easy for beginners\n- **Surface mount (SMD):** Tiny components soldered to pads, requires steady hands\n\n**Through-hole diode installation:**\n1. **Find orientation marker** - PCB will have a line or symbol matching the diode's cathode (black line)\n2. **Bend leads** - 90° bend matching hole spacing\n3. **Insert diode** - Cathode line matches PCB marking (usually a white line or square pad)\n4. **Flip PCB** - Diodes on top, you solder from bottom\n5. **Solder joints** - Heat pad and lead together, apply solder, remove iron\n6. **Trim leads** - Cut close to PCB with flush cutters\n7. **Verify orientation** - Double-check every diode before moving on\n\n**SMD diode installation:**\n1. **Apply solder to one pad** - Just a tiny amount\n2. **Position diode** - Cathode marker (line) matches PCB marking\n3. **Tack one end** - Reheat solder blob, slide diode into place with tweezers\n4. **Solder other end** - Apply iron and solder to opposite pad\n5. **Reflow first joint** - Apply more solder to first side\n6. **Inspect** - Diode should be flat, both sides soldered\n\n**Testing diodes:**\nUse multimeter in diode mode:\n- Should conduct in one direction (shows ~0.5-0.7V)\n- Should NOT conduct in reverse (shows OL or infinity)\n- If conducts both ways: solder bridge\n- If conducts neither way: bad solder joint or dead diode",
+          "order": 6,
+          "estimatedTime": "1-2 hours",
+          "requirements": {
+            "buildMethod": ["pcb-kit", "custom-pcb"]
+          },
+          "warnings": [
+            "CRITICAL: Diode orientation must match PCB markings. Wrong orientation = keyboard won't work",
+            "SMD diodes are tiny and easy to lose - work over a container",
+            "Don't overheat SMD components - max 2-3 seconds per joint"
+          ],
+          "tips": [
+            "Do all diodes in one row, then test that row before moving on",
+            "For SMD: use flux pen for easier soldering",
+            "Take a break every 20-30 minutes to prevent eye strain",
+            "Use magnification (jeweler's loupe or phone camera) for SMD work"
+          ],
+          "requiredTools": [
+            "Soldering iron",
+            "Solder",
+            "Flux pen (for SMD)",
+            "Tweezers (for SMD)",
+            "Flush cutters (for THT)",
+            "Multimeter"
+          ],
+          "externalLinks": [
+            {
+              "title": "SMD Soldering Tutorial",
+              "url": "https://www.youtube.com/watch?v=f9fbqks3BS8",
+              "type": "video",
+              "description": "Techniques for soldering small surface mount components"
+            }
+          ]
+        },
+        {
+          "id": "pcb-install-switches",
+          "title": "Install Switches or Hot-Swap Sockets",
+          "description": "Mount switches to complete the matrix",
+          "content": "The final step in building your key matrix is installing switches.\n\n**Two approaches:**\n\n**A) Hot-swap sockets (no soldering per switch):**\n1. **Identify socket pads** - Two pads per switch position\n2. **Apply solder to pads** - Tin each pad with a small amount of solder\n3. **Position socket** - Metal contacts should align with pads\n4. **Solder contacts** - Heat pad and socket contact simultaneously, let solder flow\n5. **Verify alignment** - Socket should be flat and straight\n6. **Test with switch** - Insert switch to verify it clicks in securely\n7. **Repeat for all positions**\n8. **Insert all switches** - After all sockets installed, press switches in\n\n**B) Direct solder switches:**\n1. **Test fit switches** - Verify they fit PCB holes without force\n2. **Insert switches** - Start with corner switches to align PCB and plate\n3. **Check alignment** - All switches should be perpendicular to PCB\n4. **Solder two pins** - One on opposite corners to hold alignment\n5. **Check again** - Make sure switches are flush and straight\n6. **Solder remaining pins** - Work systematically\n7. **Inspect all joints** - Shiny, smooth, cone-shaped\n\n**Quality checkpoints:**\n- Switches are all at same height\n- No wobble when pressed\n- Pins fully soldered (or hot-swap sockets fully seated)\n- No solder bridges between adjacent pads\n\n**Final matrix test:**\nBefore connecting controller:\n1. Use multimeter to verify each switch connects its row and column when pressed\n2. Check for shorts between adjacent switches\n3. Document any issues for troubleshooting",
+          "order": 7,
+          "estimatedTime": "1-2 hours",
+          "requirements": {
+            "buildMethod": ["pcb-kit", "custom-pcb"]
+          },
+          "warnings": [
+            "Switches must be fully seated before soldering - check from the side",
+            "Hot-swap sockets require less solder than you think - don't overdo it",
+            "If plate and PCB don't align, do NOT force switches - check for interference"
+          ],
+          "tips": [
+            "Install corner switches first to align plate and PCB",
+            "For hot-swap sockets: test with one switch before doing all positions",
+            "Clean PCB with isopropyl alcohol after soldering to remove flux residue",
+            "Label the PCB halves (LEFT/RIGHT) before testing"
+          ],
+          "requiredTools": [
+            "Soldering iron",
+            "Solder",
+            "Switches",
+            "Hot-swap sockets (if chosen)",
+            "Plate (if using)"
+          ],
+          "externalLinks": []
+        }
+      ]
+    },
+    {
+      "id": "flash-firmware",
+      "title": "Flash Firmware",
+      "order": 3,
+      "description": "Install and configure keyboard firmware",
+      "icon": "cpu",
+      "estimatedTime": "1-3 hours (first time)",
+      "steps": [
+        {
+          "id": "qmk-setup",
+          "title": "Set Up QMK Build Environment",
+          "description": "Install QMK toolchain on your computer",
+          "content": "QMK is the most popular keyboard firmware. It's powerful but requires some setup.\n\n**Installation process:**\n\n**Windows:**\n1. Install QMK Toolbox (graphical flasher): Download from GitHub releases\n2. Install QMK MSYS: `winget install qmk/qmk/qmk_toolbox` or download installer\n3. Open QMK MSYS terminal\n4. Run: `qmk setup` - This downloads QMK firmware and sets up build environment\n5. Follow prompts (default options are usually correct)\n\n**macOS:**\n1. Install Homebrew if not already installed: `/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"`\n2. Install QMK: `brew install qmk/qmk/qmk`\n3. Run setup: `qmk setup`\n4. Install drivers if prompted\n\n**Linux:**\n1. Install via package manager: `python3 -m pip install --user qmk`\n2. Run setup: `qmk setup`\n3. Install udev rules for device access: `sudo cp util/udev/50-qmk.rules /etc/udev/rules.d/`\n\n**Verify installation:**\n```\nqmk doctor\n```\nThis checks that all dependencies are installed correctly.\n\n**Test compilation:**\n```\nqmk compile -kb handwired/dactyl_manuform/4x5 -km default\n```\nIf this compiles without errors, your environment is ready!",
+          "order": 1,
+          "estimatedTime": "30-60 minutes",
+          "requirements": {
+            "firmware": ["qmk"]
+          },
+          "warnings": [
+            "QMK setup downloads several GB of data - ensure you have good internet and disk space",
+            "Don't skip 'qmk doctor' - it catches problems before you waste time",
+            "Windows Defender may flag QMK tools - this is a false positive, you can allow it"
+          ],
+          "tips": [
+            "Save the QMK folder location - you'll need to navigate here often",
+            "Create a bookmark folder with QMK docs and your keyboard's documentation",
+            "Join QMK Discord for real-time help: https://discord.gg/qmk"
+          ],
+          "requiredTools": [
+            "Computer (Windows/Mac/Linux)",
+            "Internet connection",
+            "5+ GB free disk space"
+          ],
+          "externalLinks": [
+            {
+              "title": "QMK Setup Guide",
+              "url": "https://docs.qmk.fm/#/newbs",
+              "type": "docs",
+              "description": "Official QMK getting started guide"
+            },
+            {
+              "title": "QMK Firmware Documentation",
+              "url": "https://docs.qmk.fm/",
+              "type": "docs",
+              "description": "Complete QMK documentation"
+            },
+            {
+              "title": "QMK Toolbox",
+              "url": "https://github.com/qmk/qmk_toolbox/releases",
+              "type": "tool",
+              "description": "Graphical firmware flasher for Windows/Mac"
+            }
+          ]
+        },
+        {
+          "id": "qmk-configure",
+          "title": "Configure QMK Keymap",
+          "description": "Create or customize your keyboard layout",
+          "content": "Now you'll create your keymap - the layout that defines what each key does.\n\n**Option 1: Use QMK Configurator (easiest):**\n1. Visit https://config.qmk.fm/\n2. Select your keyboard from dropdown (or choose similar model)\n3. Click keys to assign functions\n4. Add layers for special functions (Fn layer, numpad, etc.)\n5. Click \"Compile\" - wait for firmware to build\n6. Download .hex or .bin file\n\n**Option 2: Edit keymap locally (more control):**\n1. Navigate to keyboards folder: `cd ~/qmk_firmware/keyboards/`\n2. Find or create your keyboard folder\n3. Copy default keymap: `cp -r keymaps/default keymaps/my_layout`\n4. Edit `keymaps/my_layout/keymap.c` in your text editor\n5. Compile: `qmk compile -kb your_keyboard -km my_layout`\n\n**Keymap basics:**\n- **Layers:** Multiple layouts accessed via layer keys (like Fn key)\n- **Keycodes:** KC_A = key A, KC_ESC = Escape, etc.\n- **Modifiers:** KC_LSFT = Left Shift, LCTL_T(KC_A) = Ctrl when held, A when tapped\n- **Special functions:** RGB controls, media keys, mouse keys\n\n**Common beginner mistakes:**\n- Forgetting to set split keyboard options in config.h\n- Wrong matrix dimensions\n- Incorrect pin assignments\n- Missing bootloader definition\n\n**Split keyboard specific settings:**\nIn your `config.h`:\n```c\n#define MASTER_LEFT  // or MASTER_RIGHT\n#define USE_SERIAL   // or USE_I2C\n#define SOFT_SERIAL_PIN D2  // your TRRS connection pin\n```",
+          "order": 2,
+          "estimatedTime": "30-60 minutes",
+          "requirements": {
+            "firmware": ["qmk"]
+          },
+          "warnings": [
+            "Save your keymap file(s) somewhere safe - rebuilding from scratch is frustrating",
+            "Test basic layout first before adding complex features",
+            "Don't enable too many features at once - controllers have memory limits"
+          ],
+          "tips": [
+            "Start with a default keymap and modify gradually",
+            "Use QMK Configurator for first builds - it prevents syntax errors",
+            "Keep a layer for troubleshooting with clearly labeled test keys",
+            "Document your keymap - you'll forget what layers do!"
+          ],
+          "requiredTools": [
+            "Text editor (VS Code, Notepad++, etc.)",
+            "Web browser for QMK Configurator"
+          ],
+          "externalLinks": [
+            {
+              "title": "QMK Configurator",
+              "url": "https://config.qmk.fm/",
+              "type": "tool",
+              "description": "Visual keymap editor"
+            },
+            {
+              "title": "QMK Keycodes Reference",
+              "url": "https://docs.qmk.fm/#/keycodes",
+              "type": "docs",
+              "description": "Complete list of available keycodes"
+            },
+            {
+              "title": "Split Keyboard Features",
+              "url": "https://docs.qmk.fm/#/feature_split_keyboard",
+              "type": "docs",
+              "description": "QMK documentation for split keyboards"
+            }
+          ]
+        },
+        {
+          "id": "qmk-flash",
+          "title": "Flash QMK Firmware to Controllers",
+          "description": "Upload your firmware to the keyboard",
+          "content": "Time to flash your firmware and bring your keyboard to life!\n\n**Preparation:**\n1. **Identify bootloader:** Your controller type determines flash method:\n   - Pro Micro / Elite-C: Caterina bootloader (uses avrdude)\n   - RP2040 boards: Drag-and-drop UF2 files\n   - STM32: DFU mode (uses dfu-util)\n2. **Compile firmware:** `qmk compile -kb your_keyboard -km your_keymap`\n3. **Locate firmware file:** Usually in `qmk_firmware/.build/` folder\n   - AVR (Pro Micro): `.hex` file\n   - RP2040: `.uf2` file\n   - STM32: `.bin` file\n\n**Flashing process:**\n\n**Option A: Using QMK Toolbox (recommended for beginners):**\n1. Open QMK Toolbox\n2. Select your .hex/.bin/.uf2 file\n3. Select MCU type from dropdown\n4. Connect keyboard via USB\n5. Put controller in bootloader mode:\n   - Press reset button, OR\n   - Bridge RST and GND pins with tweezers, OR\n   - Double-tap reset (if configured)\n6. QMK Toolbox should detect device (yellow text)\n7. Click \"Flash\"\n8. Wait for success message\n9. Repeat for second half of split keyboard\n\n**Option B: Using command line:**\n```\nqmk flash -kb your_keyboard -km your_keymap\n```\nThen put controller in bootloader mode when prompted.\n\n**Verification:**\n1. Keyboard should be detected by computer\n2. Check Device Manager (Windows) or System Information (Mac)\n3. Try pressing a few keys\n4. If no response: reflash or check wiring\n\n**Troubleshooting flash issues:**\n- **Not detected:** Wrong bootloader selected, or drivers not installed\n- **Flash fails midway:** Bad USB cable, try different port\n- **Keyboard works but keys wrong:** Matrix pins incorrect in firmware\n- **Only one half works:** Check TRRS connection and master/slave configuration",
+          "order": 3,
+          "estimatedTime": "15-30 minutes per half",
+          "requirements": {
+            "firmware": ["qmk"]
+          },
+          "warnings": [
+            "NEVER disconnect during flashing - can brick the controller",
+            "Flash one half at a time - don't connect both halves during flashing",
+            "Verify you're flashing correct firmware for your controller type"
+          ],
+          "tips": [
+            "Keep a spare firmware file that you know works - makes recovery easier",
+            "Label controllers LEFT and RIGHT immediately after flashing",
+            "Test thoroughly before case assembly - flashing later is harder",
+            "Save your compiled .hex/.uf2 file - you can reflash without recompiling"
+          ],
+          "requiredTools": [
+            "USB cable (USB-C or Micro-USB)",
+            "QMK Toolbox or command line",
+            "Firmware file (.hex/.uf2/.bin)"
+          ],
+          "externalLinks": [
+            {
+              "title": "QMK Flashing Guide",
+              "url": "https://docs.qmk.fm/#/newbs_flashing",
+              "type": "docs",
+              "description": "Official flashing documentation"
+            },
+            {
+              "title": "Troubleshooting QMK",
+              "url": "https://docs.qmk.fm/#/faq_build",
+              "type": "docs",
+              "description": "Common build and flash issues"
+            }
+          ]
+        },
+        {
+          "id": "vial-setup",
+          "title": "Flash and Configure Vial",
+          "description": "Install Vial firmware for GUI configuration",
+          "content": "Vial is a fork of QMK with a graphical configurator. No recompiling needed to change your keymap!\n\n**Why Vial?**\n- Change keymap without reflashing\n- Real-time configuration via GUI app\n- Built on QMK foundation\n- Perfect for beginners or those who change layouts frequently\n\n**Installation steps:**\n\n1. **Download Vial configurator:**\n   - Visit https://get.vial.today/\n   - Download for your OS (Windows/Mac/Linux)\n   - Install the application\n\n2. **Get Vial firmware:**\n   - Check if your keyboard has official Vial support: https://get.vial.today/keyboards/\n   - If supported: Download .hex/.uf2 file directly\n   - If not supported: You'll need to compile Vial firmware using QMK\n\n3. **Flash Vial firmware:**\n   - Use QMK Toolbox or command line to flash\n   - Same process as flashing QMK (see previous step)\n   - Put controller in bootloader mode\n   - Flash the Vial .hex/.uf2 file\n   - Repeat for both halves\n\n4. **Configure in Vial app:**\n   - Connect keyboard via USB\n   - Open Vial configurator\n   - Keyboard should be auto-detected\n   - Click keys to reassign\n   - Changes apply immediately - no reboot needed!\n\n**Vial features:**\n- **Layers:** Add up to 8 layers\n- **Macros:** Record and assign macros\n- **Tap Dance:** Multi-function keys\n- **Combos:** Key combinations\n- **Key Overrides:** Context-sensitive keys\n\n**Split keyboard setup:**\nMake sure to set:\n- Master/slave configuration (usually auto-detected)\n- TRRS communication settings\n- Test both halves independently",
+          "order": 4,
+          "estimatedTime": "30-45 minutes",
+          "requirements": {
+            "firmware": ["vial"]
+          },
+          "warnings": [
+            "Not all keyboards have Vial support - check compatibility first",
+            "Vial firmware is slightly larger than basic QMK - may not fit on older controllers",
+            "Save your Vial configuration file - makes recovery easier"
+          ],
+          "tips": [
+            "Test Vial configurator BEFORE final assembly - ensures firmware works correctly",
+            "Export your layout from Vial regularly (File → Save Layout)",
+            "Use Vial's test matrix feature to verify all keys work",
+            "Enable Secure mode in Vial for additional security"
+          ],
+          "requiredTools": [
+            "Vial configurator app",
+            "USB cable",
+            "Vial firmware file"
+          ],
+          "externalLinks": [
+            {
+              "title": "Get Vial",
+              "url": "https://get.vial.today/",
+              "type": "tool",
+              "description": "Download Vial configurator and firmware"
+            },
+            {
+              "title": "Vial Documentation",
+              "url": "https://get.vial.today/docs/",
+              "type": "docs",
+              "description": "Official Vial documentation"
+            },
+            {
+              "title": "Vial Manual",
+              "url": "https://get.vial.today/manual/",
+              "type": "docs",
+              "description": "How to use Vial configurator"
+            }
+          ]
+        },
+        {
+          "id": "zmk-setup",
+          "title": "Set Up ZMK for Wireless Keyboards",
+          "description": "Configure ZMK firmware for Bluetooth keyboards",
+          "content": "ZMK is designed specifically for wireless keyboards with Bluetooth. Perfect for nice!nano builds.\n\n**Why ZMK for wireless?**\n- Designed for low power consumption\n- Native Bluetooth support\n- No USB cable needed between halves\n- Active development and community\n\n**ZMK uses GitHub Actions for building:**\nYou don't need to install anything locally! Firmware builds in the cloud.\n\n**Setup process:**\n\n1. **Fork ZMK config repository:**\n   - Visit https://github.com/zmkfirmware/unified-zmk-config-template\n   - Click \"Use this template\" → \"Create new repository\"\n   - Name it: `zmk-config` (or whatever you prefer)\n   - Set to Public (required for GitHub Actions free tier)\n\n2. **Configure your keyboard:**\n   - Edit `config/boards/shields/your_keyboard/your_keyboard.conf`\n   - Set keyboard name, manufacturer\n   - Configure split settings:\n     ```\n     CONFIG_ZMK_SPLIT=y\n     CONFIG_ZMK_SPLIT_BLE=y\n     CONFIG_ZMK_SLEEP=y\n     ```\n\n3. **Configure keymap:**\n   - Edit `config/your_keyboard.keymap`\n   - Uses devicetree syntax (different from QMK)\n   - Define layers, keys, behaviors\n   - Example:\n     ```\n     bindings = <\n       &kp ESC  &kp Q  &kp W  &kp E  &kp R\n       &kp TAB  &kp A  &kp S  &kp D  &kp F\n     >;\n     ```\n\n4. **Commit and push:**\n   - Commit your changes to GitHub\n   - GitHub Actions automatically builds firmware\n   - Wait 5-10 minutes for build to complete\n   - Download .uf2 files from Actions tab\n\n5. **Flash to controllers:**\n   - nice!nano uses UF2 bootloader (drag-and-drop)\n   - Double-press reset button on nice!nano\n   - It appears as USB drive\n   - Drag .uf2 file to drive\n   - Controller auto-reboots\n   - Repeat for both halves (left and right have different files)\n\n**Pairing keyboards:**\n1. Turn on both halves\n2. They auto-pair with each other\n3. On computer: Open Bluetooth settings\n4. Look for keyboard name\n5. Click to pair\n6. Start typing!",
+          "order": 5,
+          "estimatedTime": "1-2 hours (first time)",
+          "requirements": {
+            "firmware": ["zmk"],
+            "connectivity": ["wireless"],
+            "controller": ["nice-nano"]
+          },
+          "warnings": [
+            "ZMK requires specific wireless controllers (nice!nano, nrfmicro, etc.)",
+            "GitHub Actions free tier has limits - don't spam builds",
+            "Save your working .uf2 files - rebuilding takes 5-10 minutes"
+          ],
+          "tips": [
+            "Use the ZMK config template - it has everything pre-configured",
+            "Test with simple keymap first before adding complex features",
+            "ZMK has excellent documentation - read it before asking for help",
+            "Join ZMK Discord for community support"
+          ],
+          "requiredTools": [
+            "GitHub account (free)",
+            "Web browser",
+            "USB cable (for flashing only)"
+          ],
+          "externalLinks": [
+            {
+              "title": "ZMK Documentation",
+              "url": "https://zmk.dev/docs",
+              "type": "docs",
+              "description": "Official ZMK documentation"
+            },
+            {
+              "title": "ZMK Config Template",
+              "url": "https://github.com/zmkfirmware/unified-zmk-config-template",
+              "type": "tool",
+              "description": "GitHub template for ZMK configuration"
+            },
+            {
+              "title": "ZMK Keymap Editor",
+              "url": "https://nickcoutsos.github.io/keymap-editor/",
+              "type": "tool",
+              "description": "Visual keymap editor for ZMK"
+            }
+          ]
+        },
+        {
+          "id": "kmk-setup",
+          "title": "Install KMK (CircuitPython Firmware)",
+          "description": "Set up KMK for RP2040-based keyboards",
+          "content": "KMK is written in Python and runs on CircuitPython. Perfect for RP2040 controllers and beginners!\n\n**Why KMK?**\n- No compilation needed - edit Python files directly on the controller\n- Easy to understand - it's Python!\n- Rapid iteration - save file, keyboard reboots automatically\n- Great for learning how keyboards work\n\n**Requirements:**\n- RP2040-based controller (Raspberry Pi Pico, KB2040, etc.)\n- CircuitPython installed\n- USB connection (KMK doesn't support wireless yet)\n\n**Installation process:**\n\n1. **Install CircuitPython on controller:**\n   - Download CircuitPython .uf2 for your board: https://circuitpython.org/downloads\n   - Put controller in bootloader mode (double-press reset)\n   - Controller appears as USB drive named \"RPI-RP2\" or similar\n   - Drag .uf2 file to drive\n   - Controller reboots as \"CIRCUITPY\" drive\n\n2. **Install KMK firmware:**\n   - Download KMK: https://github.com/KMKfw/kmk_firmware/archive/refs/heads/master.zip\n   - Extract zip file\n   - Copy the `kmk/` folder to root of CIRCUITPY drive\n   - Copy the `boot.py` file to root of CIRCUITPY drive\n\n3. **Create your keymap:**\n   - Create file: `CIRCUITPY/code.py`\n   - This is your main keyboard configuration\n   - Example minimal split keyboard:\n     ```python\n     import board\n     from kmk.kmk_keyboard import KMKKeyboard\n     from kmk.keys import KC\n     from kmk.modules.split import Split\n     \n     keyboard = KMKKeyboard()\n     \n     # Split configuration\n     split = Split(\n         split_flip=True,\n         split_side=None,  # Auto-detect\n         use_pio=True,\n     )\n     keyboard.modules.append(split)\n     \n     # Matrix configuration\n     keyboard.col_pins = (board.GP0, board.GP1, board.GP2)\n     keyboard.row_pins = (board.GP4, board.GP5, board.GP6)\n     keyboard.diode_orientation = DiodeOrientation.COL2ROW\n     \n     # Keymap\n     keyboard.keymap = [\n         [  # Layer 0\n             KC.Q, KC.W, KC.E, KC.R, KC.T,\n             KC.A, KC.S, KC.D, KC.F, KC.G,\n         ]\n     ]\n     \n     if __name__ == '__main__':\n         keyboard.go()\n     ```\n\n4. **Save and test:**\n   - Save code.py\n   - Controller auto-reboots\n   - Test keys!\n   - Edit code.py to refine keymap\n   - Save again, auto-reboot, test again\n\n**Debugging:**\n- Serial console shows errors: Use Mu Editor or any serial terminal\n- Connect at 115200 baud\n- Python errors print to console\n- Much easier to debug than compiled firmware!",
+          "order": 6,
+          "estimatedTime": "45-60 minutes",
+          "requirements": {
+            "firmware": ["kmk"],
+            "controller": ["rp2040"]
+          },
+          "warnings": [
+            "KMK only works on CircuitPython-compatible controllers (mainly RP2040)",
+            "No wireless support yet in KMK",
+            "Slightly higher latency than compiled firmware (usually not noticeable)",
+            "Edit code.py carefully - syntax errors prevent keyboard from working"
+          ],
+          "tips": [
+            "Use a good text editor with Python syntax highlighting",
+            "Test with minimal keymap first before adding features",
+            "Read KMK docs - lots of examples and modules available",
+            "Join KMK Discord for community support and examples"
+          ],
+          "requiredTools": [
+            "RP2040 controller",
+            "USB cable",
+            "Text editor",
+            "CircuitPython .uf2 file"
+          ],
+          "externalLinks": [
+            {
+              "title": "KMK Documentation",
+              "url": "http://kmkfw.io/",
+              "type": "docs",
+              "description": "Official KMK firmware documentation"
+            },
+            {
+              "title": "CircuitPython Downloads",
+              "url": "https://circuitpython.org/downloads",
+              "type": "tool",
+              "description": "Download CircuitPython for your controller"
+            },
+            {
+              "title": "KMK GitHub Repository",
+              "url": "https://github.com/KMKfw/kmk_firmware",
+              "type": "docs",
+              "description": "KMK source code and examples"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "title": "Testing & Troubleshooting",
+      "order": 4,
+      "description": "Verify your keyboard works correctly",
+      "icon": "check-circle",
+      "estimatedTime": "1-2 hours",
+      "steps": [
+        {
+          "id": "initial-connection-test",
+          "title": "Test Initial Connection",
+          "description": "Verify computer recognizes your keyboard",
+          "content": "Before testing keys, make sure your keyboard is properly recognized by your computer.\n\n**Connection verification:**\n\n1. **Connect via USB:**\n   - Plug keyboard into computer\n   - Use a known-good USB cable\n   - Try different USB ports if issues occur\n\n2. **Check device detection:**\n   - **Windows:** Device Manager → Keyboard or HID devices\n   - **macOS:** System Information → USB\n   - **Linux:** Run `lsusb` in terminal\n   - Should see device named after your keyboard or controller\n\n3. **For split keyboards:**\n   - Connect only master half first\n   - Verify it works alone\n   - Connect slave half via TRRS cable (powered off!)\n   - Power on - both halves should work\n   - **For wireless:** Pair master half with computer, slave half auto-connects to master\n\n**What success looks like:**\n- Device appears in system device list\n- LED indicators light up (if equipped)\n- No error messages or \"Unknown Device\"\n- Num Lock/Caps Lock LEDs respond (if equipped)\n\n**Troubleshooting connection issues:**\n\n**Not detected at all:**\n- Check USB cable - try a different one\n- Verify controller is receiving power (LED should light)\n- Press reset button and check if bootloader is detected\n- Check for shorts with multimeter (power and ground)\n\n**Detected but not working:**\n- Wrong firmware flashed\n- Matrix pins not configured correctly in firmware\n- Diode orientation issues\n\n**One half not working (split):**\n- Check TRRS cable connection\n- Verify TRRS jacks soldered correctly\n- Check master/slave configuration in firmware\n- For wireless: Verify both halves are charged and powered on",
+          "order": 1,
+          "estimatedTime": "10-15 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null
+          },
+          "warnings": [
+            "Never connect/disconnect TRRS cable while keyboard is powered - can damage controllers",
+            "For wireless: Don't test while connected to USB - can cause conflicts",
+            "If you smell burning or see smoke, disconnect immediately and check for shorts"
+          ],
+          "tips": [
+            "Test each half independently before connecting TRRS cable",
+            "Use USB 2.0 ports if USB 3.0 causes issues (rare but happens)",
+            "Some computers are slow to recognize new keyboards - wait 30 seconds",
+            "Check Device Manager/System Info to confirm correct device name"
+          ],
+          "requiredTools": [
+            "USB cable",
+            "TRRS cable (for wired split)",
+            "Computer"
+          ],
+          "externalLinks": []
+        },
+        {
+          "id": "key-matrix-test",
+          "title": "Test Every Key",
+          "description": "Verify all switches register correctly",
+          "content": "Now the critical test: does every key work? Use online keyboard testers to systematically check every switch.\n\n**Testing process:**\n\n1. **Open keyboard tester:**\n   - Visit https://www.keyboardtester.com/\n   - Or https://keyboardchecker.com/\n   - Or use your OS's built-in text editor\n\n2. **Test systematically:**\n   - Start from top-left key\n   - Press each key once\n   - Verify it registers on screen\n   - Mark any non-working keys\n   - Test both halves if split\n\n3. **Test modifiers:**\n   - Shift, Ctrl, Alt, GUI/Win/Cmd\n   - Test both left and right variants\n   - Verify modifier + key combinations work\n\n4. **Test special keys:**\n   - Function layers (Fn key + other keys)\n   - Media keys (play, pause, volume)\n   - Any custom functions or macros\n\n5. **Stress test:**\n   - Press multiple keys simultaneously\n   - Roll fingers across rows\n   - Try common typing patterns\n   - Gaming sequences if relevant (WASD spam, etc.)\n\n**Document results:**\nCreate a simple map:\n```\n✓ = Working\n✗ = Not working\n~ = Intermittent\n\n✓ ✓ ✓ ✓ ✓ | ✓ ✓ ✓ ✓ ✓\n✓ ✓ ✗ ✓ ✓ | ✓ ✓ ✓ ✓ ✓\n✓ ✓ ✓ ✓ ✓ | ✓ ~ ✓ ✓ ✓\n```\n\nThis helps identify patterns (whole row/column out = wiring issue)",
+          "order": 2,
+          "estimatedTime": "15-20 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null
+          },
+          "warnings": [
+            "Don't skip this step - finding issues now is much easier than after case assembly",
+            "Test all layers, not just the base layer",
+            "Intermittent keys are a sign of cold solder joints - fix them now"
+          ],
+          "tips": [
+            "Use both hands to test split keyboards naturally",
+            "Screenshot or photograph your test results for reference",
+            "Test in multiple applications to rule out OS-specific issues",
+            "If most keys work, it's probably fixable - don't panic!"
+          ],
+          "requiredTools": [
+            "Web browser",
+            "Working keyboard (for documentation)",
+            "Pen and paper"
+          ],
+          "externalLinks": [
+            {
+              "title": "Keyboard Tester",
+              "url": "https://www.keyboardtester.com/",
+              "type": "tool",
+              "description": "Visual keyboard tester with key highlighting"
+            },
+            {
+              "title": "Keyboard Checker",
+              "url": "https://keyboardchecker.com/",
+              "type": "tool",
+              "description": "Alternative keyboard testing site"
+            }
+          ]
+        },
+        {
+          "id": "troubleshoot-dead-keys",
+          "title": "Troubleshoot Non-Working Keys",
+          "description": "Diagnose and fix keys that don't register",
+          "content": "Found dead keys? Don't worry - most issues are fixable. Let's debug systematically.\n\n**Common issue patterns:**\n\n**1. Single key not working:**\n- **Most likely:** Cold solder joint on that specific switch\n- **Check:** Diode orientation for that key\n- **Fix:** Reflow solder joints, verify diode direction\n- **Test:** Use multimeter to check continuity through switch when pressed\n\n**2. Entire row not working:**\n- **Most likely:** Row wire not connected to controller\n- **Check:** Solder joint at controller pin, continuity along entire row\n- **Fix:** Check firmware pin configuration, reflow controller solder joints\n- **Test:** Measure voltage on row pin when key pressed (should change)\n\n**3. Entire column not working:**\n- **Most likely:** Column wire not connected to controller, or diodes wrong orientation\n- **Check:** Diode orientation in that column, controller pin solder joint\n- **Fix:** Reflow joints, check firmware pin configuration\n- **Test:** Continuity test through diodes (should conduct one direction only)\n\n**4. Multiple random keys not working:**\n- **Most likely:** Multiple cold solder joints or intermittent connections\n- **Check:** All solder joints visually (shiny and smooth?)\n- **Fix:** Reflow all suspicious joints\n- **Test:** Wiggle keyboard gently while testing - intermittent means mechanical issue\n\n**5. Keys registering multiple times:**\n- **Most likely:** Switch bounce (normal firmware handles this), or stuck switch\n- **Check:** Firmware debounce settings, physical switch operation\n- **Fix:** Adjust debounce time in firmware, replace switch if defective\n\n**6. Wrong keys registering:**\n- **Most likely:** Firmware matrix configuration wrong\n- **Check:** Keymap file - verify row/column assignment\n- **Fix:** Update firmware with correct matrix\n\n**Diagnostic tools:**\n\n**Multimeter continuity test:**\n1. Set multimeter to continuity mode (beep mode)\n2. Press and hold switch\n3. Measure from row wire to column wire\n4. Should beep when pressed, silent when released\n5. If backwards, diode is backwards\n\n**Visual inspection:**\n1. Look at every solder joint under good lighting\n2. Shiny = good, Dull/grainy = cold joint\n3. Too much solder = potential bridge\n4. Too little = poor connection\n\n**Firmware debugging:**\n1. Enable debug output in firmware (if supported)\n2. Monitor serial console\n3. Press problem keys - see if firmware detects them\n4. If firmware sees it but OS doesn't: USB/HID issue\n5. If firmware doesn't see it: hardware issue",
+          "order": 3,
+          "estimatedTime": "30-90 minutes (varies by issues)",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null
+          },
+          "warnings": [
+            "Don't assume it's a firmware issue - hardware problems are more common",
+            "Resoldering while keyboard is plugged in can cause shorts - always disconnect first",
+            "If you're stuck, take a break - fresh eyes catch issues faster"
+          ],
+          "tips": [
+            "Fix one issue at a time - test after each fix",
+            "Document what you tried - prevents going in circles",
+            "Take high-res photos of problem areas - easier to spot issues on screen",
+            "Ask for help with clear descriptions and photos - communities are friendly!",
+            "Keep firmware source and compiled files organized - easy to reflash"
+          ],
+          "requiredTools": [
+            "Multimeter",
+            "Soldering iron",
+            "Flux pen",
+            "Magnifying glass",
+            "Patience"
+          ],
+          "externalLinks": [
+            {
+              "title": "QMK Debugging FAQ",
+              "url": "https://docs.qmk.fm/#/faq_debug",
+              "type": "docs",
+              "description": "Official QMK debugging guide"
+            },
+            {
+              "title": "Keyboard Matrix Debugging",
+              "url": "https://wiki.ai03.com/books/pcb-design/page/matrices-and-duplex-matrix",
+              "type": "article",
+              "description": "Understanding matrix issues"
+            }
+          ]
+        },
+        {
+          "id": "final-verification",
+          "title": "Final Functionality Verification",
+          "description": "Complete system test before case assembly",
+          "content": "Before closing up your keyboard in its case, do one final comprehensive test. It's much easier to fix issues now than after assembly!\n\n**Complete verification checklist:**\n\n**1. All keys functional:**\n- [ ] Every key on base layer works\n- [ ] Every key on all additional layers works\n- [ ] Modifiers work correctly (Shift, Ctrl, Alt, GUI)\n- [ ] Layer switching works smoothly\n- [ ] No keys stick or double-register\n\n**2. Split keyboard specific:**\n- [ ] Both halves work independently (if supported by firmware)\n- [ ] Communication between halves is reliable\n- [ ] TRRS cable connection is secure\n- [ ] No crosstalk or ghost keys\n- [ ] For wireless: Battery levels adequate, pairing stable\n\n**3. Special features (if applicable):**\n- [ ] RGB LEDs light up and respond to controls\n- [ ] OLED display shows information correctly\n- [ ] Rotary encoders register rotation and press\n- [ ] Trackball/trackpoint moves cursor smoothly\n- [ ] Audio/buzzer produces sound\n\n**4. Firmware functionality:**\n- [ ] Macros execute correctly\n- [ ] Key combos work as configured\n- [ ] Tap/hold functions behave correctly\n- [ ] Auto-shift works (if enabled)\n- [ ] Bootloader can be accessed (reset key or button)\n\n**5. Physical inspection:**\n- [ ] All switches are firmly mounted\n- [ ] No loose wires or components\n- [ ] No sharp edges that could cut fingers\n- [ ] Controller is securely mounted\n- [ ] TRRS jacks are firmly soldered\n\n**6. Performance test:**\n- [ ] Fast typing feels responsive\n- [ ] No noticeable input lag\n- [ ] N-key rollover works (press 6+ keys simultaneously)\n- [ ] Gaming sequences work smoothly (if relevant)\n\n**Real-world typing test:**\n1. Open a text editor\n2. Type several paragraphs at your normal speed\n3. Try fast typing bursts\n4. Use common shortcuts (Ctrl+C, Ctrl+V, etc.)\n5. Test any workflows specific to your use case\n\n**Stress test:**\n1. Press many keys simultaneously\n2. Rapidly alternate between keys\n3. Hold modifiers and press multiple keys\n4. Switch layers rapidly while typing\n5. If gaming: test your game's key bindings\n\n**If everything passes:**\n- Take final photos of your build before case assembly\n- Save your firmware files (source and compiled)\n- Document your build in a note file (pin assignments, quirks, etc.)\n- Proceed to final assembly!\n\n**If issues remain:**\n- Go back to troubleshooting steps\n- Don't proceed to case assembly until keyboard is 100% functional\n- It's better to spend extra time now than to disassemble later",
+          "order": 4,
+          "estimatedTime": "20-30 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null
+          },
+          "warnings": [
+            "Don't rush this step - it's your last chance for easy fixes",
+            "Test for at least 15-20 minutes of actual typing, not just key presses",
+            "Document any quirks or issues even if they're minor"
+          ],
+          "tips": [
+            "Use typingtest.com to get a baseline WPM before final assembly",
+            "Test in your actual work environment (IDE, game, etc.)",
+            "Let someone else try it - fresh perspective catches issues",
+            "Save build notes in a text file on the keyboard (if KMK/CircuitPython) or in your firmware repo"
+          ],
+          "requiredTools": [
+            "Text editor",
+            "Typing test website",
+            "Your actual use-case applications"
+          ],
+          "externalLinks": [
+            {
+              "title": "Typing Speed Test",
+              "url": "https://www.typingtest.com/",
+              "type": "tool",
+              "description": "Test your typing speed and accuracy"
+            },
+            {
+              "title": "10FastFingers",
+              "url": "https://10fastfingers.com/typing-test/english",
+              "type": "tool",
+              "description": "Another popular typing test"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "troubleshooting": {
+    "common_issues": [
+      {
+        "id": "no-keys-work",
+        "symptom": "Keyboard connects but no keys register",
+        "possibleCauses": [
+          "Firmware matrix configuration incorrect",
+          "All diodes installed backwards",
+          "Controller not actually running firmware (still in bootloader)",
+          "Row/column wires not connected to controller"
+        ],
+        "solutions": [
+          "Verify firmware compiled for correct controller and matrix size",
+          "Check diode orientation - should all point same direction",
+          "Reflash firmware and verify controller reboots into application mode",
+          "Use multimeter to verify continuity from matrix wires to controller pins"
+        ],
+        "relatedSteps": ["handwire-diodes", "qmk-configure", "troubleshoot-dead-keys"]
+      },
+      {
+        "id": "one-row-column-dead",
+        "symptom": "All keys in a row or column don't work",
+        "possibleCauses": [
+          "Row/column wire not connected to controller pin",
+          "Cold solder joint at controller",
+          "Wrong pin configured in firmware",
+          "Broken wire in matrix"
+        ],
+        "solutions": [
+          "Verify firmware pin configuration matches your wiring",
+          "Reflow solder joints on controller pins",
+          "Use multimeter to test continuity from matrix to controller",
+          "Check for broken wires by gently flexing keyboard while testing"
+        ],
+        "relatedSteps": ["handwire-columns", "troubleshoot-dead-keys"]
+      },
+      {
+        "id": "ghosting-chattering",
+        "symptom": "Keys register multiple times or wrong keys register",
+        "possibleCauses": [
+          "Diodes missing or wrong orientation",
+          "Solder bridges between adjacent pins",
+          "Switch bounce (normal but fixable)",
+          "Firmware debounce too aggressive or too lenient"
+        ],
+        "solutions": [
+          "Verify every switch has a diode in correct orientation",
+          "Inspect all solder joints for bridges - use magnification",
+          "Increase debounce time in firmware (try 10-15ms)",
+          "Clean PCB with isopropyl alcohol to remove flux residue"
+        ],
+        "relatedSteps": ["handwire-diodes", "pcb-solder-diodes"]
+      },
+      {
+        "id": "split-half-not-working",
+        "symptom": "One half of split keyboard doesn't work",
+        "possibleCauses": [
+          "TRRS cable not fully inserted",
+          "TRRS jack cold solder joint",
+          "Wrong master/slave configuration in firmware",
+          "TRRS cable damaged or wrong type (audio vs data)",
+          "For wireless: slave half not charged or not paired"
+        ],
+        "solutions": [
+          "Firmly seat TRRS cable in both halves",
+          "Reflow solder joints on TRRS jacks",
+          "Check firmware - master should be set correctly (MASTER_LEFT or MASTER_RIGHT)",
+          "Try a different TRRS cable - must be 4-conductor (TRRS not TRS)",
+          "For wireless: charge both halves, re-pair if needed"
+        ],
+        "relatedSteps": ["qmk-configure", "zmk-setup"]
+      },
+      {
+        "id": "cant-flash-firmware",
+        "symptom": "Can't flash firmware to controller",
+        "possibleCauses": [
+          "Wrong bootloader selected",
+          "Driver not installed for controller",
+          "Bad USB cable (charge-only, not data)",
+          "Controller bricked (rare)",
+          "Wrong MCU type selected in firmware"
+        ],
+        "solutions": [
+          "Verify controller type and select matching bootloader (Caterina, DFU, UF2)",
+          "Install or update USB drivers for your controller",
+          "Try a different USB cable - must support data transfer",
+          "Try different USB port, preferably USB 2.0",
+          "For RP2040: hold BOOT button while connecting to force bootloader mode",
+          "Check if controller bootloader is detected before flashing"
+        ],
+        "relatedSteps": ["qmk-flash", "zmk-setup", "kmk-setup"]
+      },
+      {
+        "id": "intermittent-keys",
+        "symptom": "Keys work sometimes but not always",
+        "possibleCauses": [
+          "Cold solder joints",
+          "Mechanical stress on wires",
+          "Loose switch in plate",
+          "Cracked PCB trace (PCB builds)",
+          "Poor TRRS connection (split keyboards)"
+        ],
+        "solutions": [
+          "Reflow all solder joints - focus on suspicious areas",
+          "Add strain relief to wires with hot glue",
+          "Ensure switches are fully seated in plate/PCB",
+          "For PCB: inspect traces under magnification, repair with jumper wire if cracked",
+          "Clean TRRS jack contacts with contact cleaner",
+          "Test while gently flexing keyboard to identify mechanical issues"
+        ],
+        "relatedSteps": ["handwire-rows", "pcb-install-switches", "troubleshoot-dead-keys"]
+      }
+    ]
+  }
+}

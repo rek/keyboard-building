@@ -1,0 +1,136 @@
+{
+  "controllers": {
+    "pro-micro": {
+      "base": 5.0,
+      "clone": 4.5,
+      "genuine": 19.95
+    },
+    "elite-c": {
+      "base": 18.0
+    },
+    "nice-nano": {
+      "base": 25.0
+    },
+    "rp2040": {
+      "base": 8.0,
+      "kb2040": 9.95,
+      "pico": 4.0
+    }
+  },
+  "switches": {
+    "mx": {
+      "budget": 0.25,
+      "midrange": 0.35,
+      "premium": 0.65
+    },
+    "choc-v1": {
+      "standard": 0.6
+    },
+    "choc-v2": {
+      "standard": 0.65
+    }
+  },
+  "keycaps": {
+    "mx-budget": 30,
+    "mx-midrange": 60,
+    "mx-premium": 120,
+    "choc-v1": 40,
+    "choc-v2": 50
+  },
+  "pcb": {
+    "jlcpcb-5pcs": 45,
+    "jlcpcb-10pcs": 65,
+    "pcbway-5pcs": 55,
+    "kit-predesigned": 60
+  },
+  "case": {
+    "3d-print-diy": 20,
+    "3d-print-service": 80,
+    "acrylic-laser-cut": 40,
+    "aluminum-cnc": 150
+  },
+  "features": {
+    "hotswap-socket": 0.3,
+    "rgb-led": 0.25,
+    "oled-display": 4.0,
+    "encoder": 2.5,
+    "encoder-evqwgd001": 4.0,
+    "trackball": 35.0,
+    "trackball-pmw3360": 35.0,
+    "trackball-adns9800": 18.0,
+    "trackpoint": 15.0,
+    "cirque-trackpad": 25.0,
+    "analog-thumbstick": 3.0
+  },
+  "pcbComponents": {
+    "diode-th": 0.02,
+    "diode-smd": 0.015,
+    "resistor-th": 0.01,
+    "resistor-smd": 0.008,
+    "trrs-jack": 0.5,
+    "trs-jack": 0.4,
+    "usb-c-connector": 1.5,
+    "micro-usb-connector": 0.8,
+    "reset-button": 0.15,
+    "boot-button": 0.15,
+    "power-switch-slide": 0.3,
+    "battery-connector-jst": 0.2,
+    "speaker-passive": 1.5,
+    "piezo-element": 0.8,
+    "capacitor-ceramic": 0.05,
+    "esd-protection": 0.3,
+    "polyfuse": 0.15,
+    "schottky-diode": 0.08,
+    "voltage-regulator": 0.5,
+    "io-expander": 2.0,
+    "ws2812b-led": 0.15,
+    "sk6812-mini": 0.18
+  },
+  "connectivity": {
+    "trrs-cable": 5,
+    "trrs-jack": 1,
+    "battery-lipo": 8,
+    "power-switch": 1.5
+  },
+  "hardware": {
+    "diodes-100pcs": 2,
+    "wire-30awg": 8,
+    "screws-standoffs": 10,
+    "usb-cable": 8
+  },
+  "shipping": {
+    "domestic": 5,
+    "aliexpress": 0,
+    "international-pcb": 15,
+    "international-parts": 10
+  },
+  "buildMethodExtras": {
+    "handwired": {
+      "wire": 8,
+      "diodes": 2,
+      "hardware": 5
+    },
+    "custom-pcb": {
+      "pcb": 45,
+      "diodes": 2,
+      "hardware": 10
+    },
+    "pcb-kit": {
+      "kit": 60,
+      "case": 40
+    },
+    "complete-kit": {
+      "keyboard": 250
+    }
+  },
+  "tools": {
+    "soldering-iron-budget": 25,
+    "soldering-iron-quality": 80,
+    "multimeter": 20,
+    "wire-cutters": 10,
+    "flush-cutters": 15,
+    "helping-hands": 12,
+    "solder-spool": 8,
+    "flux": 6
+  }
+}

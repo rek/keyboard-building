@@ -1,0 +1,199 @@
+{
+  "pcbComponents": {
+    "title": "PCB Components",
+    "tagline": "The building blocks of your circuit board",
+    "description": "These are the electronic components that make up your keyboard's circuit board. Whether you're building a custom PCB or handwiring, you'll need diodes, resistors, connectors, and other components. Your choice between SMD (surface-mount) and through-hole components affects build difficulty, PCB size, and professional appearance.",
+    "whyItMatters": [
+      "SMD vs through-hole determines build difficulty and required soldering skills",
+      "Connector choice (TRRS/TRS, USB-C) affects durability and compatibility",
+      "Optional components (buttons, speakers, power switches) add functionality",
+      "Protection components (capacitors, ESD diodes) improve reliability"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "SMD vs Through-Hole Components",
+        "description": "Through-hole components are easier to solder and more beginner-friendly, but take more PCB space. SMD components are tiny, professional-looking, and compact, but require fine-pitch soldering skills, tweezers, and good lighting."
+      },
+      {
+        "factor": "Connector Types",
+        "description": "TRRS jacks are standard for split keyboards ($1 for jacks + cable), reliable but can short if hot-plugged. USB-C is modern and durable but requires precise PCB design and 5.1kΩ resistors. TRS is simpler but only supports serial communication."
+      },
+      {
+        "factor": "Essential vs Optional",
+        "description": "Diodes are mandatory (one per switch). Resistors needed for LEDs and I2C. Reset buttons are highly recommended. Capacitors and ESD protection are optional but improve stability. Speakers/buzzers are rare but fun."
+      },
+      {
+        "factor": "Power Management for Wireless",
+        "description": "Wireless builds require power switches ($0.30), battery connectors ($0.20), and careful power routing. Wired builds skip these entirely. Battery protection circuits add safety but complexity."
+      }
+    ],
+    "quickTips": [
+      "Start with through-hole components for your first build - much easier to solder",
+      "SMD diodes (SOD-123) and resistors (0805/1206) are manageable with practice and flux",
+      "Always use TRRS (4-conductor) cables, not TRS, to avoid damaging your keyboard",
+      "USB-C connectors MUST have 5.1kΩ pull-down resistors on CC pins to work properly",
+      "Add 0.1µF capacitors near every IC power pin for stability",
+      "Reset buttons save time - much easier than shorting pins for firmware updates",
+      "Buy 10-20% extra diodes and resistors - you will make mistakes"
+    ]
+  },
+  "controllers": {
+    "title": "Controllers",
+    "tagline": "The brain of your keyboard",
+    "description": "The microcontroller is the most important component in your build - it runs the firmware, processes keypresses, and manages all features. Your choice determines everything from available pins to wireless capability.",
+    "whyItMatters": [
+      "Determines which firmware you can use (QMK, ZMK, etc.)",
+      "Sets the limit on how many keys and features you can support",
+      "Affects wireless capability and battery life",
+      "Influences USB connector type and durability"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "Price vs Features",
+        "description": "Cheaper controllers (Pro Micro ~$5) work great for basic builds, but lack USB-C and have fewer pins. Premium options (nice!nano ~$30) offer wireless and more flexibility."
+      },
+      {
+        "factor": "Pin Count",
+        "description": "More pins = support for larger key matrices and more features. A 60-key split with trackball needs more pins than a 36-key minimal build."
+      },
+      {
+        "factor": "Wireless Trade-offs",
+        "description": "Wireless controllers cost more, require battery management, and work with fewer firmware options (mainly ZMK). Wired is simpler and cheaper."
+      }
+    ],
+    "quickTips": [
+      "For first builds, Pro Micro or Elite-C are safe, well-documented choices",
+      "Planning wireless? Start with nice!nano and ZMK firmware",
+      "Count your needed pins: (rows × cols for matrix) + features (OLED, encoders, etc.)",
+      "RP2040 boards offer great value with modern features and KMK support"
+    ]
+  },
+  "switches": {
+    "title": "Switches",
+    "tagline": "The heart of your typing experience",
+    "description": "Switches are the mechanical actuators under each key. They define how your keyboard feels and sounds. This is the most personal choice in your build - what feels perfect to one person might feel awful to another.",
+    "whyItMatters": [
+      "Determines the tactile feel (linear, tactile, clicky)",
+      "Affects keyboard height and portability",
+      "Limits your keycap options significantly",
+      "Influences soldering difficulty and rework options"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "MX vs Choc Profile",
+        "description": "MX switches are standard height (18.5mm) with huge keycap selection. Choc switches are low-profile (11.5mm), lighter, more portable, but keycaps are limited and expensive."
+      },
+      {
+        "factor": "Feel Preference",
+        "description": "Linear (smooth, no bump), Tactile (bump feedback), or Clicky (bump + sound). There's no 'best' - try before you buy if possible."
+      },
+      {
+        "factor": "Cost",
+        "description": "MX switches: $0.35-0.70 each. Choc switches: $0.60-1.00 each. For a 60-key board, that's $21-60 just for switches."
+      }
+    ],
+    "quickTips": [
+      "MX switches are the safe choice for beginners - huge community support",
+      "Choc v1 is great for ultra-portable builds but plan for limited keycap options",
+      "Buy 10% extra switches for mistakes and future repairs",
+      "Consider hotswap sockets to try different switches without resoldering"
+    ]
+  },
+  "features": {
+    "title": "Features",
+    "tagline": "Customize your keyboard's capabilities",
+    "description": "Features are optional enhancements that add functionality beyond basic typing. Each adds complexity, cost, and requires additional pins on your controller. Choose features that match your actual workflow, not just what looks cool.",
+    "whyItMatters": [
+      "Each feature adds to build complexity and time",
+      "More features = more pins needed = limits controller choices",
+      "Some features (RGB, wireless) significantly increase power consumption",
+      "Features can fail independently, making troubleshooting harder"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "Hot-swap vs Soldered",
+        "description": "Hot-swap sockets let you swap switches without soldering (+$18 for 60 keys). Great for experimenting, but adds height and complexity. Soldered is permanent but slimmer."
+      },
+      {
+        "factor": "RGB Lighting",
+        "description": "Per-key RGB looks amazing but adds significant cost ($15+), complexity, and power draw. Wireless builds should avoid it. Consider if you actually want it or just like the idea."
+      },
+      {
+        "factor": "OLED Displays",
+        "description": "OLED screens are fun and useful for layer indicators (~$8 for two). Low power draw, but require I2C pins and firmware configuration."
+      }
+    ],
+    "quickTips": [
+      "Start minimal - you can always build a second keyboard with more features",
+      "Trackballs are advanced - expect 8+ hours extra build time",
+      "Every feature needs firmware configuration, not just hardware",
+      "Calculate total pin requirements before choosing controller"
+    ]
+  },
+  "connectivity": {
+    "title": "Connectivity",
+    "tagline": "How your keyboard halves communicate",
+    "description": "Split keyboards need a way for the left and right halves to talk to each other and to your computer. This choice affects convenience, cable management, portability, and power requirements.",
+    "whyItMatters": [
+      "Determines desk cable management complexity",
+      "Affects portability and battery requirements",
+      "Influences firmware choice (ZMK for wireless, QMK/Vial for wired)",
+      "Impacts total cost and build complexity"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "Wired (TRRS) Simplicity",
+        "description": "TRRS cable connects both halves (~$5 total cost). Simple, reliable, no batteries, works with QMK/Vial. Downside: cables on your desk, less portable."
+      },
+      {
+        "factor": "Wireless Freedom",
+        "description": "Wireless gives ultimate flexibility and clean desk. But: expensive controllers ($60+ for both halves), requires batteries, limited to ZMK firmware, more complex troubleshooting."
+      },
+      {
+        "factor": "Power Management",
+        "description": "Wireless needs LiPo batteries, charging circuits, power switches. Wired just plugs in. Battery life varies: 2 weeks to 6 months depending on features."
+      }
+    ],
+    "quickTips": [
+      "First build? Go wired with TRRS - it's simple and well-documented",
+      "Wireless adds $50+ to controller costs alone",
+      "Wireless + RGB = terrible battery life (avoid this combo)",
+      "ZMK has excellent wireless support but different workflow than QMK"
+    ]
+  },
+  "firmware": {
+    "title": "Firmware",
+    "tagline": "The software that makes it all work",
+    "description": "Firmware is the code that runs on your keyboard's controller. It interprets key presses, handles layers, macros, and special features. Your firmware choice affects how you configure your keyboard and what features are available.",
+    "whyItMatters": [
+      "Determines how you configure and customize your keyboard",
+      "Some firmware requires coding, others use GUIs",
+      "Not all firmware works with all controllers",
+      "Affects update frequency and community support"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "QMK: Power User Standard",
+        "description": "QMK is the most popular, feature-rich firmware. Requires compiling code for changes, but incredibly flexible. Huge community, extensive docs. No wireless support."
+      },
+      {
+        "factor": "Vial: Beginner Friendly",
+        "description": "Vial is QMK with a real-time GUI configurator - no compiling needed. Perfect for beginners. Change keymaps instantly. Same hardware as QMK. No wireless."
+      },
+      {
+        "factor": "ZMK: Wireless Champion",
+        "description": "ZMK is built for wireless keyboards. Excellent battery life, GitHub-based config. Smaller feature set than QMK, but growing fast. Only choice for nice!nano."
+      },
+      {
+        "factor": "KMK: Python Powered",
+        "description": "KMK runs CircuitPython on RP2040 boards. Edit code directly on the board like a USB drive. Great for learning. Less optimized than compiled options."
+      }
+    ],
+    "quickTips": [
+      "Vial is the best beginner choice - instant feedback, no compiling",
+      "QMK has the most features and community resources",
+      "Going wireless? ZMK is your only real option",
+      "You can switch firmware later, but it requires reflashing"
+    ]
+  }
+}

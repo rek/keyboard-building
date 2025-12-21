@@ -1,0 +1,1328 @@
+{
+  "controllers": {
+    "pro-micro": {
+      "id": "pro-micro",
+      "name": "Arduino Pro Micro",
+      "price": 5.0,
+      "image": "/images/components/controllers/pro-micro.svg",
+      "specs": {
+        "mcu": "ATmega32U4",
+        "pins": 12,
+        "wireless": false,
+        "usbType": "micro-usb"
+      },
+      "complexity": 1,
+      "pros": [
+        "Cheapest option (~$5)",
+        "Most common - extensive documentation",
+        "QMK/Vial fully supported"
+      ],
+      "cons": [
+        "Micro-USB connector (fragile)",
+        "Limited pins (12) for complex builds",
+        "No wireless capability"
+      ],
+      "compatibleWith": ["qmk", "vial"],
+      "incompatibleWith": ["zmk", "kmk", "wireless"],
+      "vendors": [
+        {
+          "name": "SparkFun",
+          "url": "https://www.sparkfun.com/products/12640",
+          "price": 19.95
+        },
+        {
+          "name": "AliExpress",
+          "url": "https://aliexpress.com/",
+          "price": 4.5,
+          "note": "Clone - quality varies"
+        }
+      ]
+    },
+    "elite-c": {
+      "id": "elite-c",
+      "name": "Elite-C",
+      "price": 18.0,
+      "image": "/images/components/elite-c.jpg",
+      "specs": {
+        "mcu": "ATmega32U4",
+        "pins": 12,
+        "wireless": false,
+        "usbType": "usb-c"
+      },
+      "complexity": 1,
+      "pros": [
+        "USB-C connector (more durable)",
+        "Drop-in replacement for Pro Micro",
+        "QMK/Vial supported"
+      ],
+      "cons": [
+        "More expensive than Pro Micro",
+        "Still limited pins",
+        "No wireless"
+      ],
+      "compatibleWith": ["qmk", "vial"],
+      "incompatibleWith": ["zmk", "kmk", "wireless"],
+      "vendors": [
+        {
+          "name": "Keebio",
+          "url": "https://keeb.io/products/elite-c-low-profile-version-usb-c-pro-micro-replacement-atmega32u4",
+          "price": 17.99
+        }
+      ]
+    },
+    "nice-nano": {
+      "id": "nice-nano",
+      "name": "nice!nano",
+      "price": 25.0,
+      "image": "/images/components/nice-nano.jpg",
+      "specs": {
+        "mcu": "nRF52840",
+        "pins": 13,
+        "wireless": true,
+        "usbType": "usb-c",
+        "battery": "lithium polymer"
+      },
+      "complexity": 3,
+      "pros": [
+        "Wireless Bluetooth capability",
+        "USB-C connector",
+        "ZMK firmware support",
+        "Low power consumption"
+      ],
+      "cons": [
+        "More expensive",
+        "Requires battery setup",
+        "No QMK support (ZMK only)",
+        "More complex power management"
+      ],
+      "compatibleWith": ["zmk", "wireless"],
+      "incompatibleWith": ["qmk", "vial", "kmk"],
+      "vendors": [
+        {
+          "name": "Typeractive",
+          "url": "https://typeractive.xyz/products/nice-nano",
+          "price": 24.99
+        }
+      ]
+    },
+    "rp2040": {
+      "id": "rp2040",
+      "name": "RP2040-based (Pico, KB2040)",
+      "price": 8.0,
+      "image": "/images/components/rp2040.jpg",
+      "specs": {
+        "mcu": "RP2040",
+        "pins": 20,
+        "wireless": false,
+        "usbType": "usb-c"
+      },
+      "complexity": 2,
+      "pros": [
+        "More pins available (20+)",
+        "Faster processor",
+        "USB-C connector",
+        "QMK, Vial, and KMK supported",
+        "Affordable"
+      ],
+      "cons": [
+        "Newer platform (less documentation)",
+        "Larger footprint than Pro Micro",
+        "Pin layout not standardized"
+      ],
+      "compatibleWith": ["qmk", "vial", "kmk"],
+      "incompatibleWith": ["zmk"],
+      "vendors": [
+        {
+          "name": "Adafruit",
+          "url": "https://www.adafruit.com/product/5302",
+          "price": 9.95,
+          "note": "KB2040 - Pro Micro form factor"
+        }
+      ]
+    }
+  },
+  "pcbComponents": {
+    "diode-th": {
+      "id": "diode-th",
+      "name": "Through-Hole Diodes (1N4148)",
+      "price": 0.02,
+      "priceUnit": "per diode",
+      "image": "/images/components/pcb/diode-th.svg",
+      "specs": {
+        "type": "1N4148 switching diode",
+        "mounting": "through-hole",
+        "voltage": "100V",
+        "current": "300mA"
+      },
+      "complexity": 1,
+      "pros": [
+        "Cheapest option (~$2 for 100)",
+        "Easy to solder for beginners",
+        "Easy to identify polarity (black band)",
+        "Can be bent to fit various PCB layouts",
+        "Forgiving if you make mistakes"
+      ],
+      "cons": [
+        "Larger footprint on PCB",
+        "Requires more board space",
+        "Legs need trimming after soldering",
+        "Not ideal for ultra-compact builds",
+        "Takes longer to solder (100+ diodes)"
+      ],
+      "requiredTools": ["Soldering iron", "Wire cutters"],
+      "compatibleWith": ["handwired", "custom-pcb"]
+    },
+    "diode-smd": {
+      "id": "diode-smd",
+      "name": "SMD Diodes (1N4148W SOD-123)",
+      "price": 0.015,
+      "priceUnit": "per diode",
+      "image": "/images/components/pcb/diode-smd.svg",
+      "specs": {
+        "type": "1N4148W switching diode",
+        "mounting": "SMD (SOD-123)",
+        "voltage": "100V",
+        "current": "300mA",
+        "size": "3.5mm x 1.6mm"
+      },
+      "complexity": 3,
+      "pros": [
+        "Smallest footprint - compact PCB design",
+        "Professional appearance",
+        "No leg trimming needed",
+        "Faster assembly with practice",
+        "Better for low-profile builds"
+      ],
+      "cons": [
+        "Harder to solder (requires fine tip and steady hand)",
+        "Polarity harder to see (look for line marking)",
+        "More expensive equipment helpful (tweezers, magnification)",
+        "Difficult to rework if placed incorrectly",
+        "Not beginner-friendly"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Magnification (optional)", "Flux"],
+      "compatibleWith": ["custom-pcb"]
+    },
+    "resistor-th": {
+      "id": "resistor-th",
+      "name": "Through-Hole Resistors",
+      "price": 0.01,
+      "priceUnit": "per resistor",
+      "image": "/images/components/pcb/resistor-th.svg",
+      "specs": {
+        "mounting": "through-hole",
+        "commonValues": "100Ω, 220Ω, 470Ω, 4.7kΩ, 10kΩ",
+        "power": "1/4W typical",
+        "tolerance": "5% or 1%"
+      },
+      "complexity": 1,
+      "pros": [
+        "Very cheap (~$5 for 500pc assortment)",
+        "Easy to solder",
+        "Color bands show value clearly",
+        "Easy to identify and replace",
+        "Good for learning electronics"
+      ],
+      "cons": [
+        "Larger PCB footprint",
+        "Legs need trimming",
+        "Less professional appearance",
+        "Not ideal for compact designs"
+      ],
+      "requiredTools": ["Soldering iron", "Wire cutters"],
+      "usedFor": ["LED current limiting", "Pull-up/pull-down resistors", "I2C communication"],
+      "compatibleWith": ["handwired", "custom-pcb"]
+    },
+    "resistor-smd": {
+      "id": "resistor-smd",
+      "name": "SMD Resistors (0805 or 1206)",
+      "price": 0.008,
+      "priceUnit": "per resistor",
+      "image": "/images/components/pcb/resistor-smd.svg",
+      "specs": {
+        "mounting": "SMD",
+        "sizes": "1206 (3.2×1.6mm) or 0805 (2.0×1.25mm)",
+        "commonValues": "100Ω, 220Ω, 470Ω, 4.7kΩ, 10kΩ",
+        "power": "1/8W (1206) or 1/10W (0805)",
+        "tolerance": "1% or 5%"
+      },
+      "complexity": 3,
+      "pros": [
+        "Tiny footprint - compact PCB",
+        "Professional appearance",
+        "No trimming needed",
+        "Perfect for low-profile builds",
+        "Very cheap in bulk"
+      ],
+      "cons": [
+        "Difficult to solder for beginners",
+        "Hard to read value (need magnification)",
+        "Requires precise placement",
+        "Easy to lose (tiny components)",
+        "Need good lighting and tools"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Magnification", "Flux"],
+      "usedFor": ["LED current limiting", "Pull-up/pull-down resistors", "I2C communication"],
+      "compatibleWith": ["custom-pcb"]
+    },
+    "trrs-jack": {
+      "id": "trrs-jack",
+      "name": "TRRS Jack (PJ-320A)",
+      "price": 0.5,
+      "priceUnit": "per jack",
+      "image": "/images/components/pcb/trrs-jack.svg",
+      "specs": {
+        "type": "3.5mm audio jack",
+        "contacts": "4 (Tip, Ring, Ring, Sleeve)",
+        "mounting": "Through-hole PCB mount",
+        "commonPart": "PJ-320A"
+      },
+      "complexity": 2,
+      "pros": [
+        "Standard for split keyboards",
+        "Carries VCC, GND, and 2 data lines",
+        "Cheap and widely available",
+        "Easy to find replacement cables",
+        "Proven reliable design"
+      ],
+      "cons": [
+        "Can short if plugged/unplugged while powered",
+        "Cable can disconnect accidentally",
+        "Adds ~$1-2 per keyboard (2 jacks + cable)",
+        "Less durable than USB-C connectors"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Connecting split keyboard halves (wired)"],
+      "compatibleWith": ["custom-pcb", "handwired"],
+      "warning": "Always use TRRS (4-conductor) cables, not TRS (3-conductor) to avoid shorts"
+    },
+    "trs-jack": {
+      "id": "trs-jack",
+      "name": "TRS Jack (3-conductor)",
+      "price": 0.4,
+      "priceUnit": "per jack",
+      "image": "/images/components/pcb/trs-jack.svg",
+      "specs": {
+        "type": "3.5mm audio jack",
+        "contacts": "3 (Tip, Ring, Sleeve)",
+        "mounting": "Through-hole PCB mount"
+      },
+      "complexity": 2,
+      "pros": [
+        "Slightly cheaper than TRRS",
+        "Simpler wiring (3 conductors)",
+        "Sufficient for serial communication (half-duplex)",
+        "Less chance of incorrect cable usage"
+      ],
+      "cons": [
+        "Less common in keyboard community",
+        "Only supports serial communication (not I2C)",
+        "Harder to find compatible cables",
+        "TRRS is more standard"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Connecting split keyboard halves with serial only"],
+      "compatibleWith": ["custom-pcb", "handwired"],
+      "note": "TRRS is generally preferred as it supports more communication protocols"
+    },
+    "usb-c-connector": {
+      "id": "usb-c-connector",
+      "name": "USB-C Connector (Mid-Mount)",
+      "price": 1.5,
+      "priceUnit": "per connector",
+      "image": "/images/components/pcb/usb-c.svg",
+      "specs": {
+        "type": "USB Type-C",
+        "mounting": "Mid-mount through-hole",
+        "pins": "16-pin or 6-pin (basic)",
+        "supports": "USB 2.0 data + power"
+      },
+      "complexity": 3,
+      "pros": [
+        "Modern standard connector",
+        "Reversible (no wrong way to plug in)",
+        "More durable than Micro-USB",
+        "Future-proof choice",
+        "Clean professional look"
+      ],
+      "cons": [
+        "Requires precise PCB footprint design",
+        "More expensive than other options",
+        "Harder to hand-solder than through-hole",
+        "Need proper CC resistors (5.1kΩ) for compatibility",
+        "Can be complex for beginners"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Multimeter for testing"],
+      "usedFor": ["Direct USB connection to computer (without Pro Micro)"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Requires 5.1kΩ pull-down resistors on CC1 and CC2 pins for USB-C specification compliance"
+    },
+    "micro-usb-connector": {
+      "id": "micro-usb-connector",
+      "name": "Micro-USB Connector (Breakout)",
+      "price": 0.8,
+      "priceUnit": "per connector",
+      "image": "/images/components/pcb/micro-usb.svg",
+      "specs": {
+        "type": "USB Micro-B",
+        "mounting": "Through-hole or breakout board",
+        "pins": "5-pin"
+      },
+      "complexity": 2,
+      "pros": [
+        "Cheaper than USB-C",
+        "Widely available",
+        "Simple to integrate",
+        "Common cables"
+      ],
+      "cons": [
+        "Less durable (connector wears out)",
+        "Not reversible (can plug in wrong way)",
+        "Being phased out industry-wide",
+        "Older standard"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Direct USB connection (legacy designs)"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "USB-C is recommended for new designs"
+    },
+    "reset-button": {
+      "id": "reset-button",
+      "name": "Reset Button (Tactile Switch)",
+      "price": 0.15,
+      "priceUnit": "per button",
+      "image": "/images/components/pcb/reset-button.svg",
+      "specs": {
+        "type": "6mm x 6mm tactile switch",
+        "mounting": "Through-hole",
+        "actuation": "Momentary contact"
+      },
+      "complexity": 1,
+      "pros": [
+        "Easy MCU reset without unplugging",
+        "Essential for firmware flashing",
+        "Very cheap",
+        "Simple to solder",
+        "Can be mounted on case or PCB"
+      ],
+      "cons": [
+        "Takes up board space",
+        "Need case cutout if accessible externally",
+        "Can be accidentally pressed"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Resetting microcontroller, entering bootloader for firmware flashing"],
+      "compatibleWith": ["custom-pcb", "handwired"],
+      "note": "Almost essential for easy firmware updates"
+    },
+    "boot-button": {
+      "id": "boot-button",
+      "name": "Boot/Flash Button",
+      "price": 0.15,
+      "priceUnit": "per button",
+      "image": "/images/components/pcb/boot-button.svg",
+      "specs": {
+        "type": "6mm x 6mm tactile switch",
+        "mounting": "Through-hole",
+        "actuation": "Momentary contact"
+      },
+      "complexity": 1,
+      "pros": [
+        "Enter bootloader without shorting pins",
+        "Convenient for firmware development",
+        "Professional feature",
+        "Easy to use"
+      ],
+      "cons": [
+        "Extra component cost",
+        "Not strictly necessary (can use key combo)",
+        "Takes PCB space"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Entering bootloader mode for firmware flashing (RP2040, etc.)"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Especially useful for RP2040-based builds"
+    },
+    "power-switch-slide": {
+      "id": "power-switch-slide",
+      "name": "Power Switch (Slide Switch)",
+      "price": 0.3,
+      "priceUnit": "per switch",
+      "image": "/images/components/pcb/power-switch.svg",
+      "specs": {
+        "type": "SPDT slide switch",
+        "mounting": "SMD or through-hole",
+        "rating": "500mA typical"
+      },
+      "complexity": 2,
+      "pros": [
+        "Essential for wireless builds",
+        "Prevents battery drain when not in use",
+        "Simple on/off control",
+        "Low profile options available"
+      ],
+      "cons": [
+        "Can be fragile if mounted on PCB edge",
+        "Needs case cutout for access",
+        "SMD versions harder to solder"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Turning wireless keyboards on/off to save battery"],
+      "compatibleWith": ["custom-pcb"],
+      "requiredFor": ["wireless"]
+    },
+    "battery-connector-jst": {
+      "id": "battery-connector-jst",
+      "name": "Battery Connector (JST-PH 2.0mm)",
+      "price": 0.2,
+      "priceUnit": "per connector",
+      "image": "/images/components/pcb/jst-connector.svg",
+      "specs": {
+        "type": "JST-PH 2-pin",
+        "pitch": "2.0mm",
+        "mounting": "Through-hole",
+        "current": "2A max"
+      },
+      "complexity": 2,
+      "pros": [
+        "Standard for LiPo batteries",
+        "Polarized (can't plug in backwards)",
+        "Easy to connect/disconnect battery",
+        "Widely compatible with battery vendors"
+      ],
+      "cons": [
+        "Small connector can be fragile",
+        "Takes board space",
+        "Only for wireless builds"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Connecting LiPo battery to wireless keyboard"],
+      "compatibleWith": ["custom-pcb"],
+      "requiredFor": ["wireless"]
+    },
+    "speaker-passive": {
+      "id": "speaker-passive",
+      "name": "Passive Buzzer/Speaker",
+      "price": 1.5,
+      "priceUnit": "per speaker",
+      "image": "/images/components/pcb/speaker.svg",
+      "specs": {
+        "type": "Magnetic buzzer",
+        "mounting": "Through-hole or wire leads",
+        "diameter": "12mm typical",
+        "voltage": "3-5V"
+      },
+      "complexity": 2,
+      "pros": [
+        "Audio feedback for typing",
+        "Configurable tones in firmware",
+        "Fun customization option",
+        "Can indicate layer changes, errors, etc."
+      ],
+      "cons": [
+        "Uses one PWM-capable pin",
+        "Can be annoying to others",
+        "Takes space inside case",
+        "Increases power draw slightly",
+        "Not very common in keyboards"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "pinRequirement": 1,
+      "usedFor": ["Audio feedback, musical keyboard features"],
+      "compatibleWith": ["custom-pcb", "handwired"]
+    },
+    "piezo-element": {
+      "id": "piezo-element",
+      "name": "Piezo Buzzer Element",
+      "price": 0.8,
+      "priceUnit": "per element",
+      "image": "/images/components/pcb/piezo.svg",
+      "specs": {
+        "type": "Piezoelectric element",
+        "mounting": "PCB mount or adhesive",
+        "voltage": "3-12V",
+        "frequency": "2-4kHz typical"
+      },
+      "complexity": 2,
+      "pros": [
+        "Very cheap",
+        "Louder than passive speakers",
+        "Simple to drive (just PWM)",
+        "Low power consumption",
+        "Thin profile"
+      ],
+      "cons": [
+        "Limited frequency range (tinny sound)",
+        "Uses PWM pin",
+        "Can be annoying",
+        "Needs mounting consideration"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "pinRequirement": 1,
+      "usedFor": ["Click sounds, beeps, audio feedback"],
+      "compatibleWith": ["custom-pcb", "handwired"]
+    },
+    "capacitor-ceramic": {
+      "id": "capacitor-ceramic",
+      "name": "Ceramic Capacitors (0.1µF, 10µF)",
+      "price": 0.05,
+      "priceUnit": "per capacitor",
+      "image": "/images/components/pcb/capacitor.svg",
+      "specs": {
+        "type": "Ceramic capacitor",
+        "values": "0.1µF (100nF) and 10µF common",
+        "voltage": "16V or 50V",
+        "mounting": "SMD or through-hole"
+      },
+      "complexity": 2,
+      "pros": [
+        "Essential for power filtering",
+        "Prevents MCU crashes from power spikes",
+        "Very cheap",
+        "Long lifespan",
+        "Improves overall stability"
+      ],
+      "cons": [
+        "Easy to forget for beginners",
+        "SMD versions need careful soldering",
+        "Non-polarized (but doesn't matter for ceramic)"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Power supply decoupling", "Noise filtering", "Stabilizing voltage"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Typically use 0.1µF near each IC power pin, 10µF at power input"
+    },
+    "esd-protection": {
+      "id": "esd-protection",
+      "name": "ESD Protection Diode (USBLC6-2SC6)",
+      "price": 0.3,
+      "priceUnit": "per IC",
+      "image": "/images/components/pcb/esd-diode.svg",
+      "specs": {
+        "type": "TVS diode array",
+        "mounting": "SMD (SOT-23-6)",
+        "protection": "USB data lines",
+        "voltage": "5.5V clamp"
+      },
+      "complexity": 4,
+      "pros": [
+        "Protects USB data lines from static discharge",
+        "Professional PCB design feature",
+        "Prevents damage to computer ports",
+        "Industry standard practice"
+      ],
+      "cons": [
+        "SMD soldering required (6 pins)",
+        "Not strictly necessary for basic builds",
+        "Adds component cost",
+        "Requires PCB design knowledge"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux"],
+      "usedFor": ["Protecting USB data lines from ESD damage"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Optional but recommended for professional builds, especially with exposed USB connectors"
+    },
+    "polyfuse": {
+      "id": "polyfuse",
+      "name": "Polyfuse (Resettable Fuse)",
+      "price": 0.15,
+      "priceUnit": "per fuse",
+      "image": "/images/components/pcb/polyfuse.svg",
+      "specs": {
+        "type": "PPTC resettable fuse",
+        "rating": "500mA or 750mA common",
+        "mounting": "Through-hole or SMD",
+        "voltage": "6V typical"
+      },
+      "complexity": 2,
+      "pros": [
+        "Protects against overcurrent/short circuits",
+        "Resets automatically when fault clears",
+        "Protects computer USB ports",
+        "Industry best practice",
+        "Very cheap insurance"
+      ],
+      "cons": [
+        "Small voltage drop (0.1-0.2V)",
+        "Can limit peak current for RGB/power-hungry features",
+        "Adds component to BOM"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["USB overcurrent protection", "Preventing damage from shorts"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Place in series with USB VBUS - highly recommended for safety"
+    },
+    "schottky-diode": {
+      "id": "schottky-diode",
+      "name": "Schottky Diode (BAT85, 1N5819)",
+      "price": 0.08,
+      "priceUnit": "per diode",
+      "image": "/images/components/pcb/schottky.svg",
+      "specs": {
+        "type": "Schottky barrier diode",
+        "voltage": "30-40V",
+        "current": "1A",
+        "forwardDrop": "0.3-0.4V (lower than standard diode)"
+      },
+      "complexity": 2,
+      "pros": [
+        "Prevents battery backfeeding to USB",
+        "Essential for wireless builds with USB charging",
+        "Low forward voltage drop",
+        "Protects against reverse polarity"
+      ],
+      "cons": [
+        "Only needed for wireless/battery builds",
+        "Takes PCB space",
+        "Polarity must be correct"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "usedFor": ["Battery protection in wireless builds", "Reverse current protection"],
+      "compatibleWith": ["custom-pcb"],
+      "requiredFor": ["wireless"],
+      "note": "Use between battery and power rail to prevent USB from charging battery unsafely"
+    },
+    "voltage-regulator": {
+      "id": "voltage-regulator",
+      "name": "Voltage Regulator (AMS1117-3.3V)",
+      "price": 0.5,
+      "priceUnit": "per regulator",
+      "image": "/images/components/pcb/voltage-regulator.svg",
+      "specs": {
+        "type": "Linear voltage regulator",
+        "outputVoltage": "3.3V",
+        "current": "800mA - 1A",
+        "mounting": "SOT-223 SMD or TO-220 TH"
+      },
+      "complexity": 3,
+      "pros": [
+        "Provides stable 3.3V for components",
+        "Needed for some sensors/displays",
+        "Prevents damage to 3.3V components",
+        "Simple to use with input/output caps"
+      ],
+      "cons": [
+        "Not needed if MCU provides 3.3V output",
+        "Linear regulators waste power as heat",
+        "SMD soldering for most variants",
+        "Requires input and output capacitors"
+      ],
+      "requiredTools": ["Soldering iron", "Multimeter"],
+      "usedFor": ["Powering 3.3V sensors", "Level shifting for displays/modules"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Only needed if using 3.3V-only components like some OLEDs or sensors"
+    },
+    "io-expander": {
+      "id": "io-expander",
+      "name": "I2C IO Expander (MCP23017)",
+      "price": 2.0,
+      "priceUnit": "per IC",
+      "image": "/images/components/pcb/io-expander.svg",
+      "specs": {
+        "type": "16-bit I2C GPIO expander",
+        "pins": "16 additional GPIO",
+        "interface": "I2C",
+        "mounting": "DIP-28 or SOIC-28"
+      },
+      "complexity": 4,
+      "pros": [
+        "Adds 16 GPIO pins via I2C",
+        "Allows larger matrices without extra MCU pins",
+        "Multiple can be chained (up to 8)",
+        "Useful for pin-limited controllers"
+      ],
+      "cons": [
+        "Adds complexity to firmware",
+        "I2C overhead adds slight latency",
+        "More expensive",
+        "Requires pullup resistors",
+        "QMK support varies by IC"
+      ],
+      "requiredTools": ["Soldering iron", "Multimeter"],
+      "pinRequirement": 2,
+      "usedFor": ["Expanding key matrix beyond MCU pin count", "Adding features to pin-limited builds"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Advanced option - only needed for very large keyboards (80+ keys) on pin-limited MCUs"
+    },
+    "ws2812b-led": {
+      "id": "ws2812b-led",
+      "name": "WS2812B RGB LED (Individual)",
+      "price": 0.15,
+      "priceUnit": "per LED",
+      "image": "/images/components/pcb/ws2812b.svg",
+      "specs": {
+        "type": "Addressable RGB LED",
+        "mounting": "SMD (5050 package)",
+        "voltage": "5V",
+        "current": "~60mA max per LED"
+      },
+      "complexity": 3,
+      "pros": [
+        "Per-key RGB lighting",
+        "Chainable (data out to next LED)",
+        "Only uses 1 data pin for entire chain",
+        "Individually addressable colors",
+        "Amazing visual effects"
+      ],
+      "cons": [
+        "SMD soldering required",
+        "High power draw (60mA each at full white)",
+        "Can be finicky with data signal",
+        "Needs 5V power supply",
+        "Adds significant cost for full board"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux"],
+      "pinRequirement": 1,
+      "usedFor": ["Per-key RGB backlighting", "Underglow lighting"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Often used in strips for underglow. Per-key RGB for 60 keys = $9 + power concerns"
+    },
+    "sk6812-mini": {
+      "id": "sk6812-mini",
+      "name": "SK6812 Mini RGB LED",
+      "price": 0.18,
+      "priceUnit": "per LED",
+      "image": "/images/components/pcb/sk6812.svg",
+      "specs": {
+        "type": "Addressable RGB LED",
+        "mounting": "SMD (3535 package, smaller)",
+        "voltage": "5V",
+        "current": "~50mA max per LED"
+      },
+      "complexity": 4,
+      "pros": [
+        "Smaller footprint than WS2812B",
+        "Fits under MX switches better",
+        "Same chainable protocol",
+        "Better for tight PCB layouts"
+      ],
+      "cons": [
+        "More difficult to solder (smaller)",
+        "Slightly more expensive",
+        "Same power concerns",
+        "Requires very fine soldering skills"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux", "Magnification"],
+      "pinRequirement": 1,
+      "usedFor": ["Per-key RGB in tight spaces", "Under-switch lighting"],
+      "compatibleWith": ["custom-pcb"],
+      "note": "Harder to solder but cleaner integration. Consider WS2812B for first RGB build"
+    }
+  },
+  "switches": {
+    "mx": {
+      "id": "mx",
+      "name": "Cherry MX / MX-compatible",
+      "price": 0.35,
+      "priceUnit": "per switch",
+      "image": "/images/components/switches/mx-switch.svg",
+      "specs": {
+        "profile": "standard",
+        "height": "18.5mm",
+        "mounting": "PCB or plate"
+      },
+      "complexity": 1,
+      "pros": [
+        "Huge keycap selection",
+        "Many switch variants (linear, tactile, clicky)",
+        "Standard in keyboard community",
+        "Wide availability"
+      ],
+      "cons": [
+        "Taller profile",
+        "More expensive than Choc"
+      ],
+      "compatibleWith": ["hotswap-mx", "plate-mount", "pcb-mount"]
+    },
+    "choc-v1": {
+      "id": "choc-v1",
+      "name": "Kailh Choc v1 (Low Profile)",
+      "price": 0.6,
+      "priceUnit": "per switch",
+      "image": "/images/components/switches/choc-v1.svg",
+      "specs": {
+        "profile": "low-profile",
+        "height": "11.5mm",
+        "mounting": "PCB only"
+      },
+      "complexity": 2,
+      "pros": [
+        "Very compact (low profile)",
+        "Lighter weight builds",
+        "Good for portable keyboards"
+      ],
+      "cons": [
+        "Limited keycap options",
+        "More expensive than MX",
+        "PCB-mount only (no plate support)"
+      ],
+      "compatibleWith": ["hotswap-choc", "pcb-mount"]
+    },
+    "choc-v2": {
+      "id": "choc-v2",
+      "name": "Kailh Choc v2",
+      "price": 0.65,
+      "priceUnit": "per switch",
+      "image": "/images/components/choc-v2.jpg",
+      "specs": {
+        "profile": "low-profile",
+        "height": "13mm",
+        "mounting": "PCB or plate"
+      },
+      "complexity": 2,
+      "pros": [
+        "Compatible with MX keycaps",
+        "Low profile feel",
+        "Plate mount support"
+      ],
+      "cons": [
+        "Less common than v1 or MX",
+        "Limited switch variety",
+        "Somewhat taller than Choc v1"
+      ],
+      "compatibleWith": ["hotswap-choc-v2", "plate-mount", "pcb-mount"]
+    }
+  },
+  "features": {
+    "hotswap": {
+      "id": "hotswap",
+      "name": "Hot-Swap Sockets",
+      "price": 0.3,
+      "priceUnit": "per socket",
+      "image": "/images/features/hotswap.jpg",
+      "complexity": 1,
+      "description": "Install sockets to swap switches without soldering",
+      "pros": [
+        "Easy switch replacement",
+        "Test different switch types",
+        "No desoldering needed for repairs"
+      ],
+      "cons": [
+        "Extra cost per switch",
+        "Adds thickness to PCB",
+        "Potential for socket failure over time"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "compatibleWith": ["mx", "choc-v1", "choc-v2"]
+    },
+    "rgb": {
+      "id": "rgb",
+      "name": "RGB LED Backlighting",
+      "price": 0.25,
+      "priceUnit": "per LED",
+      "image": "/images/features/rgb.jpg",
+      "complexity": 3,
+      "description": "Per-key RGB lighting using WS2812B or SK6812 LEDs",
+      "pros": [
+        "Visual customization",
+        "Layer indicators",
+        "Aesthetic appeal"
+      ],
+      "cons": [
+        "Increases power draw",
+        "Adds complexity to PCB design",
+        "More soldering work",
+        "Uses additional pins"
+      ],
+      "requiredTools": ["Soldering iron", "Multimeter"],
+      "pinRequirement": 1
+    },
+    "oled": {
+      "id": "oled",
+      "name": "OLED Display",
+      "price": 4.0,
+      "priceUnit": "per display",
+      "image": "/images/features/oled.jpg",
+      "complexity": 2,
+      "description": "128x32 or 128x64 OLED screen for status display",
+      "pros": [
+        "Layer visualization",
+        "WPM counter",
+        "Custom graphics/logos",
+        "Status information"
+      ],
+      "cons": [
+        "Uses I2C pins",
+        "Requires firmware configuration",
+        "Extra cost"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "pinRequirement": 2
+    },
+    "encoder": {
+      "id": "encoder",
+      "name": "Rotary Encoder (EC11/EC12)",
+      "price": 2.5,
+      "priceUnit": "per encoder",
+      "image": "/images/features/encoder.jpg",
+      "complexity": 2,
+      "description": "Rotary knob for volume, scrolling, etc. Standard EC11 or EC12 type with optional push button",
+      "specs": {
+        "type": "EC11 or EC12 incremental encoder",
+        "mounting": "Through-hole PCB mount",
+        "pulses": "20-24 per revolution typical",
+        "pushButton": "Optional (depends on model)"
+      },
+      "pros": [
+        "Volume control",
+        "Scrolling functionality",
+        "Custom programmable actions per-layer",
+        "Satisfying tactile feedback",
+        "Push button adds extra key functionality",
+        "Can control brightness, zoom, timeline scrubbing"
+      ],
+      "cons": [
+        "Uses 2-3 pins (3-5 with push button)",
+        "Requires PCB cutout design",
+        "Extra soldering",
+        "Knob/cap sold separately (~$2-5)",
+        "Can be accidentally bumped"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "pinRequirement": 3,
+      "variants": [
+        {
+          "name": "EC11 Standard",
+          "description": "Most common, 20mm D-shaft",
+          "price": 2.5
+        },
+        {
+          "name": "EC11 with Push Button",
+          "description": "Includes clickable push button",
+          "price": 3.0
+        },
+        {
+          "name": "EC12 Low Profile",
+          "description": "Shorter height for compact builds",
+          "price": 3.5
+        }
+      ]
+    },
+    "encoder-evqwgd001": {
+      "id": "encoder-evqwgd001",
+      "name": "EVQWGD001 Encoder (Low Profile)",
+      "price": 4.0,
+      "priceUnit": "per encoder",
+      "image": "/images/features/encoder-evqwgd001.jpg",
+      "complexity": 3,
+      "description": "Ultra low-profile encoder, ideal for thin keyboards. Used in high-end products like Apple Magic Keyboard",
+      "specs": {
+        "type": "EVQWGD001 incremental encoder",
+        "mounting": "SMD",
+        "height": "~3.8mm total",
+        "pulses": "24 per revolution",
+        "pushButton": "Yes (integrated)"
+      },
+      "pros": [
+        "Extremely low profile (~4mm height)",
+        "Premium feel and quality",
+        "Integrated push button",
+        "Professional appearance",
+        "Great for portable/slim builds"
+      ],
+      "cons": [
+        "More expensive",
+        "SMD soldering required (more difficult)",
+        "Harder to source",
+        "Special knob/cap needed",
+        "Requires precise PCB footprint"
+      ],
+      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux"],
+      "pinRequirement": 5
+    },
+    "trackball": {
+      "id": "trackball",
+      "name": "Integrated Trackball (PMW3360)",
+      "price": 35.0,
+      "priceUnit": "per module",
+      "image": "/images/features/trackball.jpg",
+      "complexity": 5,
+      "description": "PMW3360 optical sensor with trackball bearing system for precision mouse control",
+      "specs": {
+        "sensor": "PMW3360 or PMW3389",
+        "dpi": "Up to 12,000 DPI",
+        "ballSize": "34mm or 38mm typical",
+        "interface": "SPI"
+      },
+      "pros": [
+        "Integrated pointing device",
+        "No need for separate mouse",
+        "Ergonomic for some workflows",
+        "High precision sensor",
+        "Customizable DPI and sensitivity"
+      ],
+      "cons": [
+        "Very complex to implement",
+        "Uses many pins (SPI: 4-5 pins)",
+        "Requires careful PCB design",
+        "Mechanical challenges (bearings, housing)",
+        "Expensive (~$30-40 for sensor + ball)",
+        "Firmware configuration complex"
+      ],
+      "requiredTools": ["Soldering iron", "3D printer (for housing)", "Multimeter"],
+      "pinRequirement": 5,
+      "note": "Requires 3D-printed trackball housing and ceramic/ruby bearings"
+    },
+    "trackball-adns9800": {
+      "id": "trackball-adns9800",
+      "name": "Budget Trackball (ADNS-9800)",
+      "price": 18.0,
+      "priceUnit": "per module",
+      "image": "/images/features/trackball-adns.jpg",
+      "complexity": 5,
+      "description": "Lower-cost optical sensor option for trackball integration",
+      "specs": {
+        "sensor": "ADNS-9800",
+        "dpi": "Up to 8,200 DPI",
+        "ballSize": "34mm typical",
+        "interface": "SPI"
+      },
+      "pros": [
+        "Cheaper than PMW3360",
+        "Still high quality sensor",
+        "Easier to source on AliExpress",
+        "Integrated pointing device"
+      ],
+      "cons": [
+        "Lower max DPI than PMW3360",
+        "Complex implementation",
+        "SPI interface uses 4-5 pins",
+        "Requires 3D-printed housing",
+        "Firmware support may be limited"
+      ],
+      "requiredTools": ["Soldering iron", "3D printer", "Multimeter"],
+      "pinRequirement": 5
+    },
+    "trackpoint": {
+      "id": "trackpoint",
+      "name": "TrackPoint Pointing Stick",
+      "price": 15.0,
+      "priceUnit": "per module",
+      "image": "/images/features/trackpoint.jpg",
+      "complexity": 4,
+      "description": "IBM-style pointing stick (the red nub). Pressure-sensitive isometric joystick for cursor control",
+      "specs": {
+        "type": "Strain gauge pointing stick",
+        "interface": "I2C or analog (depends on module)",
+        "size": "5-7mm nub diameter",
+        "force": "30-100g actuation"
+      },
+      "pros": [
+        "Very compact - minimal space needed",
+        "No moving parts to maintain",
+        "Iconic ThinkPad-style input",
+        "Hands stay on home row",
+        "Can be placed between keys",
+        "Lower profile than trackball"
+      ],
+      "cons": [
+        "Steep learning curve",
+        "Less precise than trackball/mouse",
+        "Requires firmware support (QMK has it)",
+        "Sourcing genuine modules can be expensive",
+        "Needs calibration",
+        "Uses 2-4 pins depending on type"
+      ],
+      "requiredTools": ["Soldering iron", "Multimeter"],
+      "pinRequirement": 3,
+      "note": "Can salvage from old ThinkPad keyboards or buy clone modules"
+    },
+    "cirque-trackpad": {
+      "id": "cirque-trackpad",
+      "name": "Cirque Trackpad (Mini)",
+      "price": 25.0,
+      "priceUnit": "per module",
+      "image": "/images/features/cirque-trackpad.jpg",
+      "complexity": 3,
+      "description": "Small circular trackpad module. Multi-touch capable with excellent QMK support",
+      "specs": {
+        "type": "Capacitive touchpad",
+        "diameter": "35mm or 40mm",
+        "interface": "I2C or SPI",
+        "resolution": "Up to 1024 steps",
+        "multiTouch": "Yes (2-finger gestures)"
+      },
+      "pros": [
+        "Compact circular design",
+        "Excellent QMK firmware support",
+        "Multi-touch gestures (scroll, zoom)",
+        "Easy to integrate (I2C)",
+        "Thin profile (~2mm)",
+        "No mechanical parts to wear out",
+        "Curved overlay available"
+      ],
+      "cons": [
+        "Less precise than trackball for some users",
+        "Touchpad can be finicky",
+        "Expensive",
+        "Requires case cutout",
+        "Uses 2 pins (I2C)"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "pinRequirement": 2,
+      "note": "This is the 'mini circle mouse pad thing' - very popular in custom keyboards"
+    },
+    "analog-thumbstick": {
+      "id": "analog-thumbstick",
+      "name": "Analog Thumb Joystick",
+      "price": 3.0,
+      "priceUnit": "per joystick",
+      "image": "/images/features/thumbstick.jpg",
+      "complexity": 3,
+      "description": "PlayStation/Xbox-style analog thumbstick for gaming keyboards. Dual-axis analog input",
+      "specs": {
+        "type": "Dual-axis potentiometer joystick",
+        "size": "PSP-style or Switch-style",
+        "interface": "2x analog inputs + 1 button",
+        "range": "0-1023 per axis (10-bit ADC)"
+      },
+      "pros": [
+        "Familiar gaming input",
+        "Great for WASD replacement in games",
+        "Analog movement (not just on/off)",
+        "Includes clickable button",
+        "Fun for creative workflows (brush size, zoom)",
+        "Cheap and widely available"
+      ],
+      "cons": [
+        "Requires ADC (analog-to-digital) pins",
+        "Not all MCUs have enough ADC pins",
+        "Firmware support varies (QMK analog support improving)",
+        "Takes significant thumb cluster space",
+        "Joystick caps can break over time",
+        "Calibration drift over time"
+      ],
+      "requiredTools": ["Soldering iron"],
+      "pinRequirement": 3,
+      "note": "Requires controller with ADC pins (RP2040 has 4, Pro Micro has 4)"
+    }
+  },
+  "connectivity": {
+    "trrs": {
+      "id": "trrs",
+      "name": "TRRS Cable (Wired)",
+      "price": 5.0,
+      "image": "/images/connectivity/trrs.jpg",
+      "complexity": 1,
+      "description": "3.5mm TRRS cable for wired split connection",
+      "pros": [
+        "Simple and reliable",
+        "No battery needed",
+        "Low latency",
+        "Cheap"
+      ],
+      "cons": [
+        "Cable management",
+        "Less portable"
+      ],
+      "compatibleWith": ["qmk", "vial", "kmk"]
+    },
+    "wireless": {
+      "id": "wireless",
+      "name": "Wireless Bluetooth",
+      "price": 40.0,
+      "image": "/images/connectivity/wireless.jpg",
+      "complexity": 4,
+      "description": "Bluetooth wireless connection between halves",
+      "pros": [
+        "No cables",
+        "Very portable",
+        "Clean desk setup"
+      ],
+      "cons": [
+        "Battery management",
+        "Potential latency",
+        "More expensive",
+        "Requires ZMK firmware",
+        "Charging routine needed"
+      ],
+      "compatibleWith": ["zmk"],
+      "incompatibleWith": ["qmk", "vial", "kmk"],
+      "requiredComponents": ["nice-nano", "battery", "power-switch"]
+    }
+  },
+  "firmware": {
+    "qmk": {
+      "id": "qmk",
+      "name": "QMK Firmware",
+      "complexity": 2,
+      "image": "/images/firmware/qmk.jpg",
+      "description": "Open-source keyboard firmware with extensive features",
+      "pros": [
+        "Most feature-rich",
+        "Huge community",
+        "Extensive documentation",
+        "Supports most controllers"
+      ],
+      "cons": [
+        "Requires compiling firmware",
+        "Command line knowledge helpful",
+        "No GUI configurator"
+      ],
+      "compatibleWith": ["pro-micro", "elite-c", "rp2040"],
+      "incompatibleWith": ["nice-nano", "wireless"]
+    },
+    "vial": {
+      "id": "vial",
+      "name": "Vial (QMK + GUI)",
+      "complexity": 1,
+      "image": "/images/firmware/vial.jpg",
+      "description": "QMK fork with real-time GUI configuration",
+      "pros": [
+        "GUI configurator (no compiling)",
+        "Real-time keymap editing",
+        "QMK feature compatibility",
+        "Beginner friendly"
+      ],
+      "cons": [
+        "Smaller community than QMK",
+        "Slightly behind QMK in features",
+        "Requires Vial-specific firmware"
+      ],
+      "compatibleWith": ["pro-micro", "elite-c", "rp2040"],
+      "incompatibleWith": ["nice-nano", "wireless"]
+    },
+    "kmk": {
+      "id": "kmk",
+      "name": "KMK Firmware",
+      "complexity": 2,
+      "image": "/images/firmware/kmk.jpg",
+      "description": "CircuitPython-based firmware written in Python",
+      "pros": [
+        "Written in Python (easy to understand)",
+        "Live editing without compilation",
+        "Great for learning and experimentation",
+        "Active community"
+      ],
+      "cons": [
+        "Requires CircuitPython-compatible board",
+        "Fewer features than QMK",
+        "Slightly higher latency than compiled firmware",
+        "Best suited for RP2040 boards"
+      ],
+      "compatibleWith": ["rp2040"],
+      "incompatibleWith": ["pro-micro", "elite-c", "nice-nano", "wireless"]
+    },
+    "zmk": {
+      "id": "zmk",
+      "name": "ZMK Firmware",
+      "complexity": 3,
+      "image": "/images/firmware/zmk.jpg",
+      "description": "Modern firmware designed for wireless keyboards",
+      "pros": [
+        "Wireless Bluetooth support",
+        "Low power consumption",
+        "Modern architecture",
+        "GitHub Actions build"
+      ],
+      "cons": [
+        "Smaller community",
+        "Fewer features than QMK",
+        "Requires GitHub for configuration",
+        "No wired-only support"
+      ],
+      "compatibleWith": ["nice-nano", "wireless"],
+      "incompatibleWith": ["pro-micro", "elite-c"]
+    }
+  }
+}

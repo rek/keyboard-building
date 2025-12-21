@@ -1,0 +1,30 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+
+  <!-- Switch Housing -->
+  <rect x="275" y="150" width="250" height="250" fill="#333333" rx="10"/>
+
+  <!-- Top Housing -->
+  <rect x="285" y="160" width="230" height="100" fill="#4a4a4a" rx="8"/>
+
+  <!-- LED Window -->
+  <circle cx="400" cy="210" r="20" fill="#1a1a1a" opacity="0.5"/>
+
+  <!-- Stem (Cross) -->
+  <rect x="390" y="180" width="20" height="50" fill="#e74c3c" rx="2"/>
+  <rect x="380" y="200" width="40" height="20" fill="#e74c3c" rx="2"/>
+
+  <!-- Bottom Housing -->
+  <rect x="285" y="260" width="230" height="130" fill="#2c2c2c" rx="8"/>
+
+  <!-- Pins -->
+  <g fill="#d4af37">
+    <rect x="360" y="390" width="10" height="40" rx="1"/>
+    <rect x="430" y="390" width="10" height="40" rx="1"/>
+  </g>
+
+  <!-- Label -->
+  <text x="400" y="480" text-anchor="middle" fill="#333333" font-family="Arial, sans-serif" font-size="28" font-weight="bold">Cherry MX Switch</text>
+  <text x="400" y="510" text-anchor="middle" fill="#666666" font-family="Arial, sans-serif" font-size="16">Mechanical Key Switch (MX Compatible)</text>
+</svg>
