@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Skill(frontend-design)",
-      "Bash(npm run build:gh-pages:*)"
+      "Bash(npm run build:gh-pages:*)",
+      "Bash(npm run dev:*)"
     ]
   }
 }
