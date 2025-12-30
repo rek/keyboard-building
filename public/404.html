@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Split Keyboard Builder</title>
+    <script>
+      // GitHub Pages SPA redirect hack
+      // This script takes the current URL and redirects to the index page
+      // with the full path encoded in the hash, which is then decoded by
+      // the main app to handle client-side routing
+      (function() {
+        var pathSegmentsToKeep = 1; // /keyboard-building/ = 1 segment
+        var location = window.location;
+
+        // Store the path and query in sessionStorage
+        sessionStorage.setItem(
+          'redirect',
+          location.pathname.slice(0, location.pathname.lastIndexOf('/') + 1)
+          + location.pathname.substring(location.pathname.lastIndexOf('/'))
+        );
+        sessionStorage.setItem('redirectSearch', location.search || '');
+
+        // Redirect to the index page
+        location.replace(
+          location.pathname.split('/').slice(0, pathSegmentsToKeep + 1).join('/') +
+          '/?redirect=' +
+          encodeURIComponent(location.pathname + location.search)
+        );
+      })();
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

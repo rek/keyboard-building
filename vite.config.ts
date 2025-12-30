@@ -6,19 +6,27 @@ import viteTsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
 
+const isGitHubPages = process.env.GITHUB_PAGES === "true";
+
 const config = defineConfig({
-  base: process.env.GITHUB_PAGES ? "/keyboard-building/" : "/",
+  base: isGitHubPages ? "/keyboard-building/" : "/",
+  build: isGitHubPages ? {
+    outDir: "dist",
+    emptyOutDir: true,
+  } : undefined,
   plugins: [
-    devtools(),
-    nitro(),
+    !isGitHubPages && devtools(),
+    !isGitHubPages && nitro(),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
     tailwindcss(),
-    tanstackStart(),
+    !isGitHubPages && tanstackStart({
+      autoCodeSplitting: true,
+    }),
     viteReact(),
-  ],
+  ].filter(Boolean),
 });
 
 export default config;
