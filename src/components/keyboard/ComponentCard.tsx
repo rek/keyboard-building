@@ -1,6 +1,7 @@
-import React from 'react';
-import { useCurrency } from '../../contexts/CurrencyContext';
-import { useAppSettings } from '../../contexts/AppSettingsContext';
+import { useState } from "react";
+import { useCurrency } from "../../contexts/CurrencyContext";
+import { useAppSettings } from "../../contexts/AppSettingsContext";
+import { ImageModal } from "../common/ImageModal";
 
 interface ComponentCardProps {
   component: {
@@ -20,44 +21,112 @@ interface ComponentCardProps {
   onClick?: () => void;
 }
 
-export function ComponentCard({ component, category, onClick }: ComponentCardProps) {
+export function ComponentCard({
+  component,
+  category,
+  onClick,
+}: ComponentCardProps) {
   const { formatCurrency } = useCurrency();
   const { settings } = useAppSettings();
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow cursor-pointer overflow-hidden"
+      className="cursor-pointer overflow-hidden transition-all tech-card group"
+      style={{
+        border: "3px solid var(--color-border)",
+        background: "var(--color-bg-secondary)",
+      }}
     >
       {/* Image */}
-      <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center overflow-hidden">
+      <div
+        className="w-full h-48 flex items-center justify-center overflow-hidden relative group/image"
+        style={{
+          background: "var(--color-bg-primary)",
+          borderBottom: "3px solid var(--color-border)",
+        }}
+      >
         {component.image ? (
-          <img
-            src={component.image}
-            alt={component.name}
-            className="w-full h-full object-contain"
-          />
+          <div
+            className="w-full h-full relative cursor-zoom-in"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsImageModalOpen(true);
+            }}
+          >
+            <img
+              src={component.image}
+              alt={component.name}
+              className="w-full h-full object-contain p-4 transition-transform group-hover/image:scale-105"
+            />
+            {/* Zoom indicator */}
+            <div
+              className="absolute bottom-2 right-2 px-2 py-1 text-xs font-bold tracking-wider opacity-0 group-hover/image:opacity-100 transition-opacity"
+              style={{
+                background: "var(--color-accent-orange)",
+                color: "white",
+                fontFamily: "var(--font-display)",
+              }}
+            >
+              🔍 CLICK TO ENLARGE
+            </div>
+          </div>
         ) : (
-          <span className="text-gray-400">Component Image</span>
+          <span
+            className="font-bold text-xs tracking-widest"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            [IMG_PLACEHOLDER]
+          </span>
         )}
+        {/* Category badge */}
+        <div
+          className="absolute top-2 right-2 px-2 py-1 text-xs font-bold tracking-wider"
+          style={{
+            background: "var(--color-accent-teal)",
+            color: "white",
+            fontFamily: "var(--font-display)",
+          }}
+        >
+          {category.toUpperCase()}
+        </div>
       </div>
 
       {/* Content */}
       <div className="p-4">
         {/* Header */}
-        <div className="mb-3">
-          <div className="flex items-start justify-between mb-1">
-            <h3 className="font-bold text-gray-900 text-lg">{component.name}</h3>
-            <span className="text-sm text-gray-500 uppercase">{category}</span>
-          </div>
+        <div className="mb-4">
+          <h3
+            className="font-bold text-base mb-2"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-primary)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            {component.name.toUpperCase()}
+          </h3>
 
           {/* Price */}
           {settings.showPricing && (
-            <div className="text-blue-600 font-semibold text-xl">
+            <div
+              className="font-bold text-lg"
+              style={{
+                color: "var(--color-accent-orange)",
+                fontFamily: "var(--font-display)",
+              }}
+            >
               {formatCurrency(component.price)}
               {component.priceUnit && (
-                <span className="text-sm text-gray-500 ml-1">
-                  {component.priceUnit}
+                <span
+                  className="text-xs ml-1"
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
+                  /{component.priceUnit}
                 </span>
               )}
             </div>
@@ -65,15 +134,28 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
         </div>
 
         {/* Complexity */}
-        <div className="mb-3">
-          <div className="text-xs text-gray-600 mb-1">Complexity</div>
+        <div className="mb-4">
+          <div
+            className="text-xs mb-2 font-bold tracking-wide"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            COMPLEXITY
+          </div>
           <div className="flex items-center gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <div
                 key={i}
-                className={`w-3 h-3 rounded-full ${
-                  i < component.complexity ? 'bg-orange-500' : 'bg-gray-300'
-                }`}
+                className="w-4 h-4 border-2 transition-colors"
+                style={{
+                  borderColor: "var(--color-border)",
+                  background:
+                    i < component.complexity
+                      ? "var(--color-accent-orange)"
+                      : "transparent",
+                }}
               />
             ))}
           </div>
@@ -81,16 +163,38 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
 
         {/* Specs Preview */}
         {component.specs && (
-          <div className="mb-3 space-y-1">
+          <div
+            className="mb-4 p-3 space-y-1.5"
+            style={{
+              border: "2px solid var(--color-border-light)",
+              background: "var(--color-bg-primary)",
+            }}
+          >
             {Object.entries(component.specs)
               .slice(0, 3)
               .map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between text-xs">
-                  <span className="text-gray-600 capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}:
+                <div
+                  key={key}
+                  className="flex items-center justify-between text-xs"
+                >
+                  <span
+                    className="font-bold tracking-wide"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      color: "var(--color-text-secondary)",
+                    }}
+                  >
+                    {key.replace(/([A-Z])/g, "_$1").toUpperCase()}:
                   </span>
-                  <span className="text-gray-900 font-medium">
-                    {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : String(value)}
+                  <span
+                    className="font-medium"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
+                    {typeof value === "boolean"
+                      ? value
+                        ? "YES"
+                        : "NO"
+                      : String(value).toUpperCase()}
                   </span>
                 </div>
               ))}
@@ -99,12 +203,26 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
 
         {/* Pros (top 2) */}
         {component.pros.length > 0 && (
-          <div className="mb-2">
-            <div className="text-xs font-semibold text-green-700 mb-1">Pros</div>
-            <ul className="space-y-1">
+          <div className="mb-3">
+            <div
+              className="text-xs font-bold mb-2 tracking-wide"
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "var(--color-accent-teal)",
+              }}
+            >
+              [+] PROS
+            </div>
+            <ul className="space-y-1.5">
               {component.pros.slice(0, 2).map((pro, index) => (
-                <li key={index} className="flex items-start gap-1 text-xs text-gray-700">
-                  <span className="text-green-600 mt-0.5">+</span>
+                <li
+                  key={index}
+                  className="flex items-start gap-2 text-xs pl-3"
+                  style={{
+                    borderLeft: "2px solid var(--color-accent-teal)",
+                    color: "var(--color-text-secondary)",
+                  }}
+                >
                   <span>{pro}</span>
                 </li>
               ))}
@@ -114,12 +232,26 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
 
         {/* Cons (top 2) */}
         {component.cons.length > 0 && (
-          <div className="mb-3">
-            <div className="text-xs font-semibold text-red-700 mb-1">Cons</div>
-            <ul className="space-y-1">
+          <div className="mb-4">
+            <div
+              className="text-xs font-bold mb-2 tracking-wide"
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "var(--color-accent-orange)",
+              }}
+            >
+              [-] CONS
+            </div>
+            <ul className="space-y-1.5">
               {component.cons.slice(0, 2).map((con, index) => (
-                <li key={index} className="flex items-start gap-1 text-xs text-gray-700">
-                  <span className="text-red-600 mt-0.5">−</span>
+                <li
+                  key={index}
+                  className="flex items-start gap-2 text-xs pl-3"
+                  style={{
+                    borderLeft: "2px solid var(--color-accent-orange)",
+                    color: "var(--color-text-secondary)",
+                  }}
+                >
                   <span>{con}</span>
                 </li>
               ))}
@@ -129,26 +261,50 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
 
         {/* Compatibility Tags */}
         {(component.compatibleWith || component.incompatibleWith) && (
-          <div className="flex flex-wrap gap-1 pt-2 border-t border-gray-200">
+          <div
+            className="flex flex-wrap gap-2 pt-3"
+            style={{ borderTop: "2px solid var(--color-border-light)" }}
+          >
             {component.compatibleWith?.slice(0, 3).map((item) => (
               <span
                 key={item}
-                className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs"
+                className="px-2 py-1 text-xs font-bold tracking-wide"
+                style={{
+                  border: "2px solid var(--color-accent-teal)",
+                  background: "transparent",
+                  color: "var(--color-accent-teal)",
+                  fontFamily: "var(--font-display)",
+                }}
               >
-                {item}
+                {item.toUpperCase()}
               </span>
             ))}
             {component.incompatibleWith?.slice(0, 2).map((item) => (
               <span
                 key={item}
-                className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs line-through"
+                className="px-2 py-1 text-xs font-bold tracking-wide line-through opacity-50"
+                style={{
+                  border: "2px solid var(--color-border-light)",
+                  background: "transparent",
+                  color: "var(--color-text-secondary)",
+                  fontFamily: "var(--font-display)",
+                }}
               >
-                {item}
+                {item.toUpperCase()}
               </span>
             ))}
           </div>
         )}
       </div>
+
+      {/* Image Modal */}
+      {isImageModalOpen && component.image && (
+        <ImageModal
+          src={component.image}
+          alt={component.name}
+          onClose={() => setIsImageModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

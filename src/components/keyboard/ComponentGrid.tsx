@@ -3,7 +3,7 @@ import { ComponentCard } from './ComponentCard';
 import componentsData from '../../data/components.json';
 import categoryInfo from '../../data/category-info.json';
 
-type ComponentCategory = 'controllers' | 'switches' | 'features' | 'connectivity' | 'firmware';
+type ComponentCategory = 'controllers' | 'switches' | 'features' | 'connectivity' | 'firmware' | 'electronics';
 
 export function ComponentGrid() {
   const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>('controllers');
@@ -15,6 +15,7 @@ export function ComponentGrid() {
     { id: 'features', label: 'Features' },
     { id: 'connectivity', label: 'Connectivity' },
     { id: 'firmware', label: 'Firmware' },
+    { id: 'electronics', label: 'Electronics' },
   ];
 
   const getComponents = (category: ComponentCategory) => {
@@ -35,69 +36,115 @@ export function ComponentGrid() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
-          Component Encyclopedia
-        </h1>
-        <p className="text-gray-600">
-          Browse and learn about all the components you'll need for your split keyboard build.
-        </p>
-      </div>
-
       {/* Search */}
       <div className="mb-6">
         <input
           type="text"
-          placeholder="Search components..."
+          placeholder="SEARCH_COMPONENTS..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 transition-all focus:outline-none"
+          style={{
+            border: '3px solid var(--color-border)',
+            background: 'var(--color-bg-secondary)',
+            color: 'var(--color-text-primary)',
+            fontFamily: 'var(--font-display)',
+            fontSize: '0.875rem',
+            letterSpacing: '0.05em'
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = 'var(--color-accent-orange)';
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = 'var(--color-border)';
+          }}
         />
       </div>
 
       {/* Category Tabs */}
-      <div className="mb-8 flex flex-wrap gap-2">
+      <div className="mb-8 flex flex-wrap gap-3">
         {categories.map((category) => (
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              selectedCategory === category.id
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+            className="px-6 py-3 font-bold transition-all border-2 text-sm tracking-wide"
+            style={{
+              fontFamily: 'var(--font-display)',
+              borderColor: selectedCategory === category.id ? 'var(--color-accent-orange)' : 'var(--color-border)',
+              background: selectedCategory === category.id ? 'var(--color-accent-orange)' : 'transparent',
+              color: selectedCategory === category.id ? 'white' : 'var(--color-text-primary)',
+            }}
           >
-            {category.label}
+            {category.label.toUpperCase()}
           </button>
         ))}
       </div>
 
       {/* Category Introduction */}
       {currentCategoryInfo && (
-        <div className="mb-8 bg-white rounded-lg shadow-md p-6">
+        <div
+          className="mb-8 p-6 md:p-8"
+          style={{
+            border: '3px solid var(--color-border)',
+            background: 'var(--color-bg-secondary)'
+          }}
+        >
           {/* Header */}
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">
-              {currentCategoryInfo.title}
+          <div className="mb-6">
+            <h2
+              className="text-2xl md:text-3xl font-bold mb-2"
+              style={{
+                fontFamily: 'var(--font-display)',
+                letterSpacing: '0.02em',
+                color: 'var(--color-text-primary)'
+              }}
+            >
+              {currentCategoryInfo.title.toUpperCase()}
             </h2>
-            <p className="text-blue-600 font-medium italic">
-              {currentCategoryInfo.tagline}
+            <p
+              className="font-medium text-base"
+              style={{
+                color: 'var(--color-accent-orange)',
+                fontFamily: 'var(--font-display)',
+                letterSpacing: '0.03em'
+              }}
+            >
+              // {currentCategoryInfo.tagline}
             </p>
           </div>
 
           {/* Description */}
-          <p className="text-gray-700 mb-4 leading-relaxed">
+          <p
+            className="mb-6 leading-relaxed"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
             {currentCategoryInfo.description}
           </p>
 
           {/* Why It Matters */}
-          <div className="mb-4">
-            <h3 className="font-semibold text-gray-900 mb-2">Why It Matters:</h3>
-            <ul className="space-y-1">
+          <div className="mb-6">
+            <h3
+              className="font-bold mb-3 text-sm tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-primary)'
+              }}
+            >
+              [WHY_IT_MATTERS]
+            </h3>
+            <ul className="space-y-2">
               {currentCategoryInfo.whyItMatters.map((point, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5">•</span>
+                <li
+                  key={index}
+                  className="flex items-start gap-3 text-sm pl-4"
+                  style={{
+                    borderLeft: '2px solid var(--color-accent-teal)',
+                    color: 'var(--color-text-secondary)'
+                  }}
+                >
+                  <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
+                    [{String(index + 1).padStart(2, '0')}]
+                  </span>
                   <span>{point}</span>
                 </li>
               ))}
@@ -105,15 +152,36 @@ export function ComponentGrid() {
           </div>
 
           {/* Key Tradeoffs */}
-          <div className="mb-4">
-            <h3 className="font-semibold text-gray-900 mb-3">Key Trade-offs:</h3>
+          <div className="mb-6">
+            <h3
+              className="font-bold mb-3 text-sm tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-primary)'
+              }}
+            >
+              [KEY_TRADEOFFS]
+            </h3>
             <div className="space-y-3">
               {currentCategoryInfo.keyTradeoffs.map((tradeoff, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-3">
-                  <h4 className="font-medium text-gray-900 text-sm mb-1">
-                    {tradeoff.factor}
+                <div
+                  key={index}
+                  className="p-4"
+                  style={{
+                    border: '2px solid var(--color-border-light)',
+                    background: 'var(--color-bg-primary)'
+                  }}
+                >
+                  <h4
+                    className="font-bold text-sm mb-2 tracking-wide"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      color: 'var(--color-text-primary)'
+                    }}
+                  >
+                    {tradeoff.factor.toUpperCase()}
                   </h4>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
                     {tradeoff.description}
                   </p>
                 </div>
@@ -123,11 +191,31 @@ export function ComponentGrid() {
 
           {/* Quick Tips */}
           <div>
-            <h3 className="font-semibold text-gray-900 mb-2">Quick Tips:</h3>
-            <ul className="space-y-1">
+            <h3
+              className="font-bold mb-3 text-sm tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-primary)'
+              }}
+            >
+              [QUICK_TIPS]
+            </h3>
+            <ul className="space-y-2">
               {currentCategoryInfo.quickTips.map((tip, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-green-600 mt-0.5">✓</span>
+                <li
+                  key={index}
+                  className="flex items-start gap-3 text-sm"
+                  style={{ color: 'var(--color-text-secondary)' }}
+                >
+                  <span
+                    className="font-bold mt-0.5"
+                    style={{
+                      color: 'var(--color-accent-orange)',
+                      fontFamily: 'var(--font-display)'
+                    }}
+                  >
+                    &gt;
+                  </span>
                   <span>{tip}</span>
                 </li>
               ))}
@@ -148,8 +236,22 @@ export function ComponentGrid() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12">
-          <p className="text-gray-500">No components found matching your search.</p>
+        <div
+          className="text-center py-12 px-6"
+          style={{
+            border: '3px solid var(--color-border)',
+            background: 'var(--color-bg-secondary)'
+          }}
+        >
+          <p
+            className="font-bold tracking-wide"
+            style={{
+              fontFamily: 'var(--font-display)',
+              color: 'var(--color-text-secondary)'
+            }}
+          >
+            [NO_RESULTS_FOUND]
+          </p>
         </div>
       )}
     </div>

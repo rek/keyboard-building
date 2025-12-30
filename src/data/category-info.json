@@ -161,6 +161,38 @@
       "ZMK has excellent wireless support but different workflow than QMK"
     ]
   },
+  "electronics": {
+    "title": "Electronics & Wiring",
+    "tagline": "The nervous system of your keyboard",
+    "description": "Hand-wired builds require careful selection of wire, diodes, and connectors. Even PCB builds may need cables for split halves, LEDs, or additional features. Quality electronics ensure reliable connections and easier troubleshooting.",
+    "whyItMatters": [
+      "Wire gauge affects flexibility, current capacity, and ease of soldering",
+      "Diode type impacts keypress reliability and troubleshooting difficulty",
+      "Proper connectors prevent intermittent failures between split halves",
+      "Good solder makes joints stronger and prevents cold joints that fail over time"
+    ],
+    "keyTradeoffs": [
+      {
+        "factor": "Wire Type (Stranded vs Solid)",
+        "description": "Stranded is flexible but harder to strip/tin. Solid-core is rigid but perfect for point-to-point. Use stranded for movement areas, solid for fixed connections."
+      },
+      {
+        "factor": "Diode Form Factor",
+        "description": "Through-hole is beginner-friendly but takes more space. SMD is compact but requires precision soldering. Pre-soldered strips save time but limit flexibility."
+      },
+      {
+        "factor": "Solder Lead Content",
+        "description": "Leaded (63/37) melts easier and creates shiny joints. Lead-free is safer but requires higher temps and more skill. Consider ventilation either way."
+      }
+    ],
+    "quickTips": [
+      "Buy 2x the diodes you need - they're cheap and easy to lose",
+      "Use different wire colors for rows vs columns to simplify debugging",
+      "Pre-tin wire ends before soldering for stronger connections",
+      "Test TRRS cables with a multimeter before final assembly",
+      "Keep heat shrink on hand for covering exposed solder joints"
+    ]
+  },
   "firmware": {
     "title": "Firmware",
     "tagline": "The software that makes it all work",

@@ -18,33 +18,41 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
 
   return (
     <div
-      className={`border-2 rounded-lg p-5 transition-all ${
-        isComplete
-          ? 'border-green-300 bg-green-50'
-          : 'border-gray-200 bg-white hover:border-gray-300'
-      }`}
+      className="border-2 p-5 transition-all"
+      style={{
+        borderColor: isComplete
+          ? 'var(--color-accent-teal)'
+          : 'var(--color-border)',
+        background: isComplete
+          ? 'var(--color-bg-primary)'
+          : 'var(--color-bg-secondary)'
+      }}
     >
       {/* Step Header */}
       <div className="flex items-start gap-4 mb-3">
         {/* Checkbox */}
         <button
           onClick={onToggleComplete}
-          className={`mt-1 w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${
-            isComplete
-              ? 'bg-green-500 border-green-500'
-              : 'border-gray-300 hover:border-green-500'
-          }`}
+          className="mt-1 w-6 h-6 border-2 flex items-center justify-center transition-colors"
+          style={{
+            borderColor: isComplete
+              ? 'var(--color-accent-teal)'
+              : 'var(--color-border)',
+            background: isComplete
+              ? 'var(--color-accent-teal)'
+              : 'transparent'
+          }}
         >
           {isComplete && (
             <svg
-              className="w-4 h-4 text-white"
+              className="w-4 h-4"
               fill="none"
-              stroke="currentColor"
+              stroke="white"
               viewBox="0 0 24 24"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                strokeLinecap="square"
+                strokeLinejoin="miter"
                 strokeWidth={3}
                 d="M5 13l4 4L19 7"
               />
@@ -54,12 +62,26 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
 
         {/* Step Title and Description */}
         <div className="flex-1">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">
-            {step.title}
+          <h3
+            className="text-lg font-bold mb-1"
+            style={{
+              fontFamily: 'var(--font-display)',
+              color: 'var(--color-text-primary)'
+            }}
+          >
+            {step.title.toUpperCase()}
           </h3>
-          <p className="text-sm text-gray-600 mb-2">{step.description}</p>
+          <p className="text-sm mb-2" style={{ color: 'var(--color-text-secondary)' }}>
+            {step.description}
+          </p>
           {step.estimatedTime && (
-            <div className="text-xs text-gray-500">
+            <div
+              className="text-xs font-bold tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-secondary)'
+              }}
+            >
               ⏱️ {step.estimatedTime}
             </div>
           )}
@@ -69,7 +91,11 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
       {/* Step Content */}
       <div className="prose prose-sm max-w-none mb-4 pl-10">
         {step.content.split('\n\n').map((paragraph, idx) => (
-          <p key={idx} className="text-gray-700 mb-2 whitespace-pre-line">
+          <p
+            key={idx}
+            className="mb-2 whitespace-pre-line leading-relaxed"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
             {paragraph}
           </p>
         ))}
@@ -82,9 +108,15 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
             {step.requiredTools?.map((tool, idx) => (
               <span
                 key={idx}
-                className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium"
+                className="px-2 py-1 border-2 text-xs font-bold tracking-wide"
+                style={{
+                  borderColor: 'var(--color-border)',
+                  background: 'var(--color-bg-primary)',
+                  color: 'var(--color-text-secondary)',
+                  fontFamily: 'var(--font-display)'
+                }}
               >
-                🔧 {tool}
+                🔧 {tool.toUpperCase()}
               </span>
             ))}
           </div>
@@ -92,25 +124,41 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
       )}
 
       {/* Warning and Tips Toggles */}
-      <div className="pl-10 space-y-2">
+      <div className="pl-10 space-y-3">
         {/* Warnings */}
         {hasWarnings && (
           <div>
             <button
               onClick={() => setShowWarnings(!showWarnings)}
-              className="flex items-center gap-2 text-sm font-semibold text-yellow-800 hover:text-yellow-900"
+              className="flex items-center gap-2 text-sm font-bold tracking-wide transition-colors"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-accent-orange)'
+              }}
             >
               <span>⚠️</span>
-              <span>Warnings ({step.warnings?.length})</span>
+              <span>[WARNINGS] ({step.warnings?.length})</span>
               <span className="text-xs">
                 {showWarnings ? '▼' : '▶'}
               </span>
             </button>
             {showWarnings && (
-              <ul className="mt-2 ml-6 space-y-1 text-sm bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+              <ul
+                className="mt-2 ml-6 space-y-2 text-sm p-3 border-l-4"
+                style={{
+                  borderColor: 'var(--color-accent-orange)',
+                  background: 'var(--color-bg-primary)'
+                }}
+              >
                 {step.warnings?.map((warning, idx) => (
-                  <li key={idx} className="text-yellow-900">
-                    • {warning}
+                  <li
+                    key={idx}
+                    style={{ color: 'var(--color-text-secondary)' }}
+                  >
+                    <span className="font-bold" style={{ color: 'var(--color-accent-orange)' }}>
+                      &gt;
+                    </span>{' '}
+                    {warning}
                   </li>
                 ))}
               </ul>
@@ -123,19 +171,35 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
           <div>
             <button
               onClick={() => setShowTips(!showTips)}
-              className="flex items-center gap-2 text-sm font-semibold text-blue-800 hover:text-blue-900"
+              className="flex items-center gap-2 text-sm font-bold tracking-wide transition-colors"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-accent-teal)'
+              }}
             >
               <span>💡</span>
-              <span>Pro Tips ({step.tips?.length})</span>
+              <span>[PRO_TIPS] ({step.tips?.length})</span>
               <span className="text-xs">
                 {showTips ? '▼' : '▶'}
               </span>
             </button>
             {showTips && (
-              <ul className="mt-2 ml-6 space-y-1 text-sm bg-blue-50 border-l-4 border-blue-400 p-3 rounded">
+              <ul
+                className="mt-2 ml-6 space-y-2 text-sm p-3 border-l-4"
+                style={{
+                  borderColor: 'var(--color-accent-teal)',
+                  background: 'var(--color-bg-primary)'
+                }}
+              >
                 {step.tips?.map((tip, idx) => (
-                  <li key={idx} className="text-blue-900">
-                    • {tip}
+                  <li
+                    key={idx}
+                    style={{ color: 'var(--color-text-secondary)' }}
+                  >
+                    <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
+                      &gt;
+                    </span>{' '}
+                    {tip}
                   </li>
                 ))}
               </ul>
@@ -145,9 +209,18 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
 
         {/* External Links */}
         {hasLinks && (
-          <div className="mt-3 pt-3 border-t border-gray-200">
-            <div className="text-sm font-semibold text-gray-700 mb-2">
-              🔗 External Resources
+          <div
+            className="mt-3 pt-3"
+            style={{ borderTop: '2px solid var(--color-border-light)' }}
+          >
+            <div
+              className="text-sm font-bold mb-3 tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-primary)'
+              }}
+            >
+              🔗 [EXTERNAL_RESOURCES]
             </div>
             <div className="space-y-2">
               {step.externalLinks?.map((link, idx) => (
@@ -156,20 +229,38 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block p-2 bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 transition-colors"
+                  className="block p-3 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                  style={{
+                    borderColor: 'var(--color-border)',
+                    background: 'var(--color-bg-primary)'
+                  }}
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-medium text-blue-600 text-sm">
-                        {link.title}
-                        <span className="ml-1 text-xs text-gray-500">↗</span>
+                      <div
+                        className="font-bold text-sm mb-1"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          color: 'var(--color-accent-teal)'
+                        }}
+                      >
+                        {link.title.toUpperCase()}
+                        <span className="ml-1 text-xs">↗</span>
                       </div>
-                      <div className="text-xs text-gray-600">
+                      <div className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
                         {link.description}
                       </div>
                     </div>
-                    <span className="text-xs text-gray-500 px-2 py-1 bg-white rounded border border-gray-200">
-                      {link.type}
+                    <span
+                      className="text-xs px-2 py-1 border-2 font-bold tracking-wide"
+                      style={{
+                        borderColor: 'var(--color-border)',
+                        background: 'var(--color-bg-secondary)',
+                        color: 'var(--color-text-secondary)',
+                        fontFamily: 'var(--font-display)'
+                      }}
+                    >
+                      {link.type.toUpperCase()}
                     </span>
                   </div>
                 </a>

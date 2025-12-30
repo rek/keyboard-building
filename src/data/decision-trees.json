@@ -305,7 +305,29 @@
             "Cable between halves (cable management)",
             "No battery needed",
             "Zero latency",
-            "Simplest and most reliable option"
+            "Simplest and most reliable option",
+            "Requires TRRS jacks on both halves"
+          ]
+        },
+        {
+          "id": "usbc-wired",
+          "name": "USB-C Cable (Wired)",
+          "shortDesc": "Modern USB-C cable for inter-half connection",
+          "image": "/images/connectivity/usbc.jpg",
+          "costDelta": 8,
+          "complexityDelta": 2,
+          "timeHours": 1,
+          "skillLevel": "Intermediate",
+          "requiredTools": [
+            "Soldering iron"
+          ],
+          "downstreamEffects": [
+            "Reversible USB-C connectors",
+            "No battery needed",
+            "Zero latency",
+            "More durable than TRRS",
+            "Can be hot-pluggable with proper firmware",
+            "Requires USB-C connectors on both halves"
           ]
         },
         {

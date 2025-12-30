@@ -1,15 +1,19 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+export type Theme = 'light' | 'dark' | 'blueprint';
+
 export interface AppSettings {
   showPricing: boolean;      // Hide all currency/cost displays
   showVendors: boolean;       // Hide vendor/order links
   learningMode: boolean;      // Quick toggle for both (learning = no pricing/vendors)
+  theme: Theme;               // Visual theme
 }
 
 interface AppSettingsContextType {
   settings: AppSettings;
   updateSetting: <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => void;
   setLearningMode: (enabled: boolean) => void;
+  setTheme: (theme: Theme) => void;
 }
 
 const AppSettingsContext = createContext<AppSettingsContextType | undefined>(undefined);
@@ -18,6 +22,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   showPricing: true,
   showVendors: true,
   learningMode: false,
+  theme: 'light',
 };
 
 export function AppSettingsProvider({ children }: { children: ReactNode }) {
@@ -63,8 +68,22 @@ export function AppSettingsProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const setTheme = (theme: Theme) => {
+    setSettings(prev => ({ ...prev, theme }));
+  };
+
+  // Apply theme to document element
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.documentElement.setAttribute(
+        'data-theme',
+        settings.theme === 'light' ? '' : settings.theme
+      );
+    }
+  }, [settings.theme]);
+
   return (
-    <AppSettingsContext.Provider value={{ settings, updateSetting, setLearningMode }}>
+    <AppSettingsContext.Provider value={{ settings, updateSetting, setLearningMode, setTheme }}>
       {children}
     </AppSettingsContext.Provider>
   );

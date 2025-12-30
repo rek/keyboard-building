@@ -20,77 +20,118 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
   const isPhaseComplete = progress.isPhaseComplete(stepIds);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div
+      style={{
+        border: '3px solid var(--color-border)',
+        background: 'var(--color-bg-secondary)'
+      }}
+    >
       {/* Phase Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+        className="w-full px-6 py-4 flex items-center justify-between transition-colors"
+        style={{ background: 'transparent' }}
+        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-primary)'}
+        onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
       >
         <div className="flex items-center gap-4">
           {/* Phase Icon/Number */}
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
-              isPhaseComplete
-                ? 'bg-green-500'
+            className="w-10 h-10 border-2 flex items-center justify-center font-bold"
+            style={{
+              borderColor: isPhaseComplete
+                ? 'var(--color-accent-teal)'
                 : phaseProgress > 0
-                ? 'bg-blue-500'
-                : 'bg-gray-400'
-            }`}
+                ? 'var(--color-accent-orange)'
+                : 'var(--color-border)',
+              background: isPhaseComplete
+                ? 'var(--color-accent-teal)'
+                : phaseProgress > 0
+                ? 'var(--color-accent-orange)'
+                : 'transparent',
+              color: isPhaseComplete || phaseProgress > 0
+                ? 'white'
+                : 'var(--color-text-secondary)',
+              fontFamily: 'var(--font-display)'
+            }}
           >
-            {isPhaseComplete ? '✓' : phase.order}
+            {isPhaseComplete ? '✓' : `${phase.order}`.padStart(2, '0')}
           </div>
 
           {/* Phase Title and Description */}
           <div className="text-left">
-            <h2 className="text-xl font-bold text-gray-900">{phase.title}</h2>
-            <p className="text-sm text-gray-600">{phase.description}</p>
+            <h2
+              className="text-xl font-bold"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-primary)'
+              }}
+            >
+              {phase.title.toUpperCase()}
+            </h2>
+            <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+              {phase.description}
+            </p>
           </div>
         </div>
 
         {/* Right Side Info */}
         <div className="flex items-center gap-4">
-          {/* Progress Circle */}
+          {/* Progress */}
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">
+            <div
+              className="text-2xl font-bold"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-accent-teal)'
+              }}
+            >
               {phaseProgress}%
             </div>
-            <div className="text-xs text-gray-500">
-              {phase.steps.filter((s) => progress.isComplete(s.id)).length}/
-              {phase.steps.length}
+            <div
+              className="text-xs font-bold tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-secondary)'
+              }}
+            >
+              [{phase.steps.filter((s) => progress.isComplete(s.id)).length}/
+              {phase.steps.length}]
             </div>
           </div>
 
           {/* Expand/Collapse Icon */}
           <div
-            className={`transform transition-transform ${
-              isExpanded ? 'rotate-180' : ''
-            }`}
+            className="transform transition-transform"
+            style={{
+              transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              color: 'var(--color-text-secondary)'
+            }}
           >
-            <svg
-              className="w-6 h-6 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            <span className="text-xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>
+              ▼
+            </span>
           </div>
         </div>
       </button>
 
       {/* Progress Bar */}
-      <div className="px-6 pb-2">
-        <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="px-6 pb-3">
+        <div
+          className="w-full h-2 border-2"
+          style={{
+            borderColor: 'var(--color-border)',
+            background: 'var(--color-bg-primary)'
+          }}
+        >
           <div
-            className={`h-2 rounded-full transition-all duration-300 ${
-              isPhaseComplete ? 'bg-green-500' : 'bg-blue-500'
-            }`}
-            style={{ width: `${phaseProgress}%` }}
+            className="h-full transition-all duration-300"
+            style={{
+              width: `${phaseProgress}%`,
+              background: isPhaseComplete
+                ? 'var(--color-accent-teal)'
+                : 'var(--color-accent-orange)'
+            }}
           />
         </div>
       </div>
@@ -98,9 +139,28 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
       {/* Phase Steps */}
       {isExpanded && (
         <div className="px-6 pb-6 pt-2 space-y-4">
-          <div className="flex items-center justify-between text-sm text-gray-600 pb-2 border-b border-gray-200">
-            <span>Estimated time: {phase.estimatedTime}</span>
-            <span>{phase.steps.length} steps</span>
+          <div
+            className="flex items-center justify-between text-sm pb-3"
+            style={{ borderBottom: '2px solid var(--color-border-light)' }}
+          >
+            <span
+              className="font-bold tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-secondary)'
+              }}
+            >
+              ⏱️ ESTIMATED_TIME: {phase.estimatedTime}
+            </span>
+            <span
+              className="font-bold tracking-wide"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--color-text-secondary)'
+              }}
+            >
+              [{phase.steps.length}] STEPS
+            </span>
           </div>
 
           {phase.steps.map((step) => (

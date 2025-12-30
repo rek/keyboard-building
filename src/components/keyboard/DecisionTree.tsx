@@ -105,7 +105,7 @@ export function DecisionTree() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="space-y-12">
+      <div className="space-y-8">
         {steps.map((decision, stepIndex) => {
           const currentValue = getCurrentValue(decision.id);
           const isCompleted = currentValue !== null;
@@ -113,25 +113,40 @@ export function DecisionTree() {
           return (
             <div
               key={decision.id}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="p-6"
+              style={{
+                border: '3px solid var(--color-border)',
+                background: 'var(--color-bg-secondary)'
+              }}
             >
               {/* Step Header */}
-              <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start justify-between mb-6">
                 <div className="flex items-start gap-4">
                   <div
-                    className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold ${
-                      isCompleted
-                        ? 'bg-green-500 text-white'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
+                    className="flex-shrink-0 w-12 h-12 flex items-center justify-center text-lg font-bold border-2"
+                    style={{
+                      borderColor: isCompleted ? 'var(--color-accent-teal)' : 'var(--color-border)',
+                      background: isCompleted ? 'var(--color-accent-teal)' : 'transparent',
+                      color: isCompleted ? 'white' : 'var(--color-text-primary)',
+                      fontFamily: 'var(--font-display)'
+                    }}
                   >
-                    {isCompleted ? '✓' : stepIndex + 1}
+                    {isCompleted ? '✓' : `${stepIndex + 1}`.padStart(2, '0')}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">
-                      {decision.title}
+                    <h2
+                      className="text-xl md:text-2xl font-bold mb-2"
+                      style={{
+                        fontFamily: 'var(--font-display)',
+                        letterSpacing: '0.02em',
+                        color: 'var(--color-text-primary)'
+                      }}
+                    >
+                      {decision.title.toUpperCase()}
                     </h2>
-                    <p className="text-gray-600 mt-1">{decision.description}</p>
+                    <p style={{ color: 'var(--color-text-secondary)' }}>
+                      {decision.description}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -145,45 +160,82 @@ export function DecisionTree() {
                     <button
                       key={option.id}
                       onClick={() => handlePreview(decision, option)}
-                      className={`relative text-left p-4 rounded-lg border-2 transition-all hover:shadow-lg ${
-                        isSelected
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-blue-300'
-                      }`}
+                      className="relative text-left p-4 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                      style={{
+                        borderColor: isSelected ? 'var(--color-accent-orange)' : 'var(--color-border)',
+                        background: isSelected ? 'var(--color-bg-primary)' : 'var(--color-bg-secondary)'
+                      }}
                     >
                       {isSelected && (
-                        <div className="absolute top-2 right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-sm">✓</span>
+                        <div
+                          className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center font-bold text-xs"
+                          style={{
+                            background: 'var(--color-accent-orange)',
+                            color: 'white',
+                            fontFamily: 'var(--font-display)'
+                          }}
+                        >
+                          ✓
                         </div>
                       )}
 
                       {/* Option Image */}
-                      <div className="w-full h-32 bg-gray-100 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+                      <div
+                        className="w-full h-32 mb-3 flex items-center justify-center overflow-hidden border-2"
+                        style={{
+                          background: 'var(--color-bg-primary)',
+                          borderColor: 'var(--color-border-light)'
+                        }}
+                      >
                         {option.image ? (
                           <img
                             src={option.image}
                             alt={option.name}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain p-2"
                           />
                         ) : (
-                          <span className="text-gray-400 text-sm">Image</span>
+                          <span
+                            className="text-xs font-bold tracking-wide"
+                            style={{
+                              fontFamily: 'var(--font-display)',
+                              color: 'var(--color-text-secondary)'
+                            }}
+                          >
+                            [IMG]
+                          </span>
                         )}
                       </div>
 
                       {/* Option Title */}
-                      <h3 className="font-semibold text-gray-900 mb-1">
-                        {option.name}
+                      <h3
+                        className="font-bold mb-2 text-sm"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          color: 'var(--color-text-primary)',
+                          letterSpacing: '0.02em'
+                        }}
+                      >
+                        {option.name.toUpperCase()}
                       </h3>
 
                       {/* Short Description */}
-                      <p className="text-sm text-gray-600 mb-3">
+                      <p
+                        className="text-sm mb-3"
+                        style={{ color: 'var(--color-text-secondary)' }}
+                      >
                         {option.shortDesc}
                       </p>
 
                       {/* Quick Stats */}
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between text-sm mb-2">
                         {settings.showPricing && (
-                          <span className="text-blue-600 font-medium">
+                          <span
+                            className="font-bold"
+                            style={{
+                              color: 'var(--color-accent-orange)',
+                              fontFamily: 'var(--font-display)'
+                            }}
+                          >
                             +{formatCurrency(option.costDelta)}
                           </span>
                         )}
@@ -191,11 +243,11 @@ export function DecisionTree() {
                           {Array.from({ length: 5 }).map((_, i) => (
                             <div
                               key={i}
-                              className={`w-2 h-2 rounded-full ${
-                                i < option.complexityDelta
-                                  ? 'bg-orange-500'
-                                  : 'bg-gray-300'
-                              }`}
+                              className="w-3 h-3 border"
+                              style={{
+                                borderColor: 'var(--color-border)',
+                                background: i < option.complexityDelta ? 'var(--color-accent-orange)' : 'transparent'
+                              }}
                             />
                           ))}
                         </div>
@@ -203,8 +255,16 @@ export function DecisionTree() {
 
                       {/* Skill Level Badge */}
                       <div className="mt-2">
-                        <span className="inline-block px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
-                          {option.skillLevel}
+                        <span
+                          className="inline-block px-2 py-1 text-xs font-bold tracking-wide border-2"
+                          style={{
+                            borderColor: 'var(--color-border-light)',
+                            background: 'transparent',
+                            color: 'var(--color-text-secondary)',
+                            fontFamily: 'var(--font-display)'
+                          }}
+                        >
+                          {option.skillLevel.toUpperCase()}
                         </span>
                       </div>
                     </button>

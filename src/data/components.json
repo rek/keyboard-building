@@ -4,7 +4,7 @@
       "id": "pro-micro",
       "name": "Arduino Pro Micro",
       "price": 5.0,
-      "image": "/images/components/controllers/pro-micro.svg",
+      "image": "/images/components/controllers/pro-micro.webp",
       "specs": {
         "mcu": "ATmega32U4",
         "pins": 12,
@@ -22,8 +22,15 @@
         "Limited pins (12) for complex builds",
         "No wireless capability"
       ],
-      "compatibleWith": ["qmk", "vial"],
-      "incompatibleWith": ["zmk", "kmk", "wireless"],
+      "compatibleWith": [
+        "qmk",
+        "vial"
+      ],
+      "incompatibleWith": [
+        "zmk",
+        "kmk",
+        "wireless"
+      ],
       "vendors": [
         {
           "name": "SparkFun",
@@ -42,7 +49,7 @@
       "id": "elite-c",
       "name": "Elite-C",
       "price": 18.0,
-      "image": "/images/components/elite-c.jpg",
+      "image": "/images/components/controllers/elite-c-2_angle.webp",
       "specs": {
         "mcu": "ATmega32U4",
         "pins": 12,
@@ -60,8 +67,15 @@
         "Still limited pins",
         "No wireless"
       ],
-      "compatibleWith": ["qmk", "vial"],
-      "incompatibleWith": ["zmk", "kmk", "wireless"],
+      "compatibleWith": [
+        "qmk",
+        "vial"
+      ],
+      "incompatibleWith": [
+        "zmk",
+        "kmk",
+        "wireless"
+      ],
       "vendors": [
         {
           "name": "Keebio",
@@ -74,7 +88,7 @@
       "id": "nice-nano",
       "name": "nice!nano",
       "price": 25.0,
-      "image": "/images/components/nice-nano.jpg",
+      "image": "/images/components/controllers/nice_nano-v2.0-angle.jpg",
       "specs": {
         "mcu": "nRF52840",
         "pins": 13,
@@ -95,8 +109,15 @@
         "No QMK support (ZMK only)",
         "More complex power management"
       ],
-      "compatibleWith": ["zmk", "wireless"],
-      "incompatibleWith": ["qmk", "vial", "kmk"],
+      "compatibleWith": [
+        "zmk",
+        "wireless"
+      ],
+      "incompatibleWith": [
+        "qmk",
+        "vial",
+        "kmk"
+      ],
       "vendors": [
         {
           "name": "Typeractive",
@@ -109,7 +130,7 @@
       "id": "rp2040",
       "name": "RP2040-based (Pico, KB2040)",
       "price": 8.0,
-      "image": "/images/components/rp2040.jpg",
+      "image": "/images/components/controllers/rpi-2040-angle.jpg",
       "specs": {
         "mcu": "RP2040",
         "pins": 20,
@@ -129,8 +150,14 @@
         "Larger footprint than Pro Micro",
         "Pin layout not standardized"
       ],
-      "compatibleWith": ["qmk", "vial", "kmk"],
-      "incompatibleWith": ["zmk"],
+      "compatibleWith": [
+        "qmk",
+        "vial",
+        "kmk"
+      ],
+      "incompatibleWith": [
+        "zmk"
+      ],
       "vendors": [
         {
           "name": "Adafruit",
@@ -169,8 +196,14 @@
         "Not ideal for ultra-compact builds",
         "Takes longer to solder (100+ diodes)"
       ],
-      "requiredTools": ["Soldering iron", "Wire cutters"],
-      "compatibleWith": ["handwired", "custom-pcb"]
+      "requiredTools": [
+        "Soldering iron",
+        "Wire cutters"
+      ],
+      "compatibleWith": [
+        "handwired",
+        "custom-pcb"
+      ]
     },
     "diode-smd": {
       "id": "diode-smd",
@@ -200,8 +233,15 @@
         "Difficult to rework if placed incorrectly",
         "Not beginner-friendly"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Magnification (optional)", "Flux"],
-      "compatibleWith": ["custom-pcb"]
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Tweezers",
+        "Magnification (optional)",
+        "Flux"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ]
     },
     "resistor-th": {
       "id": "resistor-th",
@@ -229,9 +269,19 @@
         "Less professional appearance",
         "Not ideal for compact designs"
       ],
-      "requiredTools": ["Soldering iron", "Wire cutters"],
-      "usedFor": ["LED current limiting", "Pull-up/pull-down resistors", "I2C communication"],
-      "compatibleWith": ["handwired", "custom-pcb"]
+      "requiredTools": [
+        "Soldering iron",
+        "Wire cutters"
+      ],
+      "usedFor": [
+        "LED current limiting",
+        "Pull-up/pull-down resistors",
+        "I2C communication"
+      ],
+      "compatibleWith": [
+        "handwired",
+        "custom-pcb"
+      ]
     },
     "resistor-smd": {
       "id": "resistor-smd",
@@ -261,9 +311,20 @@
         "Easy to lose (tiny components)",
         "Need good lighting and tools"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Magnification", "Flux"],
-      "usedFor": ["LED current limiting", "Pull-up/pull-down resistors", "I2C communication"],
-      "compatibleWith": ["custom-pcb"]
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Tweezers",
+        "Magnification",
+        "Flux"
+      ],
+      "usedFor": [
+        "LED current limiting",
+        "Pull-up/pull-down resistors",
+        "I2C communication"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ]
     },
     "trrs-jack": {
       "id": "trrs-jack",
@@ -291,9 +352,16 @@
         "Adds ~$1-2 per keyboard (2 jacks + cable)",
         "Less durable than USB-C connectors"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Connecting split keyboard halves (wired)"],
-      "compatibleWith": ["custom-pcb", "handwired"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Connecting split keyboard halves (wired)"
+      ],
+      "compatibleWith": [
+        "custom-pcb",
+        "handwired"
+      ],
       "warning": "Always use TRRS (4-conductor) cables, not TRS (3-conductor) to avoid shorts"
     },
     "trs-jack": {
@@ -320,9 +388,16 @@
         "Harder to find compatible cables",
         "TRRS is more standard"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Connecting split keyboard halves with serial only"],
-      "compatibleWith": ["custom-pcb", "handwired"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Connecting split keyboard halves with serial only"
+      ],
+      "compatibleWith": [
+        "custom-pcb",
+        "handwired"
+      ],
       "note": "TRRS is generally preferred as it supports more communication protocols"
     },
     "usb-c-connector": {
@@ -352,9 +427,16 @@
         "Need proper CC resistors (5.1kΩ) for compatibility",
         "Can be complex for beginners"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Multimeter for testing"],
-      "usedFor": ["Direct USB connection to computer (without Pro Micro)"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Multimeter for testing"
+      ],
+      "usedFor": [
+        "Direct USB connection to computer (without Pro Micro)"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Requires 5.1kΩ pull-down resistors on CC1 and CC2 pins for USB-C specification compliance"
     },
     "micro-usb-connector": {
@@ -381,9 +463,15 @@
         "Being phased out industry-wide",
         "Older standard"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Direct USB connection (legacy designs)"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Direct USB connection (legacy designs)"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "USB-C is recommended for new designs"
     },
     "reset-button": {
@@ -410,9 +498,16 @@
         "Need case cutout if accessible externally",
         "Can be accidentally pressed"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Resetting microcontroller, entering bootloader for firmware flashing"],
-      "compatibleWith": ["custom-pcb", "handwired"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Resetting microcontroller, entering bootloader for firmware flashing"
+      ],
+      "compatibleWith": [
+        "custom-pcb",
+        "handwired"
+      ],
       "note": "Almost essential for easy firmware updates"
     },
     "boot-button": {
@@ -438,9 +533,15 @@
         "Not strictly necessary (can use key combo)",
         "Takes PCB space"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Entering bootloader mode for firmware flashing (RP2040, etc.)"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Entering bootloader mode for firmware flashing (RP2040, etc.)"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Especially useful for RP2040-based builds"
     },
     "power-switch-slide": {
@@ -466,10 +567,18 @@
         "Needs case cutout for access",
         "SMD versions harder to solder"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Turning wireless keyboards on/off to save battery"],
-      "compatibleWith": ["custom-pcb"],
-      "requiredFor": ["wireless"]
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Turning wireless keyboards on/off to save battery"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
+      "requiredFor": [
+        "wireless"
+      ]
     },
     "battery-connector-jst": {
       "id": "battery-connector-jst",
@@ -495,10 +604,18 @@
         "Takes board space",
         "Only for wireless builds"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Connecting LiPo battery to wireless keyboard"],
-      "compatibleWith": ["custom-pcb"],
-      "requiredFor": ["wireless"]
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Connecting LiPo battery to wireless keyboard"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
+      "requiredFor": [
+        "wireless"
+      ]
     },
     "speaker-passive": {
       "id": "speaker-passive",
@@ -526,10 +643,17 @@
         "Increases power draw slightly",
         "Not very common in keyboards"
       ],
-      "requiredTools": ["Soldering iron"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
       "pinRequirement": 1,
-      "usedFor": ["Audio feedback, musical keyboard features"],
-      "compatibleWith": ["custom-pcb", "handwired"]
+      "usedFor": [
+        "Audio feedback, musical keyboard features"
+      ],
+      "compatibleWith": [
+        "custom-pcb",
+        "handwired"
+      ]
     },
     "piezo-element": {
       "id": "piezo-element",
@@ -557,10 +681,17 @@
         "Can be annoying",
         "Needs mounting consideration"
       ],
-      "requiredTools": ["Soldering iron"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
       "pinRequirement": 1,
-      "usedFor": ["Click sounds, beeps, audio feedback"],
-      "compatibleWith": ["custom-pcb", "handwired"]
+      "usedFor": [
+        "Click sounds, beeps, audio feedback"
+      ],
+      "compatibleWith": [
+        "custom-pcb",
+        "handwired"
+      ]
     },
     "capacitor-ceramic": {
       "id": "capacitor-ceramic",
@@ -587,9 +718,17 @@
         "SMD versions need careful soldering",
         "Non-polarized (but doesn't matter for ceramic)"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Power supply decoupling", "Noise filtering", "Stabilizing voltage"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Power supply decoupling",
+        "Noise filtering",
+        "Stabilizing voltage"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Typically use 0.1µF near each IC power pin, 10µF at power input"
     },
     "esd-protection": {
@@ -617,9 +756,17 @@
         "Adds component cost",
         "Requires PCB design knowledge"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux"],
-      "usedFor": ["Protecting USB data lines from ESD damage"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Tweezers",
+        "Flux"
+      ],
+      "usedFor": [
+        "Protecting USB data lines from ESD damage"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Optional but recommended for professional builds, especially with exposed USB connectors"
     },
     "polyfuse": {
@@ -647,9 +794,16 @@
         "Can limit peak current for RGB/power-hungry features",
         "Adds component to BOM"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["USB overcurrent protection", "Preventing damage from shorts"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "USB overcurrent protection",
+        "Preventing damage from shorts"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Place in series with USB VBUS - highly recommended for safety"
     },
     "schottky-diode": {
@@ -676,10 +830,19 @@
         "Takes PCB space",
         "Polarity must be correct"
       ],
-      "requiredTools": ["Soldering iron"],
-      "usedFor": ["Battery protection in wireless builds", "Reverse current protection"],
-      "compatibleWith": ["custom-pcb"],
-      "requiredFor": ["wireless"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "usedFor": [
+        "Battery protection in wireless builds",
+        "Reverse current protection"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
+      "requiredFor": [
+        "wireless"
+      ],
       "note": "Use between battery and power rail to prevent USB from charging battery unsafely"
     },
     "voltage-regulator": {
@@ -707,9 +870,17 @@
         "SMD soldering for most variants",
         "Requires input and output capacitors"
       ],
-      "requiredTools": ["Soldering iron", "Multimeter"],
-      "usedFor": ["Powering 3.3V sensors", "Level shifting for displays/modules"],
-      "compatibleWith": ["custom-pcb"],
+      "requiredTools": [
+        "Soldering iron",
+        "Multimeter"
+      ],
+      "usedFor": [
+        "Powering 3.3V sensors",
+        "Level shifting for displays/modules"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Only needed if using 3.3V-only components like some OLEDs or sensors"
     },
     "io-expander": {
@@ -738,10 +909,18 @@
         "Requires pullup resistors",
         "QMK support varies by IC"
       ],
-      "requiredTools": ["Soldering iron", "Multimeter"],
+      "requiredTools": [
+        "Soldering iron",
+        "Multimeter"
+      ],
       "pinRequirement": 2,
-      "usedFor": ["Expanding key matrix beyond MCU pin count", "Adding features to pin-limited builds"],
-      "compatibleWith": ["custom-pcb"],
+      "usedFor": [
+        "Expanding key matrix beyond MCU pin count",
+        "Adding features to pin-limited builds"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Advanced option - only needed for very large keyboards (80+ keys) on pin-limited MCUs"
     },
     "ws2812b-led": {
@@ -771,10 +950,19 @@
         "Needs 5V power supply",
         "Adds significant cost for full board"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux"],
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Tweezers",
+        "Flux"
+      ],
       "pinRequirement": 1,
-      "usedFor": ["Per-key RGB backlighting", "Underglow lighting"],
-      "compatibleWith": ["custom-pcb"],
+      "usedFor": [
+        "Per-key RGB backlighting",
+        "Underglow lighting"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Often used in strips for underglow. Per-key RGB for 60 keys = $9 + power concerns"
     },
     "sk6812-mini": {
@@ -802,10 +990,20 @@
         "Same power concerns",
         "Requires very fine soldering skills"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux", "Magnification"],
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Tweezers",
+        "Flux",
+        "Magnification"
+      ],
       "pinRequirement": 1,
-      "usedFor": ["Per-key RGB in tight spaces", "Under-switch lighting"],
-      "compatibleWith": ["custom-pcb"],
+      "usedFor": [
+        "Per-key RGB in tight spaces",
+        "Under-switch lighting"
+      ],
+      "compatibleWith": [
+        "custom-pcb"
+      ],
       "note": "Harder to solder but cleaner integration. Consider WS2812B for first RGB build"
     }
   },
@@ -832,14 +1030,18 @@
         "Taller profile",
         "More expensive than Choc"
       ],
-      "compatibleWith": ["hotswap-mx", "plate-mount", "pcb-mount"]
+      "compatibleWith": [
+        "hotswap-mx",
+        "plate-mount",
+        "pcb-mount"
+      ]
     },
     "choc-v1": {
       "id": "choc-v1",
       "name": "Kailh Choc v1 (Low Profile)",
       "price": 0.6,
       "priceUnit": "per switch",
-      "image": "/images/components/switches/choc-v1.svg",
+      "image": "/images/components/switches/choc-v1.webp",
       "specs": {
         "profile": "low-profile",
         "height": "11.5mm",
@@ -856,14 +1058,17 @@
         "More expensive than MX",
         "PCB-mount only (no plate support)"
       ],
-      "compatibleWith": ["hotswap-choc", "pcb-mount"]
+      "compatibleWith": [
+        "hotswap-choc",
+        "pcb-mount"
+      ]
     },
     "choc-v2": {
       "id": "choc-v2",
       "name": "Kailh Choc v2",
       "price": 0.65,
       "priceUnit": "per switch",
-      "image": "/images/components/choc-v2.jpg",
+      "image": "/images/components/switches/choc-v2.webp",
       "specs": {
         "profile": "low-profile",
         "height": "13mm",
@@ -880,7 +1085,11 @@
         "Limited switch variety",
         "Somewhat taller than Choc v1"
       ],
-      "compatibleWith": ["hotswap-choc-v2", "plate-mount", "pcb-mount"]
+      "compatibleWith": [
+        "hotswap-choc-v2",
+        "plate-mount",
+        "pcb-mount"
+      ]
     }
   },
   "features": {
@@ -902,8 +1111,14 @@
         "Adds thickness to PCB",
         "Potential for socket failure over time"
       ],
-      "requiredTools": ["Soldering iron"],
-      "compatibleWith": ["mx", "choc-v1", "choc-v2"]
+      "requiredTools": [
+        "Soldering iron"
+      ],
+      "compatibleWith": [
+        "mx",
+        "choc-v1",
+        "choc-v2"
+      ]
     },
     "rgb": {
       "id": "rgb",
@@ -924,7 +1139,10 @@
         "More soldering work",
         "Uses additional pins"
       ],
-      "requiredTools": ["Soldering iron", "Multimeter"],
+      "requiredTools": [
+        "Soldering iron",
+        "Multimeter"
+      ],
       "pinRequirement": 1
     },
     "oled": {
@@ -946,7 +1164,9 @@
         "Requires firmware configuration",
         "Extra cost"
       ],
-      "requiredTools": ["Soldering iron"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
       "pinRequirement": 2
     },
     "encoder": {
@@ -978,7 +1198,9 @@
         "Knob/cap sold separately (~$2-5)",
         "Can be accidentally bumped"
       ],
-      "requiredTools": ["Soldering iron"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
       "pinRequirement": 3,
       "variants": [
         {
@@ -1027,7 +1249,11 @@
         "Special knob/cap needed",
         "Requires precise PCB footprint"
       ],
-      "requiredTools": ["Soldering iron with fine tip", "Tweezers", "Flux"],
+      "requiredTools": [
+        "Soldering iron with fine tip",
+        "Tweezers",
+        "Flux"
+      ],
       "pinRequirement": 5
     },
     "trackball": {
@@ -1059,7 +1285,11 @@
         "Expensive (~$30-40 for sensor + ball)",
         "Firmware configuration complex"
       ],
-      "requiredTools": ["Soldering iron", "3D printer (for housing)", "Multimeter"],
+      "requiredTools": [
+        "Soldering iron",
+        "3D printer (for housing)",
+        "Multimeter"
+      ],
       "pinRequirement": 5,
       "note": "Requires 3D-printed trackball housing and ceramic/ruby bearings"
     },
@@ -1090,7 +1320,11 @@
         "Requires 3D-printed housing",
         "Firmware support may be limited"
       ],
-      "requiredTools": ["Soldering iron", "3D printer", "Multimeter"],
+      "requiredTools": [
+        "Soldering iron",
+        "3D printer",
+        "Multimeter"
+      ],
       "pinRequirement": 5
     },
     "trackpoint": {
@@ -1123,7 +1357,10 @@
         "Needs calibration",
         "Uses 2-4 pins depending on type"
       ],
-      "requiredTools": ["Soldering iron", "Multimeter"],
+      "requiredTools": [
+        "Soldering iron",
+        "Multimeter"
+      ],
       "pinRequirement": 3,
       "note": "Can salvage from old ThinkPad keyboards or buy clone modules"
     },
@@ -1158,7 +1395,9 @@
         "Requires case cutout",
         "Uses 2 pins (I2C)"
       ],
-      "requiredTools": ["Soldering iron"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
       "pinRequirement": 2,
       "note": "This is the 'mini circle mouse pad thing' - very popular in custom keyboards"
     },
@@ -1192,7 +1431,9 @@
         "Joystick caps can break over time",
         "Calibration drift over time"
       ],
-      "requiredTools": ["Soldering iron"],
+      "requiredTools": [
+        "Soldering iron"
+      ],
       "pinRequirement": 3,
       "note": "Requires controller with ADC pins (RP2040 has 4, Pro Micro has 4)"
     }
@@ -1204,18 +1445,57 @@
       "price": 5.0,
       "image": "/images/connectivity/trrs.jpg",
       "complexity": 1,
-      "description": "3.5mm TRRS cable for wired split connection",
+      "description": "3.5mm TRRS cable for wired split connection using serial communication",
       "pros": [
         "Simple and reliable",
         "No battery needed",
-        "Low latency",
-        "Cheap"
+        "Zero latency",
+        "Cheap",
+        "Most common split keyboard connection"
       ],
       "cons": [
         "Cable management",
-        "Less portable"
+        "Less portable",
+        "Not hot-pluggable (can damage controller)"
       ],
-      "compatibleWith": ["qmk", "vial", "kmk"]
+      "compatibleWith": [
+        "qmk",
+        "vial",
+        "kmk"
+      ],
+      "requiredComponents": [
+        "trrs-jack"
+      ]
+    },
+    "usbc-wired": {
+      "id": "usbc-wired",
+      "name": "USB-C Cable (Wired)",
+      "price": 8.0,
+      "image": "/images/connectivity/usbc.jpg",
+      "complexity": 2,
+      "description": "USB-C cable for wired split connection using serial communication over D+/D- lines",
+      "pros": [
+        "Modern reversible connector",
+        "No battery needed",
+        "Zero latency",
+        "Can be hot-pluggable with proper firmware",
+        "Cleaner aesthetic than TRRS",
+        "More durable connector"
+      ],
+      "cons": [
+        "Slightly more expensive than TRRS",
+        "Requires USB-C breakout or connector soldering",
+        "Not true USB protocol (uses serial over USB pins)",
+        "More complex PCB design"
+      ],
+      "compatibleWith": [
+        "qmk",
+        "vial",
+        "kmk"
+      ],
+      "requiredComponents": [
+        "usbc-connector"
+      ]
     },
     "wireless": {
       "id": "wireless",
@@ -1236,9 +1516,389 @@
         "Requires ZMK firmware",
         "Charging routine needed"
       ],
-      "compatibleWith": ["zmk"],
-      "incompatibleWith": ["qmk", "vial", "kmk"],
-      "requiredComponents": ["nice-nano", "battery", "power-switch"]
+      "compatibleWith": [
+        "zmk"
+      ],
+      "incompatibleWith": [
+        "qmk",
+        "vial",
+        "kmk"
+      ],
+      "requiredComponents": [
+        "nice-nano",
+        "battery",
+        "power-switch"
+      ]
+    }
+  },
+  "electronics": {
+    "wire-24awg-silicone": {
+      "id": "wire-24awg-silicone",
+      "name": "24AWG Silicone Wire",
+      "price": 12,
+      "priceUnit": "10m spool",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "gauge": "24AWG",
+        "type": "Stranded",
+        "material": "Silicone insulation",
+        "flexibility": "High"
+      },
+      "pros": [
+        "Extremely flexible for routing",
+        "Heat resistant silicone jacket",
+        "Available in multiple colors"
+      ],
+      "cons": [
+        "Harder to strip cleanly",
+        "More expensive than PVC"
+      ]
+    },
+    "wire-26awg-solid": {
+      "id": "wire-26awg-solid",
+      "name": "26AWG Solid-Core Wire",
+      "price": 8,
+      "priceUnit": "30m spool",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "gauge": "26AWG",
+        "type": "Solid-core",
+        "material": "PVC insulation",
+        "flexibility": "Low"
+      },
+      "pros": [
+        "Easy to strip and tin",
+        "Holds shape for point-to-point wiring",
+        "Very cheap",
+        "Perfect for matrix wiring"
+      ],
+      "cons": [
+        "Less flexible than stranded",
+        "Can break if bent repeatedly",
+        "Not good for areas with movement"
+      ]
+    },
+    "wire-28awg-magnet": {
+      "id": "wire-28awg-magnet",
+      "name": "28AWG Magnet Wire",
+      "price": 10,
+      "priceUnit": "50m spool",
+      "image": "",
+      "complexity": 2,
+      "specs": {
+        "gauge": "28AWG",
+        "type": "Solid-core",
+        "material": "Enamel coating",
+        "flexibility": "Medium"
+      },
+      "pros": [
+        "Very thin - fits in tight spaces",
+        "Minimal insulation bulk",
+        "Cheap per meter",
+        "Can solder through enamel coating"
+      ],
+      "cons": [
+        "Enamel coating needs burning/scraping",
+        "Fragile - easily damaged",
+        "Not color-coded",
+        "Advanced technique required"
+      ]
+    },
+    "trrs-cable": {
+      "id": "trrs-cable",
+      "name": "TRRS Cable (3.5mm, 4ft)",
+      "price": 3,
+      "priceUnit": "per cable",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "type": "3.5mm TRRS audio cable",
+        "conductors": 4,
+        "length": "4 feet / 1.2m",
+        "connectors": "Male to male"
+      },
+      "pros": [
+        "Standard for split keyboards",
+        "Easy to replace",
+        "Widely available",
+        "Cheap"
+      ],
+      "cons": [
+        "Can disconnect accidentally",
+        "Various quality levels",
+        "Not hot-swappable"
+      ],
+      "compatibleWith": [
+        "trrs-jack"
+      ]
+    },
+    "usb-cable": {
+      "id": "usb-cable",
+      "name": "USB-C to USB-A Cable",
+      "price": 5,
+      "priceUnit": "per cable",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "type": "USB-C to USB-A",
+        "length": "6 feet / 1.8m",
+        "data": "USB 2.0"
+      },
+      "pros": [
+        "Connects keyboard to computer",
+        "Standard cable",
+        "Easy to replace"
+      ],
+      "cons": [
+        "Quality varies widely",
+        "Some cables are charge-only"
+      ]
+    },
+    "diode-1n4148-100": {
+      "id": "diode-1n4148-100",
+      "name": "1N4148 Diodes (100 pack)",
+      "price": 2,
+      "priceUnit": "100 pack",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "type": "1N4148 switching diode",
+        "mounting": "Through-hole",
+        "voltage": "100V",
+        "current": "300mA"
+      },
+      "pros": [
+        "Mandatory for keyboard matrix",
+        "Very cheap in bulk",
+        "Easy to solder",
+        "Clear polarity marking"
+      ],
+      "cons": [
+        "Need one per switch",
+        "Takes time to solder 60+ diodes",
+        "Legs need trimming"
+      ]
+    },
+    "solder-leaded": {
+      "id": "solder-leaded",
+      "name": "Leaded Solder (63/37, 0.8mm)",
+      "price": 8,
+      "priceUnit": "50g spool",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "composition": "63% Tin, 37% Lead",
+        "diameter": "0.8mm",
+        "flux": "Rosin core",
+        "meltTemp": "183°C"
+      },
+      "pros": [
+        "Easiest to work with",
+        "Lowest melting point",
+        "Shiny joints indicate good flow",
+        "Rosin flux core included"
+      ],
+      "cons": [
+        "Contains lead (use with ventilation)",
+        "Being phased out in some regions",
+        "Not RoHS compliant"
+      ]
+    },
+    "solder-leadfree": {
+      "id": "solder-leadfree",
+      "name": "Lead-Free Solder (0.8mm)",
+      "price": 10,
+      "priceUnit": "50g spool",
+      "image": "",
+      "complexity": 2,
+      "specs": {
+        "composition": "Tin/Silver/Copper (SAC305)",
+        "diameter": "0.8mm",
+        "flux": "Rosin core",
+        "meltTemp": "220°C"
+      },
+      "pros": [
+        "No lead exposure",
+        "RoHS compliant",
+        "Safer for environment",
+        "Stronger joints"
+      ],
+      "cons": [
+        "Higher melting temperature",
+        "Harder to work with",
+        "Requires more heat/skill",
+        "Dull finish (normal)"
+      ]
+    },
+    "flux-pen": {
+      "id": "flux-pen",
+      "name": "Flux Pen (No-Clean)",
+      "price": 6,
+      "priceUnit": "per pen",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "type": "No-clean flux",
+        "form": "Pen applicator",
+        "volume": "10ml"
+      },
+      "pros": [
+        "Makes soldering much easier",
+        "Precise application",
+        "No-clean formula",
+        "Essential for SMD work"
+      ],
+      "cons": [
+        "Dries out over time",
+        "Needs to be stored upright",
+        "Can be messy"
+      ]
+    },
+    "desoldering-braid": {
+      "id": "desoldering-braid",
+      "name": "Desoldering Braid/Wick",
+      "price": 4,
+      "priceUnit": "5ft roll",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "type": "Copper braid",
+        "width": "2-3mm",
+        "flux": "Pre-fluxed"
+      },
+      "pros": [
+        "Essential for fixing mistakes",
+        "Removes excess solder",
+        "Cheap and reusable (per section)",
+        "Works on through-hole and SMD"
+      ],
+      "cons": [
+        "Uses up quickly",
+        "Need to cut off used sections",
+        "Requires practice"
+      ]
+    },
+    "heat-shrink-kit": {
+      "id": "heat-shrink-kit",
+      "name": "Heat Shrink Tubing Kit",
+      "price": 8,
+      "priceUnit": "assortment",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "sizes": "Multiple diameters",
+        "shrinkRatio": "2:1",
+        "colors": "Assorted"
+      },
+      "pros": [
+        "Insulates exposed connections",
+        "Professional appearance",
+        "Multiple sizes included",
+        "Easy to use with heat gun or lighter"
+      ],
+      "cons": [
+        "Need heat source",
+        "Must slide on before soldering",
+        "Can burn if overheated"
+      ]
+    },
+    "cable-sleeving": {
+      "id": "cable-sleeving",
+      "name": "Braided Cable Sleeving",
+      "price": 12,
+      "priceUnit": "10ft",
+      "image": "",
+      "complexity": 2,
+      "specs": {
+        "type": "Expandable braided sleeve",
+        "material": "PET",
+        "diameter": "4-8mm"
+      },
+      "pros": [
+        "Professional cable management",
+        "Protects wires from abrasion",
+        "Looks clean and organized",
+        "Available in many colors"
+      ],
+      "cons": [
+        "Takes time to sleeve cables",
+        "Adds bulk to wiring",
+        "Can fray at cuts"
+      ]
+    },
+    "jst-connector-kit": {
+      "id": "jst-connector-kit",
+      "name": "JST Connector Kit (2-pin)",
+      "price": 10,
+      "priceUnit": "20 pairs",
+      "image": "",
+      "complexity": 2,
+      "specs": {
+        "type": "JST-PH 2.0mm",
+        "pins": 2,
+        "includes": "Housings + crimp pins"
+      },
+      "pros": [
+        "Disconnectable connections",
+        "Standard for batteries",
+        "Polarized (can't reverse)",
+        "Professional solution"
+      ],
+      "cons": [
+        "Requires crimping tool",
+        "Small and fiddly",
+        "Learning curve for crimping"
+      ]
+    },
+    "pin-headers": {
+      "id": "pin-headers",
+      "name": "Pin Headers (Male/Female)",
+      "price": 5,
+      "priceUnit": "assortment",
+      "image": "",
+      "complexity": 1,
+      "specs": {
+        "type": "2.54mm pitch",
+        "pins": "40-pin strips (breakable)",
+        "includes": "Male and female"
+      },
+      "pros": [
+        "Disconnectable connections",
+        "Easy to solder",
+        "Break to desired length",
+        "Standard spacing"
+      ],
+      "cons": [
+        "Can be bulky",
+        "Not as secure as direct solder",
+        "Takes PCB space"
+      ]
+    },
+    "millmax-sockets": {
+      "id": "millmax-sockets",
+      "name": "Mill-Max Hot-Swap Sockets",
+      "price": 12,
+      "priceUnit": "50 pieces",
+      "image": "",
+      "complexity": 3,
+      "specs": {
+        "type": "Mill-Max 7305",
+        "mounting": "Through-hole",
+        "use": "Controller hot-swap"
+      },
+      "pros": [
+        "Make controllers removable",
+        "Easy controller replacement",
+        "Gold-plated contacts",
+        "Reliable connection"
+      ],
+      "cons": [
+        "Expensive",
+        "Requires precise soldering",
+        "Can be pushed out if not careful"
+      ]
     }
   },
   "firmware": {
@@ -1246,7 +1906,7 @@
       "id": "qmk",
       "name": "QMK Firmware",
       "complexity": 2,
-      "image": "/images/firmware/qmk.jpg",
+      "image": "/images/components/firmware/qmk-logo-light.svg",
       "description": "Open-source keyboard firmware with extensive features",
       "pros": [
         "Most feature-rich",
@@ -1259,14 +1919,21 @@
         "Command line knowledge helpful",
         "No GUI configurator"
       ],
-      "compatibleWith": ["pro-micro", "elite-c", "rp2040"],
-      "incompatibleWith": ["nice-nano", "wireless"]
+      "compatibleWith": [
+        "pro-micro",
+        "elite-c",
+        "rp2040"
+      ],
+      "incompatibleWith": [
+        "nice-nano",
+        "wireless"
+      ]
     },
     "vial": {
       "id": "vial",
       "name": "Vial (QMK + GUI)",
       "complexity": 1,
-      "image": "/images/firmware/vial.jpg",
+      "image": "/images/components/firmware/vial.png",
       "description": "QMK fork with real-time GUI configuration",
       "pros": [
         "GUI configurator (no compiling)",
@@ -1279,14 +1946,21 @@
         "Slightly behind QMK in features",
         "Requires Vial-specific firmware"
       ],
-      "compatibleWith": ["pro-micro", "elite-c", "rp2040"],
-      "incompatibleWith": ["nice-nano", "wireless"]
+      "compatibleWith": [
+        "pro-micro",
+        "elite-c",
+        "rp2040"
+      ],
+      "incompatibleWith": [
+        "nice-nano",
+        "wireless"
+      ]
     },
     "kmk": {
       "id": "kmk",
       "name": "KMK Firmware",
       "complexity": 2,
-      "image": "/images/firmware/kmk.jpg",
+      "image": "/images/components/firmware/kmk.jpeg",
       "description": "CircuitPython-based firmware written in Python",
       "pros": [
         "Written in Python (easy to understand)",
@@ -1300,14 +1974,21 @@
         "Slightly higher latency than compiled firmware",
         "Best suited for RP2040 boards"
       ],
-      "compatibleWith": ["rp2040"],
-      "incompatibleWith": ["pro-micro", "elite-c", "nice-nano", "wireless"]
+      "compatibleWith": [
+        "rp2040"
+      ],
+      "incompatibleWith": [
+        "pro-micro",
+        "elite-c",
+        "nice-nano",
+        "wireless"
+      ]
     },
     "zmk": {
       "id": "zmk",
       "name": "ZMK Firmware",
       "complexity": 3,
-      "image": "/images/firmware/zmk.jpg",
+      "image": "/images/components/firmware/zmk.webp",
       "description": "Modern firmware designed for wireless keyboards",
       "pros": [
         "Wireless Bluetooth support",
@@ -1321,8 +2002,14 @@
         "Requires GitHub for configuration",
         "No wired-only support"
       ],
-      "compatibleWith": ["nice-nano", "wireless"],
-      "incompatibleWith": ["pro-micro", "elite-c"]
+      "compatibleWith": [
+        "nice-nano",
+        "wireless"
+      ],
+      "incompatibleWith": [
+        "pro-micro",
+        "elite-c"
+      ]
     }
   }
 }

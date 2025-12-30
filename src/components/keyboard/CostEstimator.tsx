@@ -1,54 +1,108 @@
-import React, { useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { useCostEstimate } from '../../hooks/useCostEstimate';
-import { useUserChoices } from '../../contexts/UserChoicesContext';
-import { useCurrency } from '../../contexts/CurrencyContext';
-import { useAppSettings } from '../../contexts/AppSettingsContext';
-import { checkCompatibility, getCompatibilityStatus } from '../../utils/compatibilityChecker';
-import { exportAsJSON, exportAsText } from '../../utils/exportBuildPlan';
+import React, { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useCostEstimate } from "../../hooks/useCostEstimate";
+import { useUserChoices } from "../../contexts/UserChoicesContext";
+import { useCurrency } from "../../contexts/CurrencyContext";
+import { useAppSettings } from "../../contexts/AppSettingsContext";
+import {
+  checkCompatibility,
+  getCompatibilityStatus,
+} from "../../utils/compatibilityChecker";
+import { exportAsJSON, exportAsText } from "../../utils/exportBuildPlan";
 
 export function CostEstimator() {
   const { breakdown, total, complexity, buildTimeHours } = useCostEstimate();
-  const { choices, isComplete } = useUserChoices();
+  const { choices, isComplete, resetChoices } = useUserChoices();
   const { formatCurrency, currency } = useCurrency();
   const { settings } = useAppSettings();
   const warnings = checkCompatibility(choices);
   const compatibilityStatus = getCompatibilityStatus(warnings);
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const handleExportJSON = () => {
-    exportAsJSON(choices, breakdown, total, complexity, buildTimeHours, currency);
+    exportAsJSON(
+      choices,
+      breakdown,
+      total,
+      complexity,
+      buildTimeHours,
+      currency
+    );
     setShowExportMenu(false);
   };
 
   const handleExportText = () => {
-    exportAsText(choices, breakdown, total, complexity, buildTimeHours, currency, formatCurrency);
+    exportAsText(
+      choices,
+      breakdown,
+      total,
+      complexity,
+      buildTimeHours,
+      currency,
+      formatCurrency
+    );
     setShowExportMenu(false);
   };
 
+  const handleReset = () => {
+    resetChoices();
+    setShowResetConfirm(false);
+  };
+
   const breakdownItems = [
-    { label: 'Controllers', amount: breakdown.controller },
-    { label: 'Switches', amount: breakdown.switches },
-    { label: 'Keycaps', amount: breakdown.keycaps },
-    { label: 'PCB', amount: breakdown.pcb },
-    { label: 'Case', amount: breakdown.case },
-    { label: 'Hardware', amount: breakdown.hardware },
-    { label: 'Features', amount: breakdown.features },
-    { label: 'Connectivity', amount: breakdown.connectivity },
-    { label: 'Shipping', amount: breakdown.shipping },
+    { label: "Controllers", amount: breakdown.controller },
+    { label: "Switches", amount: breakdown.switches },
+    { label: "Keycaps", amount: breakdown.keycaps },
+    { label: "PCB", amount: breakdown.pcb },
+    { label: "Case", amount: breakdown.case },
+    { label: "Hardware", amount: breakdown.hardware },
+    { label: "Features", amount: breakdown.features },
+    { label: "Connectivity", amount: breakdown.connectivity },
+    { label: "Shipping", amount: breakdown.shipping },
   ].filter((item) => item.amount > 0);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 sticky top-4">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">
-        {settings.showPricing ? 'Build Estimate' : 'Build Summary'}
+    <div
+      className="p-6 sticky top-4"
+      style={{
+        border: "3px solid var(--color-border)",
+        background: "var(--color-bg-secondary)",
+      }}
+    >
+      <h2
+        className="text-xl font-bold mb-6"
+        style={{
+          fontFamily: "var(--font-display)",
+          letterSpacing: "0.02em",
+          color: "var(--color-text-primary)",
+        }}
+      >
+        {settings.showPricing ? "BUILD_ESTIMATE" : "BUILD_SUMMARY"}
       </h2>
 
       {/* Total Cost */}
       {settings.showPricing && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white">
-          <div className="text-sm font-medium mb-1">Total Estimated Cost</div>
-          <div className="text-3xl font-bold">{formatCurrency(total)}</div>
+        <div
+          className="mb-6 p-4 border-2"
+          style={{
+            borderColor: "var(--color-accent-orange)",
+            background: "var(--color-accent-orange)",
+            color: "white",
+          }}
+        >
+          <div
+            className="text-xs font-bold mb-2 tracking-wide"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            TOTAL_COST
+          </div>
+          <div
+            className="text-3xl font-bold"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {formatCurrency(total)}
+          </div>
         </div>
       )}
 
@@ -56,26 +110,40 @@ export function CostEstimator() {
       {warnings.length > 0 && (
         <div className="mb-6">
           <div
-            className={`p-3 rounded-lg ${
-              compatibilityStatus === 'errors'
-                ? 'bg-red-50 border border-red-200'
-                : 'bg-yellow-50 border border-yellow-200'
-            }`}
+            className="p-3 border-2"
+            style={{
+              borderColor:
+                compatibilityStatus === "errors"
+                  ? "var(--color-accent-orange)"
+                  : "var(--color-text-secondary)",
+              background: "var(--color-bg-primary)",
+            }}
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg">
-                {compatibilityStatus === 'errors' ? '⛔' : '⚠️'}
+                {compatibilityStatus === "errors" ? "⛔" : "⚠️"}
               </span>
               <span
-                className={`font-semibold ${
-                  compatibilityStatus === 'errors' ? 'text-red-800' : 'text-yellow-800'
-                }`}
+                className="font-bold text-xs tracking-wide"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color:
+                    compatibilityStatus === "errors"
+                      ? "var(--color-accent-orange)"
+                      : "var(--color-text-primary)",
+                }}
               >
-                {warnings.length} Compatibility {warnings.length === 1 ? 'Issue' : 'Issues'}
+                {warnings.length} {warnings.length === 1 ? "ISSUE" : "ISSUES"}
               </span>
             </div>
-            <button className="text-sm text-blue-600 hover:underline">
-              View Details
+            <button
+              className="text-xs font-bold tracking-wide hover:underline"
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "var(--color-accent-teal)",
+              }}
+            >
+              VIEW_DETAILS
             </button>
           </div>
         </div>
@@ -84,52 +152,136 @@ export function CostEstimator() {
       {/* Complexity */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-700">Build Complexity</span>
-          <span className="text-sm font-bold text-gray-900">{complexity}/10</span>
+          <span
+            className="text-xs font-bold tracking-wide"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            COMPLEXITY
+          </span>
+          <span
+            className="text-sm font-bold"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-primary)",
+            }}
+          >
+            {complexity}/10
+          </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+        <div
+          className="w-full h-4 border-2"
+          style={{
+            borderColor: "var(--color-border)",
+            background: "var(--color-bg-primary)",
+          }}
+        >
           <div
-            className={`h-3 rounded-full transition-all ${
-              complexity <= 3
-                ? 'bg-green-500'
-                : complexity <= 6
-                ? 'bg-yellow-500'
-                : 'bg-red-500'
-            }`}
-            style={{ width: `${complexity * 10}%` }}
+            className="h-full transition-all"
+            style={{
+              width: `${complexity * 10}%`,
+              background:
+                complexity <= 3
+                  ? "var(--color-accent-teal)"
+                  : complexity <= 6
+                    ? "var(--color-text-secondary)"
+                    : "var(--color-accent-orange)",
+            }}
           />
         </div>
-        <div className="text-xs text-gray-600 mt-1">
+        <div
+          className="text-xs mt-2 font-bold tracking-wide"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--color-text-secondary)",
+          }}
+        >
           {complexity <= 3
-            ? 'Beginner Friendly'
+            ? "[BEGINNER]"
             : complexity <= 6
-            ? 'Intermediate'
-            : 'Advanced'}
+              ? "[INTERMEDIATE]"
+              : "[ADVANCED]"}
         </div>
       </div>
 
       {/* Build Time */}
-      <div className="mb-6 p-3 bg-gray-50 rounded-lg">
-        <div className="text-sm text-gray-600 mb-1">Estimated Build Time</div>
-        <div className="text-2xl font-bold text-purple-600">{buildTimeHours}h</div>
-        <div className="text-xs text-gray-500 mt-1">
+      <div
+        className="mb-6 p-4 border-2"
+        style={{
+          borderColor: "var(--color-border-light)",
+          background: "var(--color-bg-primary)",
+        }}
+      >
+        <div
+          className="text-xs mb-2 font-bold tracking-wide"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--color-text-secondary)",
+          }}
+        >
+          BUILD_TIME
+        </div>
+        <div
+          className="text-2xl font-bold"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--color-accent-teal)",
+          }}
+        >
+          {buildTimeHours}h
+        </div>
+        <div
+          className="text-xs mt-1 font-bold tracking-wide"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--color-text-secondary)",
+          }}
+        >
           {buildTimeHours < 5
-            ? 'Quick build'
+            ? "[QUICK]"
             : buildTimeHours < 20
-            ? 'Weekend project'
-            : 'Multi-week project'}
+              ? "[WEEKEND]"
+              : "[MULTI_WEEK]"}
         </div>
       </div>
 
       {/* Cost Breakdown */}
       {settings.showPricing && breakdownItems.length > 0 && (
         <div className="mb-6">
-          <h3 className="font-semibold text-gray-900 mb-3">Cost Breakdown</h3>
+          <h3
+            className="font-bold mb-3 text-xs tracking-wide"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-text-primary)",
+            }}
+          >
+            [BREAKDOWN]
+          </h3>
           <div className="space-y-2">
             {breakdownItems.map((item) => (
-              <div key={item.label} className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">{item.label}</span>
-                <span className="font-medium text-gray-900">
+              <div
+                key={item.label}
+                className="flex items-center justify-between text-sm pb-2"
+                style={{ borderBottom: "1px solid var(--color-border-light)" }}
+              >
+                <span
+                  className="text-xs font-bold tracking-wide"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    color: "var(--color-text-secondary)",
+                  }}
+                >
+                  {item.label.toUpperCase()}
+                </span>
+                <span
+                  className="font-bold"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    color: "var(--color-text-primary)",
+                  }}
+                >
                   {formatCurrency(item.amount)}
                 </span>
               </div>
@@ -138,53 +290,155 @@ export function CostEstimator() {
         </div>
       )}
 
-      {/* Export Button */}
-      <div className="relative">
+      {/* Action Buttons */}
+      <div className="space-y-3">
+        {/* Export Button */}
+        <div className="relative">
+          <button
+            onClick={() => setShowExportMenu(!showExportMenu)}
+            className="w-full px-4 py-3 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] font-bold text-sm tracking-wide flex items-center justify-center gap-2"
+            style={{
+              borderColor: "var(--color-border)",
+              background: "var(--color-bg-secondary)",
+              color: "var(--color-text-primary)",
+              fontFamily: "var(--font-display)",
+            }}
+          >
+            EXPORT_PLAN
+            <span className="text-xs">▼</span>
+          </button>
+
+          {showExportMenu && (
+            <>
+              <div
+                className="fixed inset-0 z-10"
+                onClick={() => setShowExportMenu(false)}
+              />
+              <div
+                className="absolute bottom-full mb-2 left-0 right-0 border-2 z-20 overflow-hidden"
+                style={{
+                  background: "var(--color-bg-secondary)",
+                  borderColor: "var(--color-border)",
+                }}
+              >
+                <button
+                  onClick={handleExportJSON}
+                  className="w-full px-4 py-3 text-left transition-all hover:bg-opacity-50"
+                  style={{
+                    borderBottom: "2px solid var(--color-border-light)",
+                    background: "transparent",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background =
+                      "var(--color-bg-primary)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "transparent")
+                  }
+                >
+                  <div
+                    className="font-bold text-sm tracking-wide"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    JSON
+                  </div>
+                  <div
+                    className="text-xs"
+                    style={{ color: "var(--color-text-secondary)" }}
+                  >
+                    Machine-readable
+                  </div>
+                </button>
+                <button
+                  onClick={handleExportText}
+                  className="w-full px-4 py-3 text-left transition-all"
+                  style={{ background: "transparent" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background =
+                      "var(--color-bg-primary)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "transparent")
+                  }
+                >
+                  <div
+                    className="font-bold text-sm tracking-wide"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    TEXT
+                  </div>
+                  <div
+                    className="text-xs"
+                    style={{ color: "var(--color-text-secondary)" }}
+                  >
+                    Human-readable
+                  </div>
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Assembly Guide Button */}
+        {isComplete && (
+          <Link
+            to="/assembly"
+            className="w-full px-4 py-3 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] font-bold text-sm tracking-wide flex items-center justify-center gap-2 mt-3"
+            style={{
+              borderColor: "var(--color-accent-teal)",
+              background: "var(--color-accent-teal)",
+              color: "white",
+              fontFamily: "var(--font-display)",
+            }}
+          >
+            <span>📖</span>
+            ASSEMBLY_GUIDE
+            <span>→</span>
+          </Link>
+        )}
         <button
-          onClick={() => setShowExportMenu(!showExportMenu)}
-          className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium flex items-center justify-center gap-2"
+          onClick={() => resetChoices()}
+          className="w-full text-xs underline text-center mt-4"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--color-text-secondary)",
+          }}
         >
-          Export Build Plan
-          <span className="text-xs">▼</span>
+          RESET_CHOICES
         </button>
 
-        {showExportMenu && (
-          <>
-            <div
-              className="fixed inset-0 z-10"
-              onClick={() => setShowExportMenu(false)}
-            />
-            <div className="absolute bottom-full mb-2 left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-20 overflow-hidden">
-              <button
-                onClick={handleExportJSON}
-                className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100"
-              >
-                <div className="font-medium text-gray-900">Export as JSON</div>
-                <div className="text-xs text-gray-500">Machine-readable format</div>
-              </button>
-              <button
-                onClick={handleExportText}
-                className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors"
-              >
-                <div className="font-medium text-gray-900">Export as Text</div>
-                <div className="text-xs text-gray-500">Human-readable checklist</div>
-              </button>
+        {/* Reset Confirmation Modal */}
+        {showResetConfirm && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ background: "rgba(0,0,0,0.8)" }}
+          >
+            <div className="bg-white p-6 max-w-sm w-full">
+              <h3 className="font-bold text-lg mb-4">RESET_ALL?</h3>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  className="flex-1 py-2 border-2 border-black"
+                >
+                  CANCEL
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="flex-1 py-2 bg-red-500 text-white font-bold"
+                >
+                  YES_RESET
+                </button>
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
-
-      {/* Assembly Guide Button */}
-      {isComplete && (
-        <Link
-          to="/assembly"
-          className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center justify-center gap-2 mt-3"
-        >
-          <span>📖</span>
-          View Assembly Guide
-          <span>→</span>
-        </Link>
-      )}
     </div>
   );
 }
