@@ -3,6 +3,15 @@ import { useCurrency } from "../../contexts/CurrencyContext";
 import { useAppSettings } from "../../contexts/AppSettingsContext";
 import { ImageModal } from "../common/ImageModal";
 
+// Get base path from vite config for GitHub Pages support
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  const base = import.meta.env.BASE_URL || '/';
+  // Remove leading slash from path if present and combine with base
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 interface ComponentCardProps {
   component: {
     id: string;
@@ -56,7 +65,7 @@ export function ComponentCard({
             }}
           >
             <img
-              src={component.image}
+              src={getImageUrl(component.image)}
               alt={component.name}
               className="w-full h-full object-contain p-4 transition-transform group-hover/image:scale-105"
             />
@@ -300,7 +309,7 @@ export function ComponentCard({
       {/* Image Modal */}
       {isImageModalOpen && component.image && (
         <ImageModal
-          src={component.image}
+          src={getImageUrl(component.image)}
           alt={component.name}
           onClose={() => setIsImageModalOpen(false)}
         />

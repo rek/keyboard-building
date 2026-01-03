@@ -6,6 +6,15 @@ import { ConsequencePreview, ConsequencePreviewData } from './ConsequencePreview
 import { checkCompatibility } from '../../utils/compatibilityChecker';
 import decisionTreeData from '../../data/decision-trees.json';
 
+// Get base path from vite config for GitHub Pages support
+const getImageUrl = (path: string) => {
+  if (!path) return '';
+  const base = import.meta.env.BASE_URL || '/';
+  // Remove leading slash from path if present and combine with base
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 interface DecisionStep {
   id: string;
   title: string;
@@ -189,7 +198,7 @@ export function DecisionTree() {
                       >
                         {option.image ? (
                           <img
-                            src={option.image}
+                            src={getImageUrl(option.image)}
                             alt={option.name}
                             className="w-full h-full object-contain p-2"
                           />
