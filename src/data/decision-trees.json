@@ -71,10 +71,7 @@
           "complexityDelta": 5,
           "timeHours": 20,
           "skillLevel": "Advanced",
-          "requiredTools": [
-            "3D printer or printing service",
-            "Handwiring skills"
-          ],
+          "requiredTools": ["3D printer or printing service", "Handwiring skills"],
           "downstreamEffects": [
             "Requires 3D printed case (expensive if outsourced)",
             "Usually handwired (no PCB option)",
@@ -92,9 +89,7 @@
           "complexityDelta": 3,
           "timeHours": 10,
           "skillLevel": "Intermediate",
-          "requiredTools": [
-            "Soldering iron"
-          ],
+          "requiredTools": ["Soldering iron"],
           "downstreamEffects": [
             "PCB-friendly design (easier to manufacture)",
             "Good ergonomics without 3D printing",
@@ -112,9 +107,7 @@
           "complexityDelta": 2,
           "timeHours": 5,
           "skillLevel": "Beginner",
-          "requiredTools": [
-            "Soldering iron"
-          ],
+          "requiredTools": ["Soldering iron"],
           "downstreamEffects": [
             "Simplest to design and build",
             "Familiar typing experience",
@@ -174,9 +167,7 @@
           "complexityDelta": 3,
           "timeHours": 3,
           "skillLevel": "Intermediate",
-          "requiredTools": [
-            "Battery management knowledge"
-          ],
+          "requiredTools": ["Battery management knowledge"],
           "downstreamEffects": [
             "Enables wireless builds",
             "Requires ZMK firmware (no QMK)",
@@ -297,9 +288,7 @@
           "complexityDelta": 2,
           "timeHours": 1,
           "skillLevel": "Intermediate",
-          "requiredTools": [
-            "Soldering iron"
-          ],
+          "requiredTools": ["Soldering iron"],
           "downstreamEffects": [
             "Reversible USB-C connectors",
             "No battery needed",
@@ -318,10 +307,7 @@
           "complexityDelta": 4,
           "timeHours": 5,
           "skillLevel": "Advanced",
-          "requiredTools": [
-            "Battery knowledge",
-            "Soldering iron"
-          ],
+          "requiredTools": ["Battery knowledge", "Soldering iron"],
           "downstreamEffects": [
             "Requires nice!nano controller (ZMK firmware)",
             "Need batteries and power switches",
@@ -348,10 +334,7 @@
           "complexityDelta": 3,
           "timeHours": 2,
           "skillLevel": "Intermediate",
-          "requiredTools": [
-            "Command line knowledge",
-            "QMK toolbox or CLI"
-          ],
+          "requiredTools": ["Command line knowledge", "QMK toolbox or CLI"],
           "downstreamEffects": [
             "Requires compiling firmware for changes",
             "Extensive features and community",
@@ -368,9 +351,7 @@
           "complexityDelta": 1,
           "timeHours": 1,
           "skillLevel": "Beginner",
-          "requiredTools": [
-            "Vial configurator app"
-          ],
+          "requiredTools": ["Vial configurator app"],
           "downstreamEffects": [
             "No compiling needed - GUI configuration",
             "Real-time keymap changes",
@@ -388,10 +369,7 @@
           "complexityDelta": 2,
           "timeHours": 2,
           "skillLevel": "Beginner",
-          "requiredTools": [
-            "Text editor",
-            "CircuitPython-compatible board (RP2040)"
-          ],
+          "requiredTools": ["Text editor", "CircuitPython-compatible board (RP2040)"],
           "downstreamEffects": [
             "Written in Python (easy to understand and modify)",
             "Live editing without compilation",
@@ -409,10 +387,7 @@
           "complexityDelta": 4,
           "timeHours": 3,
           "skillLevel": "Advanced",
-          "requiredTools": [
-            "GitHub account",
-            "GitHub Actions knowledge"
-          ],
+          "requiredTools": ["GitHub account", "GitHub Actions knowledge"],
           "downstreamEffects": [
             "Required for wireless builds",
             "Configuration via GitHub repository",

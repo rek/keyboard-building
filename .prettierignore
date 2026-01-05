@@ -1,0 +1,18 @@
+# Build outputs
+dist
+dist-ssr
+.nitro
+.output
+.vinxi
+.tanstack
+
+# Dependencies
+node_modules
+coverage
+
+# Auto-generated
+src/routeTree.gen.ts
+
+# Config
+package-lock.json
+pnpm-lock.yaml

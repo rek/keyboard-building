@@ -12,8 +12,8 @@ import {
   GraduationCap,
   Palette,
 } from 'lucide-react'
-import { useCurrency, CURRENCY_CONFIG, Currency } from '../contexts/CurrencyContext'
-import { useAppSettings, Theme } from '../contexts/AppSettingsContext'
+import { useCurrency, CURRENCY_CONFIG, type Currency } from '../contexts/CurrencyContext'
+import { useAppSettings, type Theme } from '../contexts/AppSettingsContext'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -27,7 +27,7 @@ export default function Header() {
         style={{
           background: 'var(--color-bg-secondary)',
           borderBottom: '3px solid var(--color-border)',
-          color: 'var(--color-text-primary)'
+          color: 'var(--color-text-primary)',
         }}
       >
         <button
@@ -35,7 +35,7 @@ export default function Header() {
           className="p-2 transition-all hover:bg-black hover:text-white"
           style={{
             border: '2px solid var(--color-border)',
-            background: 'transparent'
+            background: 'transparent',
           }}
           aria-label="Open menu"
         >
@@ -49,8 +49,8 @@ export default function Header() {
             to="/"
             className="transition-colors"
             style={{ color: 'var(--color-text-primary)' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent-orange)'}
-            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent-orange)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text-primary)')}
           >
             [SPLIT_KB_GUIDE]
           </Link>
@@ -65,14 +65,14 @@ export default function Header() {
           background: 'var(--color-bg-secondary)',
           borderRight: '3px solid var(--color-border)',
           color: 'var(--color-text-primary)',
-          boxShadow: '8px 0 0 0 var(--color-border)'
+          boxShadow: '8px 0 0 0 var(--color-border)',
         }}
       >
         <div
           className="flex items-center justify-between p-4"
           style={{
             borderBottom: '3px solid var(--color-border)',
-            fontFamily: 'var(--font-display)'
+            fontFamily: 'var(--font-display)',
           }}
         >
           <h2 className="text-xl font-bold tracking-wide">NAVIGATION</h2>
@@ -81,7 +81,7 @@ export default function Header() {
             className="p-2 transition-all hover:bg-black hover:text-white"
             style={{
               border: '2px solid var(--color-border)',
-              background: 'transparent'
+              background: 'transparent',
             }}
             aria-label="Close menu"
           >
@@ -95,13 +95,12 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent hover:border-black hover:bg-black hover:text-white"
             activeProps={{
-              className:
-                'flex items-center gap-3 p-3 transition-all mb-2 border-2',
+              className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
               style: {
                 borderColor: 'var(--color-accent-orange)',
                 background: 'var(--color-accent-orange)',
-                color: 'white'
-              }
+                color: 'white',
+              },
             }}
           >
             <Home size={20} />
@@ -113,13 +112,12 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent hover:border-black hover:bg-black hover:text-white"
             activeProps={{
-              className:
-                'flex items-center gap-3 p-3 transition-all mb-2 border-2',
+              className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
               style: {
                 borderColor: 'var(--color-accent-orange)',
                 background: 'var(--color-accent-orange)',
-                color: 'white'
-              }
+                color: 'white',
+              },
             }}
           >
             <SquareFunction size={20} />
@@ -131,13 +129,12 @@ export default function Header() {
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent hover:border-black hover:bg-black hover:text-white"
             activeProps={{
-              className:
-                'flex items-center gap-3 p-3 transition-all mb-2 border-2',
+              className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
               style: {
                 borderColor: 'var(--color-accent-orange)',
                 background: 'var(--color-accent-orange)',
-                color: 'white'
-              }
+                color: 'white',
+              },
             }}
           >
             <Network size={20} />
@@ -145,8 +142,14 @@ export default function Header() {
           </Link>
 
           {/* App Settings */}
-          <div className="mt-4 mb-2 pt-4" style={{ borderTop: '2px solid var(--color-border-light)' }}>
-            <div className="flex items-center gap-3 px-3 py-2 text-xs font-bold tracking-widest" style={{ color: 'var(--color-text-secondary)' }}>
+          <div
+            className="mt-4 mb-2 pt-4"
+            style={{ borderTop: '2px solid var(--color-border-light)' }}
+          >
+            <div
+              className="flex items-center gap-3 px-3 py-2 text-xs font-bold tracking-widest"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
               <Settings size={14} />
               <span>SETTINGS</span>
             </div>
@@ -157,9 +160,11 @@ export default function Header() {
                 onClick={() => setLearningMode(!settings.learningMode)}
                 className="w-full flex items-center justify-between px-3 py-2 transition-all border-2"
                 style={{
-                  borderColor: settings.learningMode ? 'var(--color-accent-teal)' : 'var(--color-border-light)',
+                  borderColor: settings.learningMode
+                    ? 'var(--color-accent-teal)'
+                    : 'var(--color-border-light)',
                   background: settings.learningMode ? 'var(--color-accent-teal)' : 'transparent',
-                  color: settings.learningMode ? 'white' : 'var(--color-text-primary)'
+                  color: settings.learningMode ? 'white' : 'var(--color-text-primary)',
                 }}
               >
                 <div className="flex items-center gap-2">
@@ -170,14 +175,14 @@ export default function Header() {
                   className="w-10 h-5 border-2 transition-all"
                   style={{
                     borderColor: settings.learningMode ? 'white' : 'var(--color-border)',
-                    background: 'transparent'
+                    background: 'transparent',
                   }}
                 >
                   <div
                     className="w-4 h-3.5 transition-transform"
                     style={{
                       background: settings.learningMode ? 'white' : 'var(--color-border)',
-                      transform: settings.learningMode ? 'translateX(18px)' : 'translateX(0)'
+                      transform: settings.learningMode ? 'translateX(18px)' : 'translateX(0)',
                     }}
                   />
                 </div>
@@ -216,7 +221,10 @@ export default function Header() {
 
           {/* Theme Settings */}
           <div className="mb-2 pt-4" style={{ borderTop: '2px solid var(--color-border-light)' }}>
-            <div className="flex items-center gap-3 px-3 py-2 text-xs font-bold tracking-widest" style={{ color: 'var(--color-text-secondary)' }}>
+            <div
+              className="flex items-center gap-3 px-3 py-2 text-xs font-bold tracking-widest"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
               <Palette size={14} />
               <span>THEME</span>
             </div>
@@ -227,13 +235,21 @@ export default function Header() {
                   onClick={() => setTheme(themeOption)}
                   className="px-2 py-3 text-xs font-bold transition-all border-2 flex flex-col items-center gap-1"
                   style={{
-                    borderColor: settings.theme === themeOption ? 'var(--color-accent-orange)' : 'var(--color-border-light)',
-                    background: settings.theme === themeOption ? 'var(--color-accent-orange)' : 'transparent',
-                    color: settings.theme === themeOption ? 'white' : 'var(--color-text-primary)'
+                    borderColor:
+                      settings.theme === themeOption
+                        ? 'var(--color-accent-orange)'
+                        : 'var(--color-border-light)',
+                    background:
+                      settings.theme === themeOption ? 'var(--color-accent-orange)' : 'transparent',
+                    color: settings.theme === themeOption ? 'white' : 'var(--color-text-primary)',
                   }}
                 >
                   <div className="text-[10px] tracking-widest uppercase">
-                    {themeOption === 'light' ? 'VINTAGE' : themeOption === 'dark' ? 'TERMINAL' : 'BLUEPRINT'}
+                    {themeOption === 'light'
+                      ? 'VINTAGE'
+                      : themeOption === 'dark'
+                        ? 'TERMINAL'
+                        : 'BLUEPRINT'}
                   </div>
                 </button>
               ))}
@@ -243,7 +259,10 @@ export default function Header() {
           {/* Currency Settings */}
           {settings.showPricing && (
             <div className="mb-2 pt-4" style={{ borderTop: '2px solid var(--color-border-light)' }}>
-              <div className="flex items-center gap-3 px-3 py-2 text-xs font-bold tracking-widest" style={{ color: 'var(--color-text-secondary)' }}>
+              <div
+                className="flex items-center gap-3 px-3 py-2 text-xs font-bold tracking-widest"
+                style={{ color: 'var(--color-text-secondary)' }}
+              >
                 <DollarSign size={14} />
                 <span>CURRENCY</span>
               </div>
@@ -254,21 +273,21 @@ export default function Header() {
                     onClick={() => setCurrency(curr)}
                     className="flex-1 px-3 py-2 text-xs font-bold transition-all border-2"
                     style={{
-                      borderColor: currency === curr ? 'var(--color-accent-teal)' : 'var(--color-border-light)',
+                      borderColor:
+                        currency === curr
+                          ? 'var(--color-accent-teal)'
+                          : 'var(--color-border-light)',
                       background: currency === curr ? 'var(--color-accent-teal)' : 'transparent',
-                      color: currency === curr ? 'white' : 'var(--color-text-primary)'
+                      color: currency === curr ? 'white' : 'var(--color-text-primary)',
                     }}
                   >
                     <div className="tracking-wide">{curr}</div>
-                    <div className="text-xs opacity-75">
-                      {CURRENCY_CONFIG[curr].symbol}
-                    </div>
+                    <div className="text-xs opacity-75">{CURRENCY_CONFIG[curr].symbol}</div>
                   </button>
                 ))}
               </div>
             </div>
           )}
-
         </nav>
       </aside>
     </>

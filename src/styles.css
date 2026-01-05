@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 /* Default theme: Vintage Catalog */
 :root {
@@ -13,15 +13,15 @@
   --color-border-light: #d1d1d1;
   --color-grid: rgba(209, 209, 209, 0.3);
 
-  --font-display: "JetBrains Mono", "Courier New", monospace;
-  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'JetBrains Mono', 'Courier New', monospace;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --border-width: 3px;
   --border-radius: 0px;
 }
 
 /* Dark theme: Terminal Night */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-bg-primary: #0a0e14;
   --color-bg-secondary: #12171e;
   --color-text-primary: #e6e6e6;
@@ -34,7 +34,7 @@
 }
 
 /* Blueprint theme: Technical Drawings */
-[data-theme="blueprint"] {
+[data-theme='blueprint'] {
   --color-bg-primary: #0c2d48;
   --color-bg-secondary: #145da0;
   --color-text-primary: #ffffff;
@@ -76,17 +76,13 @@ body {
 
 /* Dot matrix background pattern */
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(
-    circle at center,
-    var(--color-grid) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle at center, var(--color-grid) 1px, transparent 1px);
   background-size: 16px 16px;
   pointer-events: none;
   z-index: 0;
@@ -194,7 +190,7 @@ pre {
 }
 
 .key-button::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -6px;
   right: -6px;
@@ -242,7 +238,7 @@ pre {
 }
 
 .tech-card::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -3px;
   left: -3px;

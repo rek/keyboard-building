@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
-import { AssemblyStep } from '../../types/assembly';
+import React, { useState } from 'react'
+import { type AssemblyStep } from '../../types/assembly'
 
 interface StepCardProps {
-  step: AssemblyStep;
-  isComplete: boolean;
-  onToggleComplete: () => void;
+  step: AssemblyStep
+  isComplete: boolean
+  onToggleComplete: () => void
 }
 
 export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) {
-  const [showWarnings, setShowWarnings] = useState(false);
-  const [showTips, setShowTips] = useState(false);
+  const [showWarnings, setShowWarnings] = useState(false)
+  const [showTips, setShowTips] = useState(false)
 
-  const hasWarnings = step.warnings && step.warnings.length > 0;
-  const hasTips = step.tips && step.tips.length > 0;
-  const hasLinks = step.externalLinks && step.externalLinks.length > 0;
-  const hasTools = step.requiredTools && step.requiredTools.length > 0;
+  const hasWarnings = step.warnings && step.warnings.length > 0
+  const hasTips = step.tips && step.tips.length > 0
+  const hasLinks = step.externalLinks && step.externalLinks.length > 0
+  const hasTools = step.requiredTools && step.requiredTools.length > 0
 
   return (
     <div
       className="border-2 p-5 transition-all"
       style={{
-        borderColor: isComplete
-          ? 'var(--color-accent-teal)'
-          : 'var(--color-border)',
-        background: isComplete
-          ? 'var(--color-bg-primary)'
-          : 'var(--color-bg-secondary)'
+        borderColor: isComplete ? 'var(--color-accent-teal)' : 'var(--color-border)',
+        background: isComplete ? 'var(--color-bg-primary)' : 'var(--color-bg-secondary)',
       }}
     >
       {/* Step Header */}
@@ -35,21 +31,12 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
           onClick={onToggleComplete}
           className="mt-1 w-6 h-6 border-2 flex items-center justify-center transition-colors"
           style={{
-            borderColor: isComplete
-              ? 'var(--color-accent-teal)'
-              : 'var(--color-border)',
-            background: isComplete
-              ? 'var(--color-accent-teal)'
-              : 'transparent'
+            borderColor: isComplete ? 'var(--color-accent-teal)' : 'var(--color-border)',
+            background: isComplete ? 'var(--color-accent-teal)' : 'transparent',
           }}
         >
           {isComplete && (
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="white"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24">
               <path
                 strokeLinecap="square"
                 strokeLinejoin="miter"
@@ -66,7 +53,7 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
             className="text-lg font-bold mb-1"
             style={{
               fontFamily: 'var(--font-display)',
-              color: 'var(--color-text-primary)'
+              color: 'var(--color-text-primary)',
             }}
           >
             {step.title.toUpperCase()}
@@ -79,7 +66,7 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
               className="text-xs font-bold tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-secondary)'
+                color: 'var(--color-text-secondary)',
               }}
             >
               ⏱️ {step.estimatedTime}
@@ -113,7 +100,7 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
                   borderColor: 'var(--color-border)',
                   background: 'var(--color-bg-primary)',
                   color: 'var(--color-text-secondary)',
-                  fontFamily: 'var(--font-display)'
+                  fontFamily: 'var(--font-display)',
                 }}
               >
                 🔧 {tool.toUpperCase()}
@@ -133,28 +120,23 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
               className="flex items-center gap-2 text-sm font-bold tracking-wide transition-colors"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-accent-orange)'
+                color: 'var(--color-accent-orange)',
               }}
             >
               <span>⚠️</span>
               <span>[WARNINGS] ({step.warnings?.length})</span>
-              <span className="text-xs">
-                {showWarnings ? '▼' : '▶'}
-              </span>
+              <span className="text-xs">{showWarnings ? '▼' : '▶'}</span>
             </button>
             {showWarnings && (
               <ul
                 className="mt-2 ml-6 space-y-2 text-sm p-3 border-l-4"
                 style={{
                   borderColor: 'var(--color-accent-orange)',
-                  background: 'var(--color-bg-primary)'
+                  background: 'var(--color-bg-primary)',
                 }}
               >
                 {step.warnings?.map((warning, idx) => (
-                  <li
-                    key={idx}
-                    style={{ color: 'var(--color-text-secondary)' }}
-                  >
+                  <li key={idx} style={{ color: 'var(--color-text-secondary)' }}>
                     <span className="font-bold" style={{ color: 'var(--color-accent-orange)' }}>
                       &gt;
                     </span>{' '}
@@ -174,28 +156,23 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
               className="flex items-center gap-2 text-sm font-bold tracking-wide transition-colors"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-accent-teal)'
+                color: 'var(--color-accent-teal)',
               }}
             >
               <span>💡</span>
               <span>[PRO_TIPS] ({step.tips?.length})</span>
-              <span className="text-xs">
-                {showTips ? '▼' : '▶'}
-              </span>
+              <span className="text-xs">{showTips ? '▼' : '▶'}</span>
             </button>
             {showTips && (
               <ul
                 className="mt-2 ml-6 space-y-2 text-sm p-3 border-l-4"
                 style={{
                   borderColor: 'var(--color-accent-teal)',
-                  background: 'var(--color-bg-primary)'
+                  background: 'var(--color-bg-primary)',
                 }}
               >
                 {step.tips?.map((tip, idx) => (
-                  <li
-                    key={idx}
-                    style={{ color: 'var(--color-text-secondary)' }}
-                  >
+                  <li key={idx} style={{ color: 'var(--color-text-secondary)' }}>
                     <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
                       &gt;
                     </span>{' '}
@@ -209,15 +186,12 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
 
         {/* External Links */}
         {hasLinks && (
-          <div
-            className="mt-3 pt-3"
-            style={{ borderTop: '2px solid var(--color-border-light)' }}
-          >
+          <div className="mt-3 pt-3" style={{ borderTop: '2px solid var(--color-border-light)' }}>
             <div
               className="text-sm font-bold mb-3 tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-primary)'
+                color: 'var(--color-text-primary)',
               }}
             >
               🔗 [EXTERNAL_RESOURCES]
@@ -232,7 +206,7 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
                   className="block p-3 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
                   style={{
                     borderColor: 'var(--color-border)',
-                    background: 'var(--color-bg-primary)'
+                    background: 'var(--color-bg-primary)',
                   }}
                 >
                   <div className="flex items-center justify-between">
@@ -241,7 +215,7 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
                         className="font-bold text-sm mb-1"
                         style={{
                           fontFamily: 'var(--font-display)',
-                          color: 'var(--color-accent-teal)'
+                          color: 'var(--color-accent-teal)',
                         }}
                       >
                         {link.title.toUpperCase()}
@@ -257,7 +231,7 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
                         borderColor: 'var(--color-border)',
                         background: 'var(--color-bg-secondary)',
                         color: 'var(--color-text-secondary)',
-                        fontFamily: 'var(--font-display)'
+                        fontFamily: 'var(--font-display)',
                       }}
                     >
                       {link.type.toUpperCase()}
@@ -270,5 +244,5 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
         )}
       </div>
     </div>
-  );
+  )
 }

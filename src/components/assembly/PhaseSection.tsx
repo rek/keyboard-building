@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { AssemblyPhase } from '../../types/assembly';
-import { StepCard } from './StepCard';
+import React, { useState } from 'react'
+import { type AssemblyPhase } from '../../types/assembly'
+import { StepCard } from './StepCard'
 
 interface PhaseSectionProps {
-  phase: AssemblyPhase;
+  phase: AssemblyPhase
   progress: {
-    isComplete: (stepId: string) => boolean;
-    toggleStep: (stepId: string) => void;
-    getPhaseProgress: (stepIds: string[]) => number;
-    isPhaseComplete: (stepIds: string[]) => boolean;
-  };
+    isComplete: (stepId: string) => boolean
+    toggleStep: (stepId: string) => void
+    getPhaseProgress: (stepIds: string[]) => number
+    isPhaseComplete: (stepIds: string[]) => boolean
+  }
 }
 
 export function PhaseSection({ phase, progress }: PhaseSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(true)
 
-  const stepIds = phase.steps.map((step) => step.id);
-  const phaseProgress = progress.getPhaseProgress(stepIds);
-  const isPhaseComplete = progress.isPhaseComplete(stepIds);
+  const stepIds = phase.steps.map((step) => step.id)
+  const phaseProgress = progress.getPhaseProgress(stepIds)
+  const isPhaseComplete = progress.isPhaseComplete(stepIds)
 
   return (
     <div
       style={{
         border: '3px solid var(--color-border)',
-        background: 'var(--color-bg-secondary)'
+        background: 'var(--color-bg-secondary)',
       }}
     >
       {/* Phase Header */}
@@ -31,8 +31,8 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full px-6 py-4 flex items-center justify-between transition-colors"
         style={{ background: 'transparent' }}
-        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-bg-primary)'}
-        onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--color-bg-primary)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
       >
         <div className="flex items-center gap-4">
           {/* Phase Icon/Number */}
@@ -42,17 +42,15 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               borderColor: isPhaseComplete
                 ? 'var(--color-accent-teal)'
                 : phaseProgress > 0
-                ? 'var(--color-accent-orange)'
-                : 'var(--color-border)',
+                  ? 'var(--color-accent-orange)'
+                  : 'var(--color-border)',
               background: isPhaseComplete
                 ? 'var(--color-accent-teal)'
                 : phaseProgress > 0
-                ? 'var(--color-accent-orange)'
-                : 'transparent',
-              color: isPhaseComplete || phaseProgress > 0
-                ? 'white'
-                : 'var(--color-text-secondary)',
-              fontFamily: 'var(--font-display)'
+                  ? 'var(--color-accent-orange)'
+                  : 'transparent',
+              color: isPhaseComplete || phaseProgress > 0 ? 'white' : 'var(--color-text-secondary)',
+              fontFamily: 'var(--font-display)',
             }}
           >
             {isPhaseComplete ? '✓' : `${phase.order}`.padStart(2, '0')}
@@ -64,7 +62,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               className="text-xl font-bold"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-primary)'
+                color: 'var(--color-text-primary)',
               }}
             >
               {phase.title.toUpperCase()}
@@ -83,7 +81,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               className="text-2xl font-bold"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-accent-teal)'
+                color: 'var(--color-accent-teal)',
               }}
             >
               {phaseProgress}%
@@ -92,11 +90,10 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               className="text-xs font-bold tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-secondary)'
+                color: 'var(--color-text-secondary)',
               }}
             >
-              [{phase.steps.filter((s) => progress.isComplete(s.id)).length}/
-              {phase.steps.length}]
+              [{phase.steps.filter((s) => progress.isComplete(s.id)).length}/{phase.steps.length}]
             </div>
           </div>
 
@@ -105,7 +102,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
             className="transform transition-transform"
             style={{
               transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             <span className="text-xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>
@@ -121,7 +118,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
           className="w-full h-2 border-2"
           style={{
             borderColor: 'var(--color-border)',
-            background: 'var(--color-bg-primary)'
+            background: 'var(--color-bg-primary)',
           }}
         >
           <div
@@ -130,7 +127,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               width: `${phaseProgress}%`,
               background: isPhaseComplete
                 ? 'var(--color-accent-teal)'
-                : 'var(--color-accent-orange)'
+                : 'var(--color-accent-orange)',
             }}
           />
         </div>
@@ -147,7 +144,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               className="font-bold tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-secondary)'
+                color: 'var(--color-text-secondary)',
               }}
             >
               ⏱️ ESTIMATED_TIME: {phase.estimatedTime}
@@ -156,7 +153,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
               className="font-bold tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-secondary)'
+                color: 'var(--color-text-secondary)',
               }}
             >
               [{phase.steps.length}] STEPS
@@ -174,5 +171,5 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

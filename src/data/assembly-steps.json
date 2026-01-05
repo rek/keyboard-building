@@ -29,10 +29,7 @@
             "Test microcontrollers before soldering - flash a blink sketch to verify they work",
             "Order 10-20% extra switches and diodes in case of failures"
           ],
-          "requiredTools": [
-            "Build plan from cost estimator",
-            "Phone/camera for documentation"
-          ],
+          "requiredTools": ["Build plan from cost estimator", "Phone/camera for documentation"],
           "externalLinks": []
         },
         {
@@ -314,11 +311,7 @@
             "Use a magnifying glass or phone camera to inspect SMD pads",
             "Test the PCB with a multimeter if you're unsure about its condition"
           ],
-          "requiredTools": [
-            "Multimeter",
-            "Magnifying glass",
-            "Kit instructions"
-          ],
+          "requiredTools": ["Multimeter", "Magnifying glass", "Kit instructions"],
           "externalLinks": []
         },
         {
@@ -553,11 +546,7 @@
             "Use Vial's test matrix feature to verify all keys work",
             "Enable Secure mode in Vial for additional security"
           ],
-          "requiredTools": [
-            "Vial configurator app",
-            "USB cable",
-            "Vial firmware file"
-          ],
+          "requiredTools": ["Vial configurator app", "USB cable", "Vial firmware file"],
           "externalLinks": [
             {
               "title": "Get Vial",
@@ -710,11 +699,7 @@
             "Some computers are slow to recognize new keyboards - wait 30 seconds",
             "Check Device Manager/System Info to confirm correct device name"
           ],
-          "requiredTools": [
-            "USB cable",
-            "TRRS cable (for wired split)",
-            "Computer"
-          ],
+          "requiredTools": ["USB cable", "TRRS cable (for wired split)", "Computer"],
           "externalLinks": []
         },
         {
@@ -739,11 +724,7 @@
             "Test in multiple applications to rule out OS-specific issues",
             "If most keys work, it's probably fixable - don't panic!"
           ],
-          "requiredTools": [
-            "Web browser",
-            "Working keyboard (for documentation)",
-            "Pen and paper"
-          ],
+          "requiredTools": ["Web browser", "Working keyboard (for documentation)", "Pen and paper"],
           "externalLinks": [
             {
               "title": "Keyboard Tester",

@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { ComponentCard } from './ComponentCard';
-import componentsData from '../../data/components.json';
-import categoryInfo from '../../data/category-info.json';
+import React, { useState } from 'react'
+import { ComponentCard } from './ComponentCard'
+import componentsData from '../../data/components.json'
+import categoryInfo from '../../data/category-info.json'
 
-type ComponentCategory = 'controllers' | 'switches' | 'features' | 'connectivity' | 'firmware' | 'electronics';
+type ComponentCategory =
+  | 'controllers'
+  | 'switches'
+  | 'features'
+  | 'connectivity'
+  | 'firmware'
+  | 'electronics'
 
 export function ComponentGrid() {
-  const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>('controllers');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>('controllers')
+  const [searchTerm, setSearchTerm] = useState('')
 
   const categories: { id: ComponentCategory; label: string }[] = [
     { id: 'controllers', label: 'Controllers' },
@@ -16,23 +22,23 @@ export function ComponentGrid() {
     { id: 'connectivity', label: 'Connectivity' },
     { id: 'firmware', label: 'Firmware' },
     { id: 'electronics', label: 'Electronics' },
-  ];
+  ]
 
   const getComponents = (category: ComponentCategory) => {
-    const categoryData = componentsData[category];
-    if (!categoryData) return [];
+    const categoryData = componentsData[category]
+    if (!categoryData) return []
 
     return Object.values(categoryData).map((component: any) => ({
       ...component,
       category,
-    }));
-  };
+    }))
+  }
 
   const filteredComponents = getComponents(selectedCategory).filter((component) =>
     component.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  )
 
-  const currentCategoryInfo = categoryInfo[selectedCategory];
+  const currentCategoryInfo = categoryInfo[selectedCategory]
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -50,13 +56,13 @@ export function ComponentGrid() {
             color: 'var(--color-text-primary)',
             fontFamily: 'var(--font-display)',
             fontSize: '0.875rem',
-            letterSpacing: '0.05em'
+            letterSpacing: '0.05em',
           }}
           onFocus={(e) => {
-            e.currentTarget.style.borderColor = 'var(--color-accent-orange)';
+            e.currentTarget.style.borderColor = 'var(--color-accent-orange)'
           }}
           onBlur={(e) => {
-            e.currentTarget.style.borderColor = 'var(--color-border)';
+            e.currentTarget.style.borderColor = 'var(--color-border)'
           }}
         />
       </div>
@@ -70,8 +76,12 @@ export function ComponentGrid() {
             className="px-6 py-3 font-bold transition-all border-2 text-sm tracking-wide"
             style={{
               fontFamily: 'var(--font-display)',
-              borderColor: selectedCategory === category.id ? 'var(--color-accent-orange)' : 'var(--color-border)',
-              background: selectedCategory === category.id ? 'var(--color-accent-orange)' : 'transparent',
+              borderColor:
+                selectedCategory === category.id
+                  ? 'var(--color-accent-orange)'
+                  : 'var(--color-border)',
+              background:
+                selectedCategory === category.id ? 'var(--color-accent-orange)' : 'transparent',
               color: selectedCategory === category.id ? 'white' : 'var(--color-text-primary)',
             }}
           >
@@ -86,7 +96,7 @@ export function ComponentGrid() {
           className="mb-8 p-6 md:p-8"
           style={{
             border: '3px solid var(--color-border)',
-            background: 'var(--color-bg-secondary)'
+            background: 'var(--color-bg-secondary)',
           }}
         >
           {/* Header */}
@@ -96,7 +106,7 @@ export function ComponentGrid() {
               style={{
                 fontFamily: 'var(--font-display)',
                 letterSpacing: '0.02em',
-                color: 'var(--color-text-primary)'
+                color: 'var(--color-text-primary)',
               }}
             >
               {currentCategoryInfo.title.toUpperCase()}
@@ -106,7 +116,7 @@ export function ComponentGrid() {
               style={{
                 color: 'var(--color-accent-orange)',
                 fontFamily: 'var(--font-display)',
-                letterSpacing: '0.03em'
+                letterSpacing: '0.03em',
               }}
             >
               // {currentCategoryInfo.tagline}
@@ -114,10 +124,7 @@ export function ComponentGrid() {
           </div>
 
           {/* Description */}
-          <p
-            className="mb-6 leading-relaxed"
-            style={{ color: 'var(--color-text-secondary)' }}
-          >
+          <p className="mb-6 leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
             {currentCategoryInfo.description}
           </p>
 
@@ -127,7 +134,7 @@ export function ComponentGrid() {
               className="font-bold mb-3 text-sm tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-primary)'
+                color: 'var(--color-text-primary)',
               }}
             >
               [WHY_IT_MATTERS]
@@ -139,7 +146,7 @@ export function ComponentGrid() {
                   className="flex items-start gap-3 text-sm pl-4"
                   style={{
                     borderLeft: '2px solid var(--color-accent-teal)',
-                    color: 'var(--color-text-secondary)'
+                    color: 'var(--color-text-secondary)',
                   }}
                 >
                   <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
@@ -157,7 +164,7 @@ export function ComponentGrid() {
               className="font-bold mb-3 text-sm tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-primary)'
+                color: 'var(--color-text-primary)',
               }}
             >
               [KEY_TRADEOFFS]
@@ -169,14 +176,14 @@ export function ComponentGrid() {
                   className="p-4"
                   style={{
                     border: '2px solid var(--color-border-light)',
-                    background: 'var(--color-bg-primary)'
+                    background: 'var(--color-bg-primary)',
                   }}
                 >
                   <h4
                     className="font-bold text-sm mb-2 tracking-wide"
                     style={{
                       fontFamily: 'var(--font-display)',
-                      color: 'var(--color-text-primary)'
+                      color: 'var(--color-text-primary)',
                     }}
                   >
                     {tradeoff.factor.toUpperCase()}
@@ -195,7 +202,7 @@ export function ComponentGrid() {
               className="font-bold mb-3 text-sm tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-primary)'
+                color: 'var(--color-text-primary)',
               }}
             >
               [QUICK_TIPS]
@@ -211,7 +218,7 @@ export function ComponentGrid() {
                     className="font-bold mt-0.5"
                     style={{
                       color: 'var(--color-accent-orange)',
-                      fontFamily: 'var(--font-display)'
+                      fontFamily: 'var(--font-display)',
                     }}
                   >
                     &gt;
@@ -228,11 +235,7 @@ export function ComponentGrid() {
       {filteredComponents.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredComponents.map((component) => (
-            <ComponentCard
-              key={component.id}
-              component={component}
-              category={selectedCategory}
-            />
+            <ComponentCard key={component.id} component={component} category={selectedCategory} />
           ))}
         </div>
       ) : (
@@ -240,14 +243,14 @@ export function ComponentGrid() {
           className="text-center py-12 px-6"
           style={{
             border: '3px solid var(--color-border)',
-            background: 'var(--color-bg-secondary)'
+            background: 'var(--color-bg-secondary)',
           }}
         >
           <p
             className="font-bold tracking-wide"
             style={{
               fontFamily: 'var(--font-display)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             [NO_RESULTS_FOUND]
@@ -255,5 +258,5 @@ export function ComponentGrid() {
         </div>
       )}
     </div>
-  );
+  )
 }

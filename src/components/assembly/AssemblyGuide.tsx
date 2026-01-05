@@ -1,15 +1,15 @@
-import React from 'react';
-import { useUserChoices } from '../../contexts/UserChoicesContext';
-import { useAssemblySteps } from '../../hooks/useAssemblySteps';
-import { useAssemblyProgress } from '../../hooks/useAssemblyProgress';
-import { PhaseSection } from './PhaseSection';
+import React from 'react'
+import { useUserChoices } from '../../contexts/UserChoicesContext'
+import { useAssemblySteps } from '../../hooks/useAssemblySteps'
+import { useAssemblyProgress } from '../../hooks/useAssemblyProgress'
+import { PhaseSection } from './PhaseSection'
 
 export function AssemblyGuide() {
-  const { choices } = useUserChoices();
-  const { phases, totalSteps } = useAssemblySteps();
-  const progress = useAssemblyProgress(choices);
+  const { choices } = useUserChoices()
+  const { phases, totalSteps } = useAssemblySteps()
+  const progress = useAssemblyProgress(choices)
 
-  const overallProgress = progress.getOverallProgress(totalSteps);
+  const overallProgress = progress.getOverallProgress(totalSteps)
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -20,7 +20,7 @@ export function AssemblyGuide() {
           style={{
             fontFamily: 'var(--font-display)',
             letterSpacing: '0.02em',
-            color: 'var(--color-text-primary)'
+            color: 'var(--color-text-primary)',
           }}
         >
           [ASSEMBLY_GUIDE]
@@ -30,7 +30,7 @@ export function AssemblyGuide() {
           style={{
             color: 'var(--color-accent-orange)',
             fontFamily: 'var(--font-display)',
-            letterSpacing: '0.03em'
+            letterSpacing: '0.03em',
           }}
         >
           // Step-by-step instructions customized for your build configuration
@@ -42,14 +42,14 @@ export function AssemblyGuide() {
         className="p-6 mb-8"
         style={{
           border: '3px solid var(--color-border)',
-          background: 'var(--color-bg-secondary)'
+          background: 'var(--color-bg-secondary)',
         }}
       >
         <h2
           className="text-xl font-bold mb-4 tracking-wide"
           style={{
             fontFamily: 'var(--font-display)',
-            color: 'var(--color-text-primary)'
+            color: 'var(--color-text-primary)',
           }}
         >
           [YOUR_BUILD]
@@ -61,15 +61,12 @@ export function AssemblyGuide() {
                 className="text-xs font-bold mb-1 tracking-wide"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-text-secondary)'
+                  color: 'var(--color-text-secondary)',
                 }}
               >
                 BUILD_METHOD:
               </div>
-              <div
-                className="font-semibold"
-                style={{ color: 'var(--color-text-primary)' }}
-              >
+              <div className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                 {formatId(choices.buildMethod)}
               </div>
             </div>
@@ -80,15 +77,12 @@ export function AssemblyGuide() {
                 className="text-xs font-bold mb-1 tracking-wide"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-text-secondary)'
+                  color: 'var(--color-text-secondary)',
                 }}
               >
                 LAYOUT:
               </div>
-              <div
-                className="font-semibold"
-                style={{ color: 'var(--color-text-primary)' }}
-              >
+              <div className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                 {formatId(choices.layout.formFactor)}
               </div>
             </div>
@@ -99,15 +93,12 @@ export function AssemblyGuide() {
                 className="text-xs font-bold mb-1 tracking-wide"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-text-secondary)'
+                  color: 'var(--color-text-secondary)',
                 }}
               >
                 CONTROLLER:
               </div>
-              <div
-                className="font-semibold"
-                style={{ color: 'var(--color-text-primary)' }}
-              >
+              <div className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                 {formatId(choices.controller)}
               </div>
             </div>
@@ -118,15 +109,12 @@ export function AssemblyGuide() {
                 className="text-xs font-bold mb-1 tracking-wide"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-text-secondary)'
+                  color: 'var(--color-text-secondary)',
                 }}
               >
                 SWITCHES:
               </div>
-              <div
-                className="font-semibold"
-                style={{ color: 'var(--color-text-primary)' }}
-              >
+              <div className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                 {formatId(choices.switchType)}
               </div>
             </div>
@@ -137,15 +125,12 @@ export function AssemblyGuide() {
                 className="text-xs font-bold mb-1 tracking-wide"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-text-secondary)'
+                  color: 'var(--color-text-secondary)',
                 }}
               >
                 CONNECTIVITY:
               </div>
-              <div
-                className="font-semibold"
-                style={{ color: 'var(--color-text-primary)' }}
-              >
+              <div className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                 {formatId(choices.connectivity)}
               </div>
             </div>
@@ -156,15 +141,12 @@ export function AssemblyGuide() {
                 className="text-xs font-bold mb-1 tracking-wide"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-text-secondary)'
+                  color: 'var(--color-text-secondary)',
                 }}
               >
                 FIRMWARE:
               </div>
-              <div
-                className="font-semibold"
-                style={{ color: 'var(--color-text-primary)' }}
-              >
+              <div className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                 {formatId(choices.firmware)}
               </div>
             </div>
@@ -173,15 +155,12 @@ export function AssemblyGuide() {
 
         {/* Features if any enabled */}
         {Object.values(choices.features).some((f) => f) && (
-          <div
-            className="mt-4 pt-4"
-            style={{ borderTop: '2px solid var(--color-border-light)' }}
-          >
+          <div className="mt-4 pt-4" style={{ borderTop: '2px solid var(--color-border-light)' }}>
             <div
               className="text-xs font-bold mb-3 tracking-wide"
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-text-secondary)'
+                color: 'var(--color-text-secondary)',
               }}
             >
               FEATURES:
@@ -197,7 +176,7 @@ export function AssemblyGuide() {
                       borderColor: 'var(--color-accent-teal)',
                       background: 'transparent',
                       color: 'var(--color-accent-teal)',
-                      fontFamily: 'var(--font-display)'
+                      fontFamily: 'var(--font-display)',
                     }}
                   >
                     {formatId(feature).toUpperCase()}
@@ -213,7 +192,7 @@ export function AssemblyGuide() {
         className="p-6 mb-8"
         style={{
           border: '3px solid var(--color-border)',
-          background: 'var(--color-bg-secondary)'
+          background: 'var(--color-bg-secondary)',
         }}
       >
         <div className="flex items-center justify-between mb-4">
@@ -221,7 +200,7 @@ export function AssemblyGuide() {
             className="text-xl font-bold tracking-wide"
             style={{
               fontFamily: 'var(--font-display)',
-              color: 'var(--color-text-primary)'
+              color: 'var(--color-text-primary)',
             }}
           >
             [OVERALL_PROGRESS]
@@ -230,7 +209,7 @@ export function AssemblyGuide() {
             className="text-2xl font-bold"
             style={{
               fontFamily: 'var(--font-display)',
-              color: 'var(--color-accent-teal)'
+              color: 'var(--color-accent-teal)',
             }}
           >
             {overallProgress}%
@@ -240,14 +219,14 @@ export function AssemblyGuide() {
           className="w-full h-4 border-2 mb-3"
           style={{
             borderColor: 'var(--color-border)',
-            background: 'var(--color-bg-primary)'
+            background: 'var(--color-bg-primary)',
           }}
         >
           <div
             className="h-full transition-all duration-300"
             style={{
               width: `${overallProgress}%`,
-              background: 'var(--color-accent-teal)'
+              background: 'var(--color-accent-teal)',
             }}
           />
         </div>
@@ -255,7 +234,7 @@ export function AssemblyGuide() {
           className="text-sm font-bold tracking-wide"
           style={{
             fontFamily: 'var(--font-display)',
-            color: 'var(--color-text-secondary)'
+            color: 'var(--color-text-secondary)',
           }}
         >
           [{progress.completedSteps.length}/{totalSteps}] STEPS_COMPLETED
@@ -274,14 +253,14 @@ export function AssemblyGuide() {
         className="mt-8 p-6"
         style={{
           border: '3px solid var(--color-accent-teal)',
-          background: 'var(--color-bg-secondary)'
+          background: 'var(--color-bg-secondary)',
         }}
       >
         <h3
           className="font-bold mb-4 text-sm tracking-wide"
           style={{
             fontFamily: 'var(--font-display)',
-            color: 'var(--color-text-primary)'
+            color: 'var(--color-text-primary)',
           }}
         >
           [TIPS_FOR_SUCCESS]
@@ -291,7 +270,7 @@ export function AssemblyGuide() {
             className="flex items-start gap-3 pl-4"
             style={{
               borderLeft: '2px solid var(--color-accent-teal)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
@@ -303,7 +282,7 @@ export function AssemblyGuide() {
             className="flex items-start gap-3 pl-4"
             style={{
               borderLeft: '2px solid var(--color-accent-teal)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
@@ -315,7 +294,7 @@ export function AssemblyGuide() {
             className="flex items-start gap-3 pl-4"
             style={{
               borderLeft: '2px solid var(--color-accent-teal)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
@@ -327,7 +306,7 @@ export function AssemblyGuide() {
             className="flex items-start gap-3 pl-4"
             style={{
               borderLeft: '2px solid var(--color-accent-teal)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
@@ -339,7 +318,7 @@ export function AssemblyGuide() {
             className="flex items-start gap-3 pl-4"
             style={{
               borderLeft: '2px solid var(--color-accent-teal)',
-              color: 'var(--color-text-secondary)'
+              color: 'var(--color-text-secondary)',
             }}
           >
             <span className="font-bold" style={{ color: 'var(--color-accent-teal)' }}>
@@ -350,12 +329,12 @@ export function AssemblyGuide() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
 function formatId(id: string): string {
   return id
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(' ')
 }

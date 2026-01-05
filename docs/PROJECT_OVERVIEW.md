@@ -1,17 +1,20 @@
 # Split Keyboard Builder Guide - Project Overview
 
 ## Purpose
+
 An interactive web application that guides users through building custom split keyboards. The app helps users make informed decisions by showing real-time cost estimates, complexity scores, and compatibility warnings before they commit to choices.
 
 ## Key Features
 
 ### 1. Interactive Decision Tree
+
 - Step-by-step guided decision-making process
 - 6 main decision categories: Build Method, Layout, Controller, Switches, Connectivity, Firmware
 - Consequence preview modal shows impact before confirming choices
 - Real-time compatibility checking
 
 ### 2. Real-Time Cost Estimator
+
 - Live cost calculation as users make choices
 - Detailed breakdown by category (controller, switches, PCB, features, etc.)
 - Complexity score (1-10 scale)
@@ -19,12 +22,14 @@ An interactive web application that guides users through building custom split k
 - Compatibility warnings integration
 
 ### 3. Component Encyclopedia
+
 - Browsable database of keyboard components
 - Categorized by: Controllers, Switches, Features, Connectivity, Firmware
 - Search functionality
 - Detailed specs, pros/cons, compatibility info
 
 ### 4. State Persistence
+
 - Automatic localStorage saving of user choices
 - Progress persists across browser sessions
 
@@ -88,13 +93,17 @@ src/
 ## Core Concepts
 
 ### Decision Tree
+
 Each decision step has:
+
 - Title and description
 - Multiple options (2-4 typically)
 - Each option shows: cost delta, complexity, time, skill level, tools needed, downstream effects
 
 ### Consequence Preview
+
 Before confirming a choice, users see:
+
 - Cost impact
 - Build time increase
 - Complexity increase
@@ -103,14 +112,18 @@ Before confirming a choice, users see:
 - Compatibility warnings (errors/warnings/info)
 
 ### Compatibility System
+
 Automatically checks for:
+
 - Firmware/controller mismatches (e.g., ZMK requires nice!nano)
 - Pin count requirements vs available pins
 - Wireless build requirements
 - Feature complexity warnings
 
 ### Cost Calculation
+
 Calculates total cost including:
+
 - Controllers (x2 for split)
 - Switches (based on key count)
 - Keycaps

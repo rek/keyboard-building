@@ -7,6 +7,7 @@
 Added a comprehensive settings system that allows hiding pricing and vendor information for educational use.
 
 #### Features:
+
 - **Learning Mode Toggle**: Quick toggle that hides all pricing and vendor information
 - **Individual Controls**: Fine-grained control over:
   - Show Pricing (cost estimates, breakdowns, currency)
@@ -15,14 +16,17 @@ Added a comprehensive settings system that allows hiding pricing and vendor info
 - **Conditional Currency Selector**: Currency options only appear when pricing is enabled
 
 #### Location in UI:
+
 Navigate to the sidebar menu → Settings section (below main navigation)
 
 #### How It Works:
+
 - **Learning Mode ON**: Hides all pricing and vendor information (educational focus)
 - **Learning Mode OFF**: Shows individual toggles for pricing and vendors
 - Settings auto-save to localStorage and persist across sessions
 
 #### Components Affected:
+
 - `CostEstimator.tsx`: Hides total cost and breakdown when pricing disabled
 - `DecisionTree.tsx`: Hides cost delta in option cards
 - `ConsequencePreview.tsx`: Hides cost impact in preview modal
@@ -34,6 +38,7 @@ Navigate to the sidebar menu → Settings section (below main navigation)
 Created infrastructure for component images with SVG placeholders and documentation for sourcing real photos.
 
 #### What's Ready:
+
 - Directory structure: `/public/images/components/{category}/`
 - SVG placeholder images for:
   - Pro Micro controller
@@ -43,7 +48,9 @@ Created infrastructure for component images with SVG placeholders and documentat
 - Components now properly render images (ComponentCard, DecisionTree)
 
 #### Image Documentation:
+
 See `/docs/IMAGE_SOURCES.md` for:
+
 - Where to find component images (manufacturer sites, open source)
 - Licensing guidelines
 - File naming conventions
@@ -54,6 +61,7 @@ See `/docs/IMAGE_SOURCES.md` for:
 ## File Changes
 
 ### New Files Created:
+
 1. `src/contexts/AppSettingsContext.tsx` - Settings management
 2. `docs/IMAGE_SOURCES.md` - Image sourcing guide
 3. `docs/SETTINGS_AND_IMAGES.md` - This file
@@ -63,6 +71,7 @@ See `/docs/IMAGE_SOURCES.md` for:
 7. Directory structure for images
 
 ### Modified Files:
+
 1. `src/routes/__root.tsx` - Added AppSettingsProvider
 2. `src/components/Header.tsx` - Added settings UI and toggles
 3. `src/components/keyboard/CostEstimator.tsx` - Conditional pricing display
@@ -74,6 +83,7 @@ See `/docs/IMAGE_SOURCES.md` for:
 ## Testing the Features
 
 ### Test Learning Mode:
+
 1. Open the app in browser
 2. Open navigation sidebar
 3. Scroll to "Settings" section
@@ -85,6 +95,7 @@ See `/docs/IMAGE_SOURCES.md` for:
 9. ✅ Cost Estimator sidebar should show "Build Summary" instead of costs
 
 ### Test Individual Toggles:
+
 1. Turn Learning Mode OFF
 2. ✅ Two checkboxes should appear: "Show Pricing" and "Show Vendors"
 3. Uncheck "Show Pricing"
@@ -94,6 +105,7 @@ See `/docs/IMAGE_SOURCES.md` for:
 7. ✅ Currency selector should reappear
 
 ### Test Images:
+
 1. Navigate to Components page (`/components`)
 2. ✅ Pro Micro should show SVG diagram
 3. ✅ MX Switch should show SVG diagram
@@ -103,7 +115,9 @@ See `/docs/IMAGE_SOURCES.md` for:
 ## Next Steps
 
 ### For Images:
+
 1. **Create more SVG placeholders** for remaining components:
+
    ```bash
    # Controllers: elite-c, rp2040, nice-nano
    # Switches: choc-v2
@@ -119,6 +133,7 @@ See `/docs/IMAGE_SOURCES.md` for:
    - Unsplash/Pexels for generic keyboard component photos
 
 3. **Batch process images**:
+
    ```bash
    # Resize to 800x600
    # Convert to WebP for smaller file size
@@ -128,6 +143,7 @@ See `/docs/IMAGE_SOURCES.md` for:
 4. **Update decision-trees.json** to add image paths to decision options
 
 ### For Settings:
+
 1. **Add more granular controls** (if needed):
    - Hide build time estimates
    - Hide complexity scores
@@ -146,28 +162,31 @@ See `/docs/IMAGE_SOURCES.md` for:
 ## Usage Examples
 
 ### For Educational Workshops:
+
 ```typescript
 // Default to Learning Mode for workshops
 const settings = {
-  learningMode: true,  // Hides all commercial aspects
+  learningMode: true, // Hides all commercial aspects
   showPricing: false,
-  showVendors: false
-};
+  showVendors: false,
+}
 ```
 
 ### For Build Planning:
+
 ```typescript
 // Show everything for actual build planning
 const settings = {
   learningMode: false,
-  showPricing: true,   // Show costs
-  showVendors: true    // Show where to buy
-};
+  showPricing: true, // Show costs
+  showVendors: true, // Show where to buy
+}
 ```
 
 ## Technical Details
 
 ### Settings Storage:
+
 ```typescript
 // localStorage key
 'kb-app-settings'
@@ -181,10 +200,11 @@ const settings = {
 ```
 
 ### Context API:
-```typescript
-import { useAppSettings } from '../contexts/AppSettingsContext';
 
-const { settings, updateSetting, setLearningMode } = useAppSettings();
+```typescript
+import { useAppSettings } from '../contexts/AppSettingsContext'
+
+const { settings, updateSetting, setLearningMode } = useAppSettings()
 
 // Check if pricing should be shown
 if (settings.showPricing) {
@@ -192,13 +212,14 @@ if (settings.showPricing) {
 }
 
 // Toggle learning mode
-setLearningMode(true);
+setLearningMode(true)
 
 // Update individual setting
-updateSetting('showVendors', false);
+updateSetting('showVendors', false)
 ```
 
 ### Image Paths:
+
 ```json
 {
   "controllers": {
@@ -212,17 +233,20 @@ updateSetting('showVendors', false);
 ## Troubleshooting
 
 ### Settings not persisting:
+
 - Check localStorage in browser DevTools
 - Key: `kb-app-settings`
 - Clear cache and reload
 
 ### Images not showing:
+
 - Check path in `components.json`
 - Verify file exists in `public/images/components/`
 - Check browser console for 404 errors
 - SVG files should be accessible at `/images/components/{category}/{name}.svg`
 
 ### Learning Mode toggle not working:
+
 - Check AppSettingsProvider is wrapping the app in `__root.tsx`
 - Verify all components import and use `useAppSettings()` hook
 - Check console for errors
@@ -235,10 +259,12 @@ If using manufacturer images, add to `/docs/ATTRIBUTIONS.md`:
 ## Component Images
 
 ### Controllers
+
 - **Pro Micro**: SVG diagram created for educational purposes
 - **Elite-C**: Photo courtesy of keeb.io
 
 ### Switches
+
 - **Cherry MX**: SVG diagram created for educational purposes
 - **Kailh Choc**: SVG diagram created for educational purposes
 ```

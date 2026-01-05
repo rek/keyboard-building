@@ -16,7 +16,9 @@ Welcome to the Split Keyboard Builder Guide documentation. These guides will hel
 If you're an AI agent helping to develop this project, follow this sequence:
 
 ### 1. Understand the Project
+
 Read **[PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md)** to learn:
+
 - What the application does
 - Core features and user flow
 - Tech stack
@@ -24,7 +26,9 @@ Read **[PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md)** to learn:
 - Target audience
 
 ### 2. Learn the Data Layer
+
 Read **[DATA_SCHEMAS.md](./DATA_SCHEMAS.md)** to understand:
+
 - How `components.json` is structured
 - How `decision-trees.json` defines the decision flow
 - How `cost-database.json` stores pricing
@@ -32,7 +36,9 @@ Read **[DATA_SCHEMAS.md](./DATA_SCHEMAS.md)** to understand:
 - How to add new data entries
 
 ### 3. Reference Components & APIs
+
 Use **[COMPONENT_API.md](./COMPONENT_API.md)** as a reference for:
+
 - Available React components and their props
 - Hooks like `useUserChoices` and `useCostEstimate`
 - Utility functions for calculations and formatting
@@ -40,7 +46,9 @@ Use **[COMPONENT_API.md](./COMPONENT_API.md)** as a reference for:
 - Route structure
 
 ### 4. Add New Features
+
 Follow **[EXTENDING.md](./EXTENDING.md)** for step-by-step instructions on:
+
 - Adding new decision steps
 - Adding new component categories
 - Adding feature toggles
@@ -147,26 +155,31 @@ npm run preview
 ## Key Concepts
 
 ### State Management
+
 - Global state via `UserChoicesContext`
 - Persisted to localStorage automatically
 - Access via `useUserChoices()` hook
 
 ### Cost Calculation
+
 - Centralized in `costCalculator.ts`
 - Recalculates on every state change
 - Returns breakdown + total
 
 ### Compatibility Checking
+
 - Runs before allowing option selection
 - Shows warnings in ConsequencePreview modal
 - Errors prevent selection, warnings allow with notice
 
 ### Decision Flow
+
 - Defined in `decision-trees.json`
 - Rendered by `DecisionTree` component
 - Each option shows consequence before confirming
 
 ### Component Architecture
+
 - Presentation components in `components/keyboard/`
 - Data fetching via hooks
 - State management via context
@@ -182,6 +195,7 @@ npm run preview
 ## Contributing
 
 When adding new features:
+
 1. Update relevant data files
 2. Update TypeScript types
 3. Add documentation to these files

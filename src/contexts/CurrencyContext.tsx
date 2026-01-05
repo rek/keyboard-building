@@ -1,23 +1,23 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 
-export type Currency = 'USD' | 'NPR';
+export type Currency = 'USD' | 'NPR'
 
 interface CurrencyContextType {
-  currency: Currency;
-  setCurrency: (currency: Currency) => void;
-  convertAmount: (amount: number) => number;
-  formatCurrency: (amount: number) => string;
+  currency: Currency
+  setCurrency: (currency: Currency) => void
+  convertAmount: (amount: number) => number
+  formatCurrency: (amount: number) => string
 }
 
-const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
+const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined)
 
-const STORAGE_KEY = 'kb-currency';
+const STORAGE_KEY = 'kb-currency'
 
 // Conversion rates (base: USD)
 const CONVERSION_RATES: Record<Currency, number> = {
   USD: 1,
   NPR: 133.5, // 1 USD = ~133.5 NPR (approximate rate)
-};
+}
 
 const CURRENCY_CONFIG: Record<Currency, { symbol: string; name: string; locale: string }> = {
   USD: {
@@ -30,79 +30,75 @@ const CURRENCY_CONFIG: Record<Currency, { symbol: string; name: string; locale: 
     name: 'Nepali Rupee',
     locale: 'ne-NP',
   },
-};
+}
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
-  const [currency, setCurrencyState] = useState<Currency>('USD');
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [currency, setCurrencyState] = useState<Currency>('USD')
+  const [isLoaded, setIsLoaded] = useState(false)
 
   // Load from localStorage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
+        const saved = localStorage.getItem(STORAGE_KEY)
         if (saved && (saved === 'USD' || saved === 'NPR')) {
-          setCurrencyState(saved as Currency);
+          setCurrencyState(saved as Currency)
         }
       } catch (error) {
-        console.error('Failed to load currency preference:', error);
+        console.error('Failed to load currency preference:', error)
       } finally {
-        setIsLoaded(true);
+        setIsLoaded(true)
       }
     }
-  }, []);
+  }, [])
 
   // Save to localStorage whenever currency changes
   useEffect(() => {
     if (isLoaded && typeof window !== 'undefined') {
       try {
-        localStorage.setItem(STORAGE_KEY, currency);
+        localStorage.setItem(STORAGE_KEY, currency)
       } catch (error) {
-        console.error('Failed to save currency preference:', error);
+        console.error('Failed to save currency preference:', error)
       }
     }
-  }, [currency, isLoaded]);
+  }, [currency, isLoaded])
 
   const setCurrency = (newCurrency: Currency) => {
-    setCurrencyState(newCurrency);
-  };
+    setCurrencyState(newCurrency)
+  }
 
   const convertAmount = (amount: number): number => {
-    return amount * CONVERSION_RATES[currency];
-  };
+    return amount * CONVERSION_RATES[currency]
+  }
 
   const formatCurrency = (amount: number): string => {
-    const convertedAmount = convertAmount(amount);
-    const config = CURRENCY_CONFIG[currency];
+    const convertedAmount = convertAmount(amount)
+    const config = CURRENCY_CONFIG[currency]
 
     return new Intl.NumberFormat(config.locale, {
       style: 'currency',
       currency: currency,
       minimumFractionDigits: currency === 'NPR' ? 0 : 2,
       maximumFractionDigits: currency === 'NPR' ? 0 : 2,
-    }).format(convertedAmount);
-  };
+    }).format(convertedAmount)
+  }
 
   const value: CurrencyContextType = {
     currency,
     setCurrency,
     convertAmount,
     formatCurrency,
-  };
+  }
 
-  return (
-    <CurrencyContext.Provider value={value}>
-      {children}
-    </CurrencyContext.Provider>
-  );
+  return <CurrencyContext.Provider value={value}>{children}</CurrencyContext.Provider>
 }
 
 export function useCurrency() {
-  const context = useContext(CurrencyContext);
+  const context = useContext(CurrencyContext)
   if (context === undefined) {
-    throw new Error('useCurrency must be used within a CurrencyProvider');
+    throw new Error('useCurrency must be used within a CurrencyProvider')
   }
-  return context;
+  return context
 }
 
-export { CURRENCY_CONFIG };
+export { CURRENCY_CONFIG }

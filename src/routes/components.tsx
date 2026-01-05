@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { ComponentGrid } from '../components/keyboard/ComponentGrid';
+import { createFileRoute } from '@tanstack/react-router'
+import { ComponentGrid } from '../components/keyboard/ComponentGrid'
 
 export const Route = createFileRoute('/components')({
   component: ComponentsPage,
-});
+})
 
 function ComponentsPage() {
   return (
@@ -16,15 +16,13 @@ function ComponentsPage() {
           >
             COMPONENT_DATABASE
           </h1>
-          <p
-            className="text-base md:text-lg"
-            style={{ color: 'var(--color-text-secondary)' }}
-          >
-            Browse and learn about controllers, switches, features, and more with detailed specifications.
+          <p className="text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
+            Browse and learn about controllers, switches, features, and more with detailed
+            specifications.
           </p>
         </div>
         <ComponentGrid />
       </div>
     </div>
-  );
+  )
 }

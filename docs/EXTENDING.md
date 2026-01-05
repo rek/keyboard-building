@@ -24,9 +24,7 @@ Let's say you want to add a "Case Material" decision step.
       "complexityDelta": 2,
       "timeHours": 8,
       "skillLevel": "Beginner",
-      "requiredTools": [
-        "3D printer or printing service"
-      ],
+      "requiredTools": ["3D printer or printing service"],
       "downstreamEffects": [
         "Lightweight but less durable",
         "Easy to modify and reprint",
@@ -42,9 +40,7 @@ Let's say you want to add a "Case Material" decision step.
       "complexityDelta": 1,
       "timeHours": 2,
       "skillLevel": "Beginner",
-      "requiredTools": [
-        "Screwdriver"
-      ],
+      "requiredTools": ["Screwdriver"],
       "downstreamEffects": [
         "Professional appearance",
         "More fragile than other materials",
@@ -63,21 +59,23 @@ In `src/contexts/UserChoicesContext.tsx`:
 
 ```typescript
 export interface UserChoices {
-  buildMethod: string | null;
-  layout: { formFactor: string | null; keyCount: number };
-  controller: string | null;
-  switchType: string | null;
-  caseMaterial: string | null;  // ADD THIS
-  features: { /* ... */ };
-  connectivity: string | null;
-  firmware: string | null;
-  keycaps: string | null;
+  buildMethod: string | null
+  layout: { formFactor: string | null; keyCount: number }
+  controller: string | null
+  switchType: string | null
+  caseMaterial: string | null // ADD THIS
+  features: {
+    /* ... */
+  }
+  connectivity: string | null
+  firmware: string | null
+  keycaps: string | null
 }
 
 const defaultChoices: UserChoices = {
   // ... existing defaults
-  caseMaterial: null,  // ADD THIS
-};
+  caseMaterial: null, // ADD THIS
+}
 ```
 
 ### 3. Update DecisionTree Component
@@ -116,13 +114,13 @@ If this affects cost, update `src/utils/costCalculator.ts`:
 export function calculateCost(choices: UserChoices): CostEstimate {
   const breakdown: CostBreakdown = {
     // ... existing
-  };
+  }
 
   // ADD THIS
   if (choices.caseMaterial === '3d-printed-pla') {
-    breakdown.case = 20;
+    breakdown.case = 20
   } else if (choices.caseMaterial === 'acrylic') {
-    breakdown.case = 40;
+    breakdown.case = 40
   }
 
   // ... rest of function
@@ -135,7 +133,7 @@ If there are compatibility rules, add them in `src/utils/compatibilityChecker.ts
 
 ```typescript
 export function checkCompatibility(choices: UserChoices): CompatibilityWarning[] {
-  const warnings: CompatibilityWarning[] = [];
+  const warnings: CompatibilityWarning[] = []
 
   // ADD THIS
   if (choices.layout.formFactor === 'ergonomic-3d' && choices.caseMaterial === 'acrylic') {
@@ -143,11 +141,11 @@ export function checkCompatibility(choices: UserChoices): CompatibilityWarning[]
       severity: 'warning',
       message: 'Acrylic cases are difficult to create for 3D curved layouts. Consider 3D printing.',
       affectedChoices: ['layout', 'caseMaterial'],
-    });
+    })
   }
 
   // ... existing checks
-  return warnings;
+  return warnings
 }
 ```
 
@@ -159,8 +157,12 @@ Let's add "Keycap Sets" as a browsable category.
 
 ```json
 {
-  "controllers": { /* ... */ },
-  "switches": { /* ... */ },
+  "controllers": {
+    /* ... */
+  },
+  "switches": {
+    /* ... */
+  },
   "keycaps": {
     "gmk-standard": {
       "id": "gmk-standard",
@@ -174,16 +176,8 @@ Let's add "Keycap Sets" as a browsable category.
         "material": "ABS",
         "compatibility": "MX only"
       },
-      "pros": [
-        "Premium quality",
-        "Thick legends",
-        "Many color options"
-      ],
-      "cons": [
-        "Expensive",
-        "Long wait times",
-        "MX switches only"
-      ],
+      "pros": ["Premium quality", "Thick legends", "Many color options"],
+      "cons": ["Expensive", "Long wait times", "MX switches only"],
       "compatibleWith": ["mx"]
     }
   }
@@ -201,7 +195,7 @@ type ComponentCategory =
   | 'features'
   | 'connectivity'
   | 'firmware'
-  | 'keycaps';  // ADD THIS
+  | 'keycaps' // ADD THIS
 
 const categories: { id: ComponentCategory; label: string }[] = [
   { id: 'controllers', label: 'Controllers' },
@@ -209,8 +203,8 @@ const categories: { id: ComponentCategory; label: string }[] = [
   { id: 'features', label: 'Features' },
   { id: 'connectivity', label: 'Connectivity' },
   { id: 'firmware', label: 'Firmware' },
-  { id: 'keycaps', label: 'Keycap Sets' },  // ADD THIS
-];
+  { id: 'keycaps', label: 'Keycap Sets' }, // ADD THIS
+]
 ```
 
 That's it! The component will automatically render the new category.
@@ -232,16 +226,8 @@ Let's add a "Wireless Charging" feature.
       "image": "/images/features/wireless-charging.jpg",
       "complexity": 3,
       "description": "Qi wireless charging for battery-powered keyboards",
-      "pros": [
-        "Convenient charging",
-        "No cable wear",
-        "Modern feature"
-      ],
-      "cons": [
-        "Requires wireless keyboard",
-        "Slower than wired",
-        "Additional components needed"
-      ],
+      "pros": ["Convenient charging", "No cable wear", "Modern feature"],
+      "cons": ["Requires wireless keyboard", "Slower than wired", "Additional components needed"],
       "requiredTools": ["Soldering iron", "Hot glue gun"],
       "pinRequirement": 0
     }
@@ -253,13 +239,13 @@ Let's add a "Wireless Charging" feature.
 
 ```typescript
 features: {
-  hotswap: boolean;
-  rgb: boolean;
-  oled: boolean;
-  encoder: boolean;
-  trackball: boolean;
-  wireless: boolean;
-  wirelessCharging: boolean;  // ADD THIS
+  hotswap: boolean
+  rgb: boolean
+  oled: boolean
+  encoder: boolean
+  trackball: boolean
+  wireless: boolean
+  wirelessCharging: boolean // ADD THIS
 }
 
 const defaultChoices: UserChoices = {
@@ -271,9 +257,9 @@ const defaultChoices: UserChoices = {
     encoder: false,
     trackball: false,
     wireless: false,
-    wirelessCharging: false,  // ADD THIS
+    wirelessCharging: false, // ADD THIS
   },
-};
+}
 ```
 
 ### 3. Add Cost Calculation
@@ -283,7 +269,7 @@ In `src/utils/costCalculator.ts`:
 ```typescript
 // Wireless charging
 if (choices.features.wirelessCharging) {
-  breakdown.features += 15 * 2; // 2 charging pads for split keyboard
+  breakdown.features += 15 * 2 // 2 charging pads for split keyboard
 }
 ```
 
@@ -296,7 +282,7 @@ if (choices.features.wirelessCharging && !choices.features.wireless) {
     severity: 'error',
     message: 'Wireless charging requires a wireless keyboard build.',
     affectedChoices: ['features'],
-  });
+  })
 }
 ```
 
@@ -327,23 +313,21 @@ Let's add a "Build Gallery" page.
 Create `src/routes/gallery.tsx`:
 
 ```tsx
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/gallery')({
   component: GalleryPage,
-});
+})
 
 function GalleryPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">
-          Build Gallery
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">Build Gallery</h1>
         {/* Gallery content */}
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -357,7 +341,8 @@ In `src/components/Header.tsx`:
   onClick={() => setIsOpen(false)}
   className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
   activeProps={{
-    className: 'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+    className:
+      'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
   }}
 >
   <ImageIcon size={20} />
@@ -382,55 +367,57 @@ Let's add a pin calculator.
 Create `src/utils/pinCalculator.ts`:
 
 ```typescript
-import { UserChoices } from '../contexts/UserChoicesContext';
+import { UserChoices } from '../contexts/UserChoicesContext'
 
 export interface PinRequirements {
-  matrix: number;      // Rows + columns
-  features: number;    // Additional features
-  total: number;       // Total required
-  available: number;   // Available on controller
-  remaining: number;   // Remaining pins
-  warnings: string[];
+  matrix: number // Rows + columns
+  features: number // Additional features
+  total: number // Total required
+  available: number // Available on controller
+  remaining: number // Remaining pins
+  warnings: string[]
 }
 
 export function calculatePinRequirements(choices: UserChoices): PinRequirements {
-  let matrix = 0;
-  let features = 0;
-  const warnings: string[] = [];
+  let matrix = 0
+  let features = 0
+  const warnings: string[] = []
 
   // Calculate matrix pins (rough estimate)
-  const keyCount = choices.layout.keyCount / 2; // per half
-  const rows = Math.ceil(Math.sqrt(keyCount));
-  const cols = Math.ceil(keyCount / rows);
-  matrix = rows + cols;
+  const keyCount = choices.layout.keyCount / 2 // per half
+  const rows = Math.ceil(Math.sqrt(keyCount))
+  const cols = Math.ceil(keyCount / rows)
+  matrix = rows + cols
 
   // Feature pins
-  if (choices.features.rgb) features += 1;
-  if (choices.features.oled) features += 2;
-  if (choices.features.encoder) features += 3;
-  if (choices.features.trackball) features += 6;
+  if (choices.features.rgb) features += 1
+  if (choices.features.oled) features += 2
+  if (choices.features.encoder) features += 3
+  if (choices.features.trackball) features += 6
 
-  const total = matrix + features;
+  const total = matrix + features
 
   // Available pins based on controller
-  let available = 0;
+  let available = 0
   if (choices.controller === 'pro-micro' || choices.controller === 'elite-c') {
-    available = 12;
+    available = 12
   } else if (choices.controller === 'rp2040') {
-    available = 20;
+    available = 20
   } else if (choices.controller === 'nice-nano') {
-    available = 13;
+    available = 13
   }
 
-  const remaining = available - total;
+  const remaining = available - total
 
   if (remaining < 0) {
-    warnings.push(`You need ${Math.abs(remaining)} more pins. Consider a controller with more pins.`);
+    warnings.push(
+      `You need ${Math.abs(remaining)} more pins. Consider a controller with more pins.`
+    )
   } else if (remaining < 2) {
-    warnings.push('Very tight on pins. No room for additional features.');
+    warnings.push('Very tight on pins. No room for additional features.')
   }
 
-  return { matrix, features, total, available, remaining, warnings };
+  return { matrix, features, total, available, remaining, warnings }
 }
 ```
 
@@ -439,35 +426,39 @@ export function calculatePinRequirements(choices: UserChoices): PinRequirements 
 Create `src/hooks/usePinCalculator.ts`:
 
 ```typescript
-import { useMemo } from 'react';
-import { useUserChoices } from '../contexts/UserChoicesContext';
-import { calculatePinRequirements } from '../utils/pinCalculator';
+import { useMemo } from 'react'
+import { useUserChoices } from '../contexts/UserChoicesContext'
+import { calculatePinRequirements } from '../utils/pinCalculator'
 
 export function usePinCalculator() {
-  const { choices } = useUserChoices();
+  const { choices } = useUserChoices()
 
-  return useMemo(() => calculatePinRequirements(choices), [choices]);
+  return useMemo(() => calculatePinRequirements(choices), [choices])
 }
 ```
 
 ### 3. Use in Component
 
 ```tsx
-import { usePinCalculator } from '../hooks/usePinCalculator';
+import { usePinCalculator } from '../hooks/usePinCalculator'
 
 function PinCounter() {
-  const pins = usePinCalculator();
+  const pins = usePinCalculator()
 
   return (
     <div>
       <h3>Pin Usage</h3>
-      <p>Using {pins.total} of {pins.available} pins</p>
+      <p>
+        Using {pins.total} of {pins.available} pins
+      </p>
       <p>{pins.remaining} pins remaining</p>
       {pins.warnings.map((warning, i) => (
-        <div key={i} className="text-yellow-600">{warning}</div>
+        <div key={i} className="text-yellow-600">
+          {warning}
+        </div>
       ))}
     </div>
-  );
+  )
 }
 ```
 
@@ -476,11 +467,13 @@ function PinCounter() {
 After adding new features:
 
 1. **Check TypeScript Compilation**
+
    ```bash
    npm run build
    ```
 
 2. **Test in Development**
+
    ```bash
    npm run dev
    ```

@@ -1,9 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { Keyboard, Wrench, BookOpen, ArrowRight, Terminal, Zap } from 'lucide-react';
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { Keyboard, Wrench, BookOpen, ArrowRight, Terminal, Zap } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: LandingPage,
-});
+})
 
 function LandingPage() {
   return (
@@ -20,7 +20,7 @@ function LandingPage() {
               fontFamily: 'var(--font-display)',
               fontSize: '0.875rem',
               letterSpacing: '0.1em',
-              fontWeight: 600
+              fontWeight: 600,
             }}
           >
             <Terminal size={16} className="inline mr-2" style={{ transform: 'translateY(-1px)' }} />
@@ -32,10 +32,11 @@ function LandingPage() {
             style={{
               fontFamily: 'var(--font-display)',
               animationDelay: '0.1s',
-              opacity: 0
+              opacity: 0,
             }}
           >
-            BUILD YOUR<br />
+            BUILD YOUR
+            <br />
             <span style={{ color: 'var(--color-accent-orange)' }}>SPLIT KEYBOARD_</span>
           </h1>
 
@@ -45,23 +46,29 @@ function LandingPage() {
               color: 'var(--color-text-secondary)',
               lineHeight: '1.7',
               animationDelay: '0.2s',
-              opacity: 0
+              opacity: 0,
             }}
           >
-            An interactive guide to help you learn, choose components, and build
-            your custom split keyboard with confidence. Technical specifications,
-            real-time cost tracking, and detailed assembly instructions.
+            An interactive guide to help you learn, choose components, and build your custom split
+            keyboard with confidence. Technical specifications, real-time cost tracking, and
+            detailed assembly instructions.
           </p>
 
           <div
             className="flex flex-col sm:flex-row gap-4 animate-slide-up"
             style={{ animationDelay: '0.3s', opacity: 0 }}
           >
-            <Link to="/builder" className="key-button key-button-primary inline-flex items-center justify-center gap-2 text-base">
+            <Link
+              to="/builder"
+              className="key-button key-button-primary inline-flex items-center justify-center gap-2 text-base"
+            >
               Start Building
               <ArrowRight size={18} />
             </Link>
-            <Link to="/components" className="key-button inline-flex items-center justify-center gap-2 text-base">
+            <Link
+              to="/components"
+              className="key-button inline-flex items-center justify-center gap-2 text-base"
+            >
               Browse Components
               <BookOpen size={18} />
             </Link>
@@ -76,7 +83,7 @@ function LandingPage() {
               style={{
                 border: '3px solid var(--color-border)',
                 background: 'var(--color-accent-orange)',
-                transition: 'transform 0.2s ease'
+                transition: 'transform 0.2s ease',
               }}
             >
               <Keyboard style={{ color: 'white' }} size={28} />
@@ -88,8 +95,8 @@ function LandingPage() {
               INTERACTIVE_TREE
             </h3>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-              Make informed choices with consequence previews showing cost, complexity,
-              and compatibility before you commit.
+              Make informed choices with consequence previews showing cost, complexity, and
+              compatibility before you commit.
             </p>
           </div>
 
@@ -99,7 +106,7 @@ function LandingPage() {
               style={{
                 border: '3px solid var(--color-border)',
                 background: 'var(--color-accent-teal)',
-                transition: 'transform 0.2s ease'
+                transition: 'transform 0.2s ease',
               }}
             >
               <Wrench style={{ color: 'white' }} size={28} />
@@ -111,8 +118,8 @@ function LandingPage() {
               COST_TRACKING
             </h3>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-              See your total build cost, complexity score, and estimated build time
-              update as you make decisions.
+              See your total build cost, complexity score, and estimated build time update as you
+              make decisions.
             </p>
           </div>
 
@@ -122,7 +129,7 @@ function LandingPage() {
               style={{
                 border: '3px solid var(--color-border)',
                 background: 'var(--color-text-primary)',
-                transition: 'transform 0.2s ease'
+                transition: 'transform 0.2s ease',
               }}
             >
               <BookOpen style={{ color: 'white' }} size={28} />
@@ -134,8 +141,8 @@ function LandingPage() {
               COMPONENT_DB
             </h3>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-              Browse and learn about controllers, switches, features, and more
-              with detailed specs and compatibility info.
+              Browse and learn about controllers, switches, features, and more with detailed specs
+              and compatibility info.
             </p>
           </div>
         </div>
@@ -145,7 +152,7 @@ function LandingPage() {
           className="relative p-8 md:p-12"
           style={{
             border: '3px solid var(--color-border)',
-            background: 'var(--color-bg-secondary)'
+            background: 'var(--color-bg-secondary)',
           }}
         >
           {/* Corner accent */}
@@ -154,7 +161,7 @@ function LandingPage() {
             style={{
               background: 'var(--color-accent-orange)',
               clipPath: 'polygon(100% 0, 100% 100%, 0 0)',
-              opacity: 0.1
+              opacity: 0.1,
             }}
           />
 
@@ -172,77 +179,65 @@ function LandingPage() {
             <div
               className="p-6"
               style={{
-                borderLeft: '3px solid var(--color-accent-orange)'
+                borderLeft: '3px solid var(--color-accent-orange)',
               }}
             >
-              <h3
-                className="font-bold mb-3 text-lg"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
+              <h3 className="font-bold mb-3 text-lg" style={{ fontFamily: 'var(--font-display)' }}>
                 [01] ERGONOMICS
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-                Split keyboards allow for a more natural shoulder width positioning
-                and can reduce strain during long typing sessions.
+                Split keyboards allow for a more natural shoulder width positioning and can reduce
+                strain during long typing sessions.
               </p>
             </div>
 
             <div
               className="p-6"
               style={{
-                borderLeft: '3px solid var(--color-accent-teal)'
+                borderLeft: '3px solid var(--color-accent-teal)',
               }}
             >
-              <h3
-                className="font-bold mb-3 text-lg"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
+              <h3 className="font-bold mb-3 text-lg" style={{ fontFamily: 'var(--font-display)' }}>
                 [02] CUSTOMIZATION
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-                Build exactly what you want - from layout and switches to features
-                like trackballs, encoders, and RGB lighting.
+                Build exactly what you want - from layout and switches to features like trackballs,
+                encoders, and RGB lighting.
               </p>
             </div>
 
             <div
               className="p-6"
               style={{
-                borderLeft: '3px solid var(--color-accent-orange)'
+                borderLeft: '3px solid var(--color-accent-orange)',
               }}
             >
-              <h3
-                className="font-bold mb-3 text-lg"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
+              <h3 className="font-bold mb-3 text-lg" style={{ fontFamily: 'var(--font-display)' }}>
                 [03] LEARNING
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-                Gain hands-on experience with electronics, soldering, firmware
-                programming, and mechanical design.
+                Gain hands-on experience with electronics, soldering, firmware programming, and
+                mechanical design.
               </p>
             </div>
 
             <div
               className="p-6"
               style={{
-                borderLeft: '3px solid var(--color-accent-teal)'
+                borderLeft: '3px solid var(--color-accent-teal)',
               }}
             >
-              <h3
-                className="font-bold mb-3 text-lg"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
+              <h3 className="font-bold mb-3 text-lg" style={{ fontFamily: 'var(--font-display)' }}>
                 [04] COMMUNITY
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-                Join a passionate community of keyboard enthusiasts sharing designs,
-                tips, and innovations.
+                Join a passionate community of keyboard enthusiasts sharing designs, tips, and
+                innovations.
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

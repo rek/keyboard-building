@@ -1,10 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { DecisionTree } from '../components/keyboard/DecisionTree';
-import { CostEstimator } from '../components/keyboard/CostEstimator';
+import { createFileRoute } from '@tanstack/react-router'
+import { DecisionTree } from '../components/keyboard/DecisionTree'
+import { CostEstimator } from '../components/keyboard/CostEstimator'
 
 export const Route = createFileRoute('/builder')({
   component: BuilderPage,
-});
+})
 
 function BuilderPage() {
   return (
@@ -18,10 +18,7 @@ function BuilderPage() {
           >
             INTERACTIVE_BUILDER
           </h1>
-          <p
-            className="text-base md:text-lg"
-            style={{ color: 'var(--color-text-secondary)' }}
-          >
+          <p className="text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
             Make your choices step by step. Preview the impact of each decision before committing.
           </p>
         </div>
@@ -40,5 +37,5 @@ function BuilderPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

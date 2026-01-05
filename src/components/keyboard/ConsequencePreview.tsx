@@ -1,38 +1,38 @@
-import React from 'react';
-import { useCurrency } from '../../contexts/CurrencyContext';
-import { useAppSettings } from '../../contexts/AppSettingsContext';
+import React from 'react'
+import { useCurrency } from '../../contexts/CurrencyContext'
+import { useAppSettings } from '../../contexts/AppSettingsContext'
 
 export interface ConsequencePreviewData {
-  decision: string;
+  decision: string
   option: {
-    id: string;
-    name: string;
-    shortDesc: string;
-    costDelta: number;
-    complexityDelta: number;
-    timeHours: number;
-    skillLevel: string;
-    requiredTools: string[];
-    downstreamEffects: string[];
-  };
-  warnings: Array<{
-    severity: 'error' | 'warning' | 'info';
-    message: string;
-  }>;
+    id: string
+    name: string
+    shortDesc: string
+    costDelta: number
+    complexityDelta: number
+    timeHours: number
+    skillLevel: string
+    requiredTools: string[]
+    downstreamEffects: string[]
+  }
+  warnings: {
+    severity: 'error' | 'warning' | 'info'
+    message: string
+  }[]
 }
 
 interface ConsequencePreviewProps {
-  data: ConsequencePreviewData | null;
-  onClose: () => void;
-  onConfirm: () => void;
+  data: ConsequencePreviewData | null
+  onClose: () => void
+  onConfirm: () => void
 }
 
 export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePreviewProps) {
-  if (!data) return null;
+  if (!data) return null
 
-  const { option, warnings } = data;
-  const { formatCurrency } = useCurrency();
-  const { settings } = useAppSettings();
+  const { option, warnings } = data
+  const { formatCurrency } = useCurrency()
+  const { settings } = useAppSettings()
 
   return (
     <div
@@ -58,7 +58,9 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
           </div>
 
           {/* Quick Stats */}
-          <div className={`grid ${settings.showPricing ? 'grid-cols-3' : 'grid-cols-2'} gap-4 mb-6 p-4 bg-gray-50 rounded-lg`}>
+          <div
+            className={`grid ${settings.showPricing ? 'grid-cols-3' : 'grid-cols-2'} gap-4 mb-6 p-4 bg-gray-50 rounded-lg`}
+          >
             {settings.showPricing && (
               <div>
                 <div className="text-sm text-gray-600">Cost Impact</div>
@@ -69,9 +71,7 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
             )}
             <div>
               <div className="text-sm text-gray-600">Build Time</div>
-              <div className="text-xl font-bold text-purple-600">
-                {option.timeHours}h
-              </div>
+              <div className="text-xl font-bold text-purple-600">{option.timeHours}h</div>
             </div>
             <div>
               <div className="text-sm text-gray-600">Complexity</div>
@@ -80,9 +80,7 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
                   <div
                     key={i}
                     className={`w-3 h-3 rounded-full ${
-                      i < option.complexityDelta
-                        ? 'bg-orange-500'
-                        : 'bg-gray-300'
+                      i < option.complexityDelta ? 'bg-orange-500' : 'bg-gray-300'
                     }`}
                   />
                 ))}
@@ -140,8 +138,8 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
                       warning.severity === 'error'
                         ? 'bg-red-50 border-red-500'
                         : warning.severity === 'warning'
-                        ? 'bg-yellow-50 border-yellow-500'
-                        : 'bg-blue-50 border-blue-500'
+                          ? 'bg-yellow-50 border-yellow-500'
+                          : 'bg-blue-50 border-blue-500'
                     }`}
                   >
                     <div className="flex items-start gap-2">
@@ -149,16 +147,16 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
                         {warning.severity === 'error'
                           ? '⛔'
                           : warning.severity === 'warning'
-                          ? '⚠️'
-                          : 'ℹ️'}
+                            ? '⚠️'
+                            : 'ℹ️'}
                       </span>
                       <p
                         className={`text-sm ${
                           warning.severity === 'error'
                             ? 'text-red-800'
                             : warning.severity === 'warning'
-                            ? 'text-yellow-800'
-                            : 'text-blue-800'
+                              ? 'text-yellow-800'
+                              : 'text-blue-800'
                         }`}
                       >
                         {warning.message}
@@ -183,13 +181,11 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
               disabled={warnings.some((w) => w.severity === 'error')}
               className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
-              {warnings.some((w) => w.severity === 'error')
-                ? 'Incompatible'
-                : 'Choose This Option'}
+              {warnings.some((w) => w.severity === 'error') ? 'Incompatible' : 'Choose This Option'}
             </button>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
