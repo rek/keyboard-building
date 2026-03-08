@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
 
 /* Default theme: Vintage Catalog */
 :root {
@@ -46,6 +46,31 @@
   --color-grid: rgba(255, 255, 255, 0.1);
 }
 
+/* Neumorphic theme: Soft UI */
+[data-theme='neumorphic'] {
+  --color-bg-primary: #e0e5ec;
+  --color-bg-secondary: #e0e5ec;
+  --color-text-primary: #4a5568;
+  --color-text-secondary: #718096;
+  --color-accent-orange: #6c7ee1;
+  --color-accent-teal: #48bb78;
+  --color-border: transparent;
+  --color-border-light: transparent;
+  --color-grid: transparent;
+
+  --font-display: 'Nunito', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+
+  --border-width: 0px;
+  --border-radius: 16px;
+
+  --neu-shadow-raised: 6px 6px 14px #b8bec7, -6px -6px 14px #ffffff;
+  --neu-shadow-inset: inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff;
+  --neu-shadow-raised-sm: 3px 3px 7px #b8bec7, -3px -3px 7px #ffffff;
+  --neu-shadow-accent: 6px 6px 14px #b8bec7, -6px -6px 14px #ffffff,
+    inset 0 0 0 2px rgba(108, 126, 225, 0.3);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -61,7 +86,8 @@ nav,
   transition:
     background-color 0.3s ease,
     color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 body {
@@ -256,4 +282,49 @@ pre {
 
 .tech-card:hover {
   transform: translate(-3px, -3px);
+}
+
+/* Neumorphic component overrides */
+[data-theme='neumorphic'] header {
+  box-shadow: 0 4px 12px rgba(163, 177, 198, 0.5) !important;
+}
+
+[data-theme='neumorphic'] aside {
+  box-shadow: 8px 0 24px rgba(163, 177, 198, 0.5) !important;
+  border-right: none !important;
+}
+
+[data-theme='neumorphic'] .tech-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: var(--neu-shadow-raised);
+}
+
+[data-theme='neumorphic'] .tech-card::before {
+  display: none;
+}
+
+[data-theme='neumorphic'] .tech-card:hover {
+  box-shadow: var(--neu-shadow-accent);
+  transform: none;
+}
+
+[data-theme='neumorphic'] .key-button {
+  border: none;
+  border-radius: 12px;
+  box-shadow: var(--neu-shadow-raised-sm);
+}
+
+[data-theme='neumorphic'] .key-button::after {
+  display: none;
+}
+
+[data-theme='neumorphic'] .key-button:hover {
+  transform: none;
+  box-shadow: var(--neu-shadow-accent);
+}
+
+[data-theme='neumorphic'] .key-button:active {
+  box-shadow: var(--neu-shadow-inset);
+  transform: none;
 }

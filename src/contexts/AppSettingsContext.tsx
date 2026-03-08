@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 
-export type Theme = 'light' | 'dark' | 'blueprint'
+import { type Theme } from '../themes'
+export type { Theme }
 
 export interface AppSettings {
   showPricing: boolean // Hide all currency/cost displays

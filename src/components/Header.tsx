@@ -13,7 +13,8 @@ import {
   Palette,
 } from 'lucide-react'
 import { useCurrency, CURRENCY_CONFIG, type Currency } from '../contexts/CurrencyContext'
-import { useAppSettings, type Theme } from '../contexts/AppSettingsContext'
+import { useAppSettings } from '../contexts/AppSettingsContext'
+import { THEMES, type Theme } from '../themes'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -253,8 +254,8 @@ export default function Header() {
               <Palette size={14} />
               <span>THEME</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 px-3 py-2">
-              {(['light', 'dark', 'blueprint'] as Theme[]).map((themeOption) => (
+            <div className="grid grid-cols-2 gap-2 px-3 py-2">
+              {(Object.keys(THEMES) as Theme[]).map((themeOption) => (
                 <button
                   key={themeOption}
                   onClick={() => setTheme(themeOption)}
@@ -270,11 +271,7 @@ export default function Header() {
                   }}
                 >
                   <div className="text-[10px] tracking-widest uppercase">
-                    {themeOption === 'light'
-                      ? 'VINTAGE'
-                      : themeOption === 'dark'
-                        ? 'TERMINAL'
-                        : 'BLUEPRINT'}
+                    {THEMES[themeOption].label}
                   </div>
                 </button>
               ))}
