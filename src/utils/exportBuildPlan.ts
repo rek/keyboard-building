@@ -1,6 +1,7 @@
 import { type UserChoices } from '../contexts/UserChoicesContext'
 import { type CostBreakdown } from './costCalculator'
 import { type Currency } from '../contexts/CurrencyContext'
+import { formatId } from './formatting'
 
 export interface BuildPlanExport {
   choices: UserChoices
@@ -183,7 +184,7 @@ export function exportAsText(
   // Footer
   lines.push('='.repeat(60))
   lines.push('Built with Split Keyboard Builder Guide')
-  lines.push('https://github.com/yourusername/split-keyboard-guide')
+  lines.push('https://adamsoutar.github.io/keyboard-building')
   lines.push('='.repeat(60))
 
   const text = lines.join('\n')
@@ -196,9 +197,3 @@ export function exportAsText(
   URL.revokeObjectURL(url)
 }
 
-function formatId(id: string): string {
-  return id
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
-}

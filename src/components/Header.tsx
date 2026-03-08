@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Home,
   Menu,
@@ -20,6 +20,15 @@ export default function Header() {
   const { currency, setCurrency } = useCurrency()
   const { settings, updateSetting, setLearningMode, setTheme } = useAppSettings()
 
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false)
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [isOpen])
+
   return (
     <>
       <header
@@ -38,6 +47,8 @@ export default function Header() {
             background: 'transparent',
           }}
           aria-label="Open menu"
+          aria-expanded={isOpen}
+          aria-controls="nav-sidebar"
         >
           <Menu size={24} />
         </button>
@@ -57,7 +68,21 @@ export default function Header() {
         </h1>
       </header>
 
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40"
+          style={{ background: 'rgba(0,0,0,0.5)' }}
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       <aside
+        id="nav-sidebar"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
         className={`fixed top-0 left-0 h-full w-80 z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}

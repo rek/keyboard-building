@@ -16,6 +16,7 @@ export function CostEstimator() {
   const compatibilityStatus = getCompatibilityStatus(warnings)
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [showCompatDetails, setShowCompatDetails] = useState(false)
 
   const handleExportJSON = () => {
     exportAsJSON(choices, breakdown, total, complexity, buildTimeHours, currency)
@@ -114,14 +115,31 @@ export function CostEstimator() {
               </span>
             </div>
             <button
+              onClick={() => setShowCompatDetails((v) => !v)}
               className="text-xs font-bold tracking-wide hover:underline"
               style={{
                 fontFamily: 'var(--font-display)',
                 color: 'var(--color-accent-teal)',
               }}
             >
-              VIEW_DETAILS
+              {showCompatDetails ? 'HIDE_DETAILS' : 'VIEW_DETAILS'}
             </button>
+            {showCompatDetails && (
+              <ul className="mt-2 space-y-1">
+                {warnings.map((w, i) => (
+                  <li
+                    key={i}
+                    className="text-xs pl-2"
+                    style={{
+                      borderLeft: '2px solid var(--color-border)',
+                      color: 'var(--color-text-secondary)',
+                    }}
+                  >
+                    {w.message}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}
@@ -357,7 +375,7 @@ export function CostEstimator() {
           </Link>
         )}
         <button
-          onClick={() => resetChoices()}
+          onClick={() => setShowResetConfirm(true)}
           className="w-full text-xs underline text-center mt-4"
           style={{
             fontFamily: 'var(--font-display)',

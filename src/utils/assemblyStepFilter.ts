@@ -1,5 +1,5 @@
 import { type UserChoices } from '../contexts/UserChoicesContext'
-import { type AssemblyPhase, type AssemblyStep, StepRequirements } from '../types/assembly'
+import { type AssemblyPhase, type AssemblyStep, type StepRequirements } from '../types/assembly'
 
 /**
  * Filters assembly steps based on user's build choices
@@ -178,12 +178,3 @@ export function getTotalSteps(phases: AssemblyPhase[]): number {
   return phases.reduce((total, phase) => total + phase.steps.length, 0)
 }
 
-/**
- * Calculates estimated total build time from phases
- */
-export function getEstimatedTotalTime(phases: AssemblyPhase[]): string {
-  // This is a simple implementation - could be enhanced to parse time strings
-  // and provide more accurate total estimates
-  const times = phases.map((p) => p.estimatedTime)
-  return times.join(', ')
-}

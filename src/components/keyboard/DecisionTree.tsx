@@ -35,54 +35,49 @@ export function DecisionTree() {
 
   const steps: DecisionStep[] = decisionTreeData.steps
 
-  const handlePreview = (decision: DecisionStep, option: DecisionStep['options'][0]) => {
-    // Create a temporary choices object with this option selected
-    const tempChoices = { ...choices }
-
-    // Map decision ID to choices property
-    if (decision.id === 'buildMethod') {
-      tempChoices.buildMethod = option.id
-    } else if (decision.id === 'layout') {
-      tempChoices.layout = { ...tempChoices.layout, formFactor: option.id }
-    } else if (decision.id === 'controller') {
-      tempChoices.controller = option.id
-    } else if (decision.id === 'switches') {
-      tempChoices.switchType = option.id
-    } else if (decision.id === 'connectivity') {
-      tempChoices.connectivity = option.id
-    } else if (decision.id === 'firmware') {
-      tempChoices.firmware = option.id
+  const applyDecisionToChoices = (
+    currentChoices: typeof choices,
+    decisionId: string,
+    optionId: string
+  ): typeof choices => {
+    if (decisionId === 'layout') {
+      return { ...currentChoices, layout: { ...currentChoices.layout, formFactor: optionId } }
     }
+    const keyMap: Partial<Record<string, keyof typeof choices>> = {
+      buildMethod: 'buildMethod',
+      controller: 'controller',
+      switches: 'switchType',
+      connectivity: 'connectivity',
+      firmware: 'firmware',
+    }
+    const key = keyMap[decisionId]
+    if (key) return { ...currentChoices, [key]: optionId }
+    return currentChoices
+  }
 
-    // Check compatibility with temporary choices
+  const handlePreview = (decision: DecisionStep, option: DecisionStep['options'][0]) => {
+    const tempChoices = applyDecisionToChoices(choices, decision.id, option.id)
     const warnings = checkCompatibility(tempChoices)
-
-    setPreviewData({
-      decision: decision.title,
-      option,
-      warnings,
-    })
+    setPreviewData({ decision: decision.title, option, warnings })
     setSelectedDecisionId(decision.id)
   }
 
   const handleConfirm = () => {
     if (!previewData || !selectedDecisionId) return
+    const updated = applyDecisionToChoices(choices, selectedDecisionId, previewData.option.id)
 
-    const optionId = previewData.option.id
-
-    // Update the appropriate choice
-    if (selectedDecisionId === 'buildMethod') {
-      updateChoice('buildMethod', optionId)
-    } else if (selectedDecisionId === 'layout') {
-      updateChoice('layout', { ...choices.layout, formFactor: optionId })
-    } else if (selectedDecisionId === 'controller') {
-      updateChoice('controller', optionId)
-    } else if (selectedDecisionId === 'switches') {
-      updateChoice('switchType', optionId)
-    } else if (selectedDecisionId === 'connectivity') {
-      updateChoice('connectivity', optionId)
-    } else if (selectedDecisionId === 'firmware') {
-      updateChoice('firmware', optionId)
+    if (selectedDecisionId === 'layout') {
+      updateChoice('layout', updated.layout)
+    } else {
+      const keyMap: Partial<Record<string, keyof typeof choices>> = {
+        buildMethod: 'buildMethod',
+        controller: 'controller',
+        switches: 'switchType',
+        connectivity: 'connectivity',
+        firmware: 'firmware',
+      }
+      const key = keyMap[selectedDecisionId]
+      if (key) updateChoice(key, updated[key])
     }
 
     setPreviewData(null)

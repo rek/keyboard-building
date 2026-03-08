@@ -30,7 +30,7 @@ export function checkCompatibility(choices: UserChoices): CompatibilityWarning[]
     })
   }
 
-  if (choices.firmware === 'kmk' && choices.controller !== 'rp2040') {
+  if (choices.firmware === 'kmk' && choices.controller && choices.controller !== 'rp2040') {
     warnings.push({
       severity: 'error',
       message:

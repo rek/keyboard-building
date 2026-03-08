@@ -65,7 +65,7 @@ export function UserChoicesProvider({ children }: { children: ReactNode }) {
         const saved = localStorage.getItem(STORAGE_KEY)
         if (saved) {
           const parsed = JSON.parse(saved)
-          setChoices(parsed)
+          setChoices({ ...defaultChoices, ...parsed })
         }
       } catch (error) {
         console.error('Failed to load saved choices:', error)

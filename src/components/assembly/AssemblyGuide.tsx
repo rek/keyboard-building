@@ -3,6 +3,7 @@ import { useUserChoices } from '../../contexts/UserChoicesContext'
 import { useAssemblySteps } from '../../hooks/useAssemblySteps'
 import { useAssemblyProgress } from '../../hooks/useAssemblyProgress'
 import { PhaseSection } from './PhaseSection'
+import { formatId } from '../../utils/formatting'
 
 export function AssemblyGuide() {
   const { choices } = useUserChoices()
@@ -332,9 +333,3 @@ export function AssemblyGuide() {
   )
 }
 
-function formatId(id: string): string {
-  return id
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
-}
