@@ -93,7 +93,7 @@ export function ComponentGrid() {
       {/* Category Introduction */}
       {currentCategoryInfo && (
         <div
-          className="mb-8 p-6 md:p-8"
+          className="glass-panel mb-8 p-6 md:p-8"
           style={{
             border: '3px solid var(--color-border)',
             background: 'var(--color-bg-secondary)',

@@ -52,12 +52,12 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center z-50 p-4"
+      className="glass-overlay fixed inset-0 flex items-center justify-center z-50 p-4"
       style={{ background: 'rgba(0,0,0,0.7)' }}
       onClick={onClose}
     >
       <div
-        className="max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="glass-panel max-w-2xl w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: 'var(--color-bg-secondary)',

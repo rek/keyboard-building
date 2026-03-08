@@ -149,7 +149,7 @@ function LandingPage() {
 
         {/* Why Split Keyboards - Technical Grid */}
         <div
-          className="relative p-8 md:p-12"
+          className="glass-panel relative p-8 md:p-12"
           style={{
             border: '3px solid var(--color-border)',
             background: 'var(--color-bg-secondary)',

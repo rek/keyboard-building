@@ -335,6 +335,97 @@ pre {
   transform: none;
 }
 
+/* Neumorphic glass-panel overrides (builder, assembly, etc.) */
+[data-theme='neumorphic'] .glass-panel {
+  border: none !important;
+  border-radius: 16px;
+  box-shadow: var(--neu-shadow-raised);
+}
+
+[data-theme='neumorphic'] .glass-panel-light {
+  border: none !important;
+  border-radius: 12px;
+  box-shadow: var(--neu-shadow-raised-sm);
+}
+
+[data-theme='neumorphic'] .glass-panel-light:hover {
+  box-shadow: var(--neu-shadow-accent);
+  transform: none !important;
+}
+
+[data-theme='neumorphic'] .glass-bar {
+  border-radius: 8px;
+}
+
+/* Neumorphic overrides for inline-styled buttons on builder page */
+[data-theme='neumorphic'] button[style*='--color-border'][class*='border-2'],
+[data-theme='neumorphic'] a[style*='--color-border'][class*='border-2'] {
+  border-color: transparent !important;
+  border-radius: 12px;
+  box-shadow: var(--neu-shadow-raised-sm);
+}
+
+[data-theme='neumorphic'] button[style*='--color-border'][class*='border-2']:hover,
+[data-theme='neumorphic'] a[style*='--color-border'][class*='border-2']:hover {
+  box-shadow: var(--neu-shadow-accent);
+  transform: none !important;
+}
+
+[data-theme='neumorphic'] button[style*='--color-border'][class*='border-2']:active {
+  box-shadow: var(--neu-shadow-inset);
+}
+
+/* Neumorphic accent-colored buttons */
+[data-theme='neumorphic'] button[style*='--color-accent-orange'][style*='background'],
+[data-theme='neumorphic'] a[style*='--color-accent-orange'][style*='background'],
+[data-theme='neumorphic'] button[style*='--color-accent-teal'][style*='background'],
+[data-theme='neumorphic'] a[style*='--color-accent-teal'][style*='background'] {
+  border-color: transparent !important;
+  border-radius: 12px;
+  box-shadow: var(--neu-shadow-raised-sm);
+}
+
+[data-theme='neumorphic'] button[style*='--color-accent-orange'][style*='background']:hover,
+[data-theme='neumorphic'] a[style*='--color-accent-orange'][style*='background']:hover,
+[data-theme='neumorphic'] button[style*='--color-accent-teal'][style*='background']:hover,
+[data-theme='neumorphic'] a[style*='--color-accent-teal'][style*='background']:hover {
+  box-shadow: var(--neu-shadow-accent);
+  transform: none !important;
+}
+
+/* Neumorphic progress bar containers */
+[data-theme='neumorphic'] div[class*='border-2'][style*='--color-bg-primary'] {
+  border-color: transparent !important;
+  border-radius: 8px;
+  box-shadow: var(--neu-shadow-inset);
+}
+
+/* Neumorphic tool checkboxes */
+[data-theme='neumorphic'] .tool-checkbox {
+  border-color: transparent !important;
+  border-radius: 4px;
+  box-shadow: var(--neu-shadow-raised-sm);
+}
+
+/* Neumorphic step number badges */
+[data-theme='neumorphic'] div[class*='border-2'][style*='--color-accent-teal'][style*='background'] {
+  border-color: transparent !important;
+  border-radius: 12px;
+}
+
+/* Neumorphic input fields */
+[data-theme='neumorphic'] input[type='text'],
+[data-theme='neumorphic'] input[type='search'] {
+  border-color: transparent !important;
+  border-radius: 12px;
+  box-shadow: var(--neu-shadow-inset);
+}
+
+[data-theme='neumorphic'] input[type='text']:focus,
+[data-theme='neumorphic'] input[type='search']:focus {
+  box-shadow: var(--neu-shadow-accent);
+}
+
 /* Glassmorphism overrides for dark/terminal theme */
 [data-theme='dark'] body {
   background: radial-gradient(ellipse at top left, #001a00 0%, #000800 40%, #000000 100%);
@@ -434,11 +525,21 @@ pre {
   background: rgba(0, 255, 65, 0.3);
 }
 
-/* Glass panels - general containers in dark theme */
-[data-theme='dark'] .glass-panel,
-[data-theme='dark'] [style*='border'][style*='background'][style*='--color-bg-secondary'] {
+/* Glass panels - the core glassmorphism class for dark theme containers */
+[data-theme='dark'] .glass-panel {
+  background: var(--glass-bg) !important;
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow), var(--glass-inset);
+}
+
+[data-theme='dark'] .glass-panel-light {
+  background: var(--glass-bg-secondary) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-inset);
 }
 
 /* Glass inputs */
@@ -457,31 +558,28 @@ pre {
   box-shadow: var(--glass-glow), var(--glass-inset);
 }
 
-/* Glass modals */
-[data-theme='dark'] [style*='rgba(0,0,0,0.7)'],
-[data-theme='dark'] [style*='rgba(0,0,0,0.8)'] {
+/* Glass modals - backdrop blur behind overlays */
+[data-theme='dark'] .glass-overlay {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Glass dropdown menus */
-[data-theme='dark'] [class*='absolute'][style*='--color-bg-secondary'] {
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+/* Glass progress bars glow */
+[data-theme='dark'] .glass-bar {
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 3px rgba(0, 255, 65, 0.8);
 }
 
-/* Glass progress bars */
-[data-theme='dark'] [style*='--color-accent-teal'][class*='h-full'],
-[data-theme='dark'] [style*='--color-accent-orange'][class*='h-full'] {
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+/* Dark theme nav links */
+[data-theme='dark'] .nav-link:hover {
+  background: var(--glass-bg-secondary) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-glow);
 }
 
-/* Terminal glow on active/selected elements */
-@keyframes terminal-pulse {
-  0%, 100% { box-shadow: var(--glass-glow); }
-  50% { box-shadow: var(--glass-glow-strong); }
-}
-
-[data-theme='dark'] [style*='border-color'][style*='--color-accent-orange'] {
-  animation: terminal-pulse 3s ease-in-out infinite;
+/* Neumorphic nav links */
+[data-theme='neumorphic'] .nav-link:hover {
+  background: var(--color-bg-primary) !important;
+  border-color: transparent !important;
+  box-shadow: var(--neu-shadow-raised-sm);
+  border-radius: 12px;
 }

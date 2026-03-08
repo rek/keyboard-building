@@ -40,7 +40,7 @@ export function AssemblyGuide() {
 
       {/* Build Summary */}
       <div
-        className="p-6 mb-8"
+        className="glass-panel p-6 mb-8"
         style={{
           border: '3px solid var(--color-border)',
           background: 'var(--color-bg-secondary)',
@@ -190,7 +190,7 @@ export function AssemblyGuide() {
 
       {/* Overall Progress */}
       <div
-        className="p-6 mb-8"
+        className="glass-panel p-6 mb-8"
         style={{
           border: '3px solid var(--color-border)',
           background: 'var(--color-bg-secondary)',
@@ -224,7 +224,7 @@ export function AssemblyGuide() {
           }}
         >
           <div
-            className="h-full transition-all duration-300"
+            className="glass-bar h-full transition-all duration-300"
             style={{
               width: `${overallProgress}%`,
               background: 'var(--color-accent-teal)',
@@ -251,7 +251,7 @@ export function AssemblyGuide() {
 
       {/* Footer Tips */}
       <div
-        className="mt-8 p-6"
+        className="glass-panel mt-8 p-6"
         style={{
           border: '3px solid var(--color-accent-teal)',
           background: 'var(--color-bg-secondary)',

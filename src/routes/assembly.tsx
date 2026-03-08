@@ -17,7 +17,7 @@ function AssemblyPage() {
         style={{ background: 'var(--color-bg-primary)' }}
       >
         <div
-          className="max-w-md w-full p-8 text-center"
+          className="glass-panel max-w-md w-full p-8 text-center"
           style={{
             border: '3px solid var(--color-border)',
             background: 'var(--color-bg-secondary)',

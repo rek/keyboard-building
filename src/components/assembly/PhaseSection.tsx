@@ -21,6 +21,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
 
   return (
     <div
+      className="glass-panel"
       style={{
         border: '3px solid var(--color-border)',
         background: 'var(--color-bg-secondary)',
@@ -122,7 +123,7 @@ export function PhaseSection({ phase, progress }: PhaseSectionProps) {
           }}
         >
           <div
-            className="h-full transition-all duration-300"
+            className="glass-bar h-full transition-all duration-300"
             style={{
               width: `${phaseProgress}%`,
               background: isPhaseComplete
