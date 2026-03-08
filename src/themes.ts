@@ -5,11 +5,7 @@ export const THEMES = {
   },
   dark: {
     label: 'TERMINAL',
-    accent: '#ff8c42',
-  },
-  blueprint: {
-    label: 'BLUEPRINT',
-    accent: '#ffd700',
+    accent: '#00ff41',
   },
   neumorphic: {
     label: 'SOFT UI',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useCostEstimate } from '../../hooks/useCostEstimate'
 import { useUserChoices } from '../../contexts/UserChoicesContext'
@@ -6,13 +6,23 @@ import { useCurrency } from '../../contexts/CurrencyContext'
 import { useAppSettings } from '../../contexts/AppSettingsContext'
 import { checkCompatibility, getCompatibilityStatus } from '../../utils/compatibilityChecker'
 import { exportAsJSON, exportAsText } from '../../utils/exportBuildPlan'
+import { formatId } from '../../utils/formatting'
+
+const CHOICE_LABELS: Record<string, string> = {
+  buildMethod: 'Build Method',
+  layout: 'Layout',
+  controller: 'Controller',
+  switchType: 'Switches',
+  connectivity: 'Connectivity',
+  firmware: 'Firmware',
+}
 
 export function CostEstimator() {
   const { breakdown, total, complexity, buildTimeHours } = useCostEstimate()
   const { choices, isComplete, resetChoices } = useUserChoices()
   const { formatCurrency, currency } = useCurrency()
   const { settings } = useAppSettings()
-  const warnings = checkCompatibility(choices)
+  const warnings = useMemo(() => checkCompatibility(choices), [choices])
   const compatibilityStatus = getCompatibilityStatus(warnings)
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -43,11 +53,21 @@ export function CostEstimator() {
     { label: 'Features', amount: breakdown.features },
     { label: 'Connectivity', amount: breakdown.connectivity },
     { label: 'Shipping', amount: breakdown.shipping },
+    { label: 'Tools (one-time)', amount: breakdown.tools },
   ].filter((item) => item.amount > 0)
+
+  const selectedChoices = [
+    { label: CHOICE_LABELS.buildMethod, value: choices.buildMethod },
+    { label: CHOICE_LABELS.layout, value: choices.layout.formFactor },
+    { label: CHOICE_LABELS.controller, value: choices.controller },
+    { label: CHOICE_LABELS.switchType, value: choices.switchType },
+    { label: CHOICE_LABELS.connectivity, value: choices.connectivity },
+    { label: CHOICE_LABELS.firmware, value: choices.firmware },
+  ].filter((item) => item.value !== null)
 
   return (
     <div
-      className="p-6 sticky top-4"
+      className="glass-panel p-6 sticky top-4"
       style={{
         border: '3px solid var(--color-border)',
         background: 'var(--color-bg-secondary)',
@@ -174,7 +194,7 @@ export function CostEstimator() {
           }}
         >
           <div
-            className="h-full transition-all"
+            className="glass-bar h-full transition-all"
             style={{
               width: `${complexity * 10}%`,
               background:
@@ -233,6 +253,48 @@ export function CostEstimator() {
           {buildTimeHours < 5 ? '[QUICK]' : buildTimeHours < 20 ? '[WEEKEND]' : '[MULTI_WEEK]'}
         </div>
       </div>
+
+      {/* Selected Choices Summary */}
+      {selectedChoices.length > 0 && (
+        <div className="mb-6">
+          <h3
+            className="font-bold mb-3 text-xs tracking-wide"
+            style={{
+              fontFamily: 'var(--font-display)',
+              color: 'var(--color-text-primary)',
+            }}
+          >
+            [SELECTIONS]
+          </h3>
+          <div className="space-y-1">
+            {selectedChoices.map((item) => (
+              <div
+                key={item.label}
+                className="flex items-center justify-between text-xs pb-1"
+                style={{ borderBottom: '1px solid var(--color-border-light)' }}
+              >
+                <span
+                  className="font-bold tracking-wide"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    color: 'var(--color-text-secondary)',
+                  }}
+                >
+                  {item.label.toUpperCase()}
+                </span>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    color: 'var(--color-accent-teal)',
+                  }}
+                >
+                  {formatId(item.value!)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Cost Breakdown */}
       {settings.showPricing && breakdownItems.length > 0 && (
@@ -299,7 +361,7 @@ export function CostEstimator() {
             <>
               <div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
               <div
-                className="absolute bottom-full mb-2 left-0 right-0 border-2 z-20 overflow-hidden"
+                className="glass-panel absolute bottom-full mb-2 left-0 right-0 border-2 z-20 overflow-hidden"
                 style={{
                   background: 'var(--color-bg-secondary)',
                   borderColor: 'var(--color-border)',
@@ -388,21 +450,47 @@ export function CostEstimator() {
         {/* Reset Confirmation Modal */}
         {showResetConfirm && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="glass-overlay fixed inset-0 z-50 flex items-center justify-center p-4"
             style={{ background: 'rgba(0,0,0,0.8)' }}
           >
-            <div className="bg-white p-6 max-w-sm w-full">
-              <h3 className="font-bold text-lg mb-4">RESET_ALL?</h3>
+            <div
+              className="glass-panel p-6 max-w-sm w-full"
+              style={{
+                background: 'var(--color-bg-secondary)',
+                border: '3px solid var(--color-border)',
+              }}
+            >
+              <h3
+                className="font-bold text-lg mb-4"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  color: 'var(--color-text-primary)',
+                }}
+              >
+                RESET_ALL?
+              </h3>
               <div className="flex gap-4">
                 <button
                   onClick={() => setShowResetConfirm(false)}
-                  className="flex-1 py-2 border-2 border-black"
+                  className="flex-1 py-2 border-2 font-bold text-sm tracking-wide transition-all"
+                  style={{
+                    borderColor: 'var(--color-border)',
+                    background: 'transparent',
+                    color: 'var(--color-text-primary)',
+                    fontFamily: 'var(--font-display)',
+                  }}
                 >
                   CANCEL
                 </button>
                 <button
                   onClick={handleReset}
-                  className="flex-1 py-2 bg-red-500 text-white font-bold"
+                  className="flex-1 py-2 border-2 font-bold text-sm tracking-wide transition-all"
+                  style={{
+                    borderColor: 'var(--color-accent-orange)',
+                    background: 'var(--color-accent-orange)',
+                    color: 'white',
+                    fontFamily: 'var(--font-display)',
+                  }}
                 >
                   YES_RESET
                 </button>

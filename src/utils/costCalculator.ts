@@ -1,5 +1,6 @@
 import { type UserChoices } from '../contexts/UserChoicesContext'
 import costDatabase from '../data/cost-database.json'
+import buildComplexity from '../data/build-complexity.json'
 
 export interface CostBreakdown {
   controller: number
@@ -45,8 +46,10 @@ export function calculateCost(choices: UserChoices): CostEstimate {
   // Switches - based on key count
   if (choices.switchType) {
     const switchCount = choices.layout.keyCount
-    const switchPrice =
-      costDatabase.switches[choices.switchType as keyof typeof costDatabase.switches]?.midrange || 0
+    const switchData = costDatabase.switches[
+      choices.switchType as keyof typeof costDatabase.switches
+    ] as { midrange?: number; standard?: number } | undefined
+    const switchPrice: number = switchData?.midrange ?? switchData?.standard ?? 0
     breakdown.switches = switchCount * switchPrice
 
     // Hot-swap sockets
@@ -126,8 +129,17 @@ export function calculateCost(choices: UserChoices): CostEstimate {
     breakdown.shipping = costDatabase.shipping.domestic
   }
 
+  // One-time tools cost (basic soldering kit for builds that require it)
+  if (choices.buildMethod && choices.buildMethod !== 'complete-kit') {
+    breakdown.tools =
+      costDatabase.tools['soldering-iron-budget'] +
+      costDatabase.tools['solder-spool'] +
+      costDatabase.tools.flux +
+      costDatabase.tools['wire-cutters']
+  }
+
   // Calculate total
-  const total = Object.values(breakdown).reduce((sum, cost) => sum + cost, 0)
+  const total = (Object.values(breakdown) as number[]).reduce((sum, cost) => sum + cost, 0)
 
   // Calculate per-half breakdown (for display purposes)
   const perHalf: CostBreakdown = {
@@ -150,36 +162,21 @@ export function calculateCost(choices: UserChoices): CostEstimate {
   }
 }
 
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount)
-}
-
 export function calculateComplexity(choices: UserChoices): number {
   let complexity = 0
 
-  // Base complexity from build method
-  const methodComplexity: Record<string, number> = {
-    handwired: 4,
-    'custom-pcb': 5,
-    'pcb-kit': 2,
-    'complete-kit': 1,
-  }
-  complexity += choices.buildMethod ? methodComplexity[choices.buildMethod] || 0 : 0
+  complexity += choices.buildMethod
+    ? (buildComplexity.methodComplexity[
+        choices.buildMethod as keyof typeof buildComplexity.methodComplexity
+      ] ?? 0)
+    : 0
 
-  // Layout complexity
-  const layoutComplexity: Record<string, number> = {
-    'ergonomic-3d': 5,
-    'flat-splay': 3,
-    'standard-split': 2,
-  }
-  complexity += choices.layout.formFactor ? layoutComplexity[choices.layout.formFactor] || 0 : 0
+  complexity += choices.layout.formFactor
+    ? (buildComplexity.layoutComplexity[
+        choices.layout.formFactor as keyof typeof buildComplexity.layoutComplexity
+      ] ?? 0)
+    : 0
 
-  // Feature complexity
   if (choices.features.hotswap) complexity += 0.5
   if (choices.features.rgb) complexity += 2
   if (choices.features.oled) complexity += 1.5
@@ -187,54 +184,41 @@ export function calculateComplexity(choices: UserChoices): number {
   if (choices.features.trackball) complexity += 4
   if (choices.features.wireless) complexity += 3
 
-  // Firmware complexity
-  const firmwareComplexity: Record<string, number> = {
-    qmk: 3,
-    vial: 1,
-    kmk: 2,
-    zmk: 4,
-  }
-  complexity += choices.firmware ? firmwareComplexity[choices.firmware] || 0 : 0
+  complexity += choices.firmware
+    ? (buildComplexity.firmwareComplexity[
+        choices.firmware as keyof typeof buildComplexity.firmwareComplexity
+      ] ?? 0)
+    : 0
 
-  // Normalize to 1-10 scale
   return Math.min(10, Math.max(1, Math.round(complexity / 2)))
 }
 
 export function estimateBuildTime(choices: UserChoices): number {
   let hours = 0
 
-  // Base time from build method
-  const methodTime: Record<string, number> = {
-    handwired: 15,
-    'custom-pcb': 40,
-    'pcb-kit': 5,
-    'complete-kit': 1,
-  }
-  hours += choices.buildMethod ? methodTime[choices.buildMethod] || 0 : 0
+  hours += choices.buildMethod
+    ? (buildComplexity.methodTime[
+        choices.buildMethod as keyof typeof buildComplexity.methodTime
+      ] ?? 0)
+    : 0
 
-  // Layout time
-  const layoutTime: Record<string, number> = {
-    'ergonomic-3d': 20,
-    'flat-splay': 10,
-    'standard-split': 5,
-  }
-  hours += choices.layout.formFactor ? layoutTime[choices.layout.formFactor] || 0 : 0
+  hours += choices.layout.formFactor
+    ? (buildComplexity.layoutTime[
+        choices.layout.formFactor as keyof typeof buildComplexity.layoutTime
+      ] ?? 0)
+    : 0
 
-  // Feature time
   if (choices.features.rgb) hours += 3
   if (choices.features.oled) hours += 1
   if (choices.features.encoder) hours += 1
   if (choices.features.trackball) hours += 8
   if (choices.features.wireless) hours += 5
 
-  // Firmware setup time
-  const firmwareTime: Record<string, number> = {
-    qmk: 2,
-    vial: 1,
-    kmk: 2,
-    zmk: 3,
-  }
-  hours += choices.firmware ? firmwareTime[choices.firmware] || 0 : 0
+  hours += choices.firmware
+    ? (buildComplexity.firmwareTime[
+        choices.firmware as keyof typeof buildComplexity.firmwareTime
+      ] ?? 0)
+    : 0
 
   return hours
 }

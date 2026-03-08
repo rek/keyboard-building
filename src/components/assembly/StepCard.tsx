@@ -7,6 +7,112 @@ interface StepCardProps {
   onToggleComplete: () => void
 }
 
+// Inline markdown renderer: bold, inline code, and links
+function renderInline(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = []
+  // Regex matches **bold**, `code`, and [text](url)
+  const pattern = /(\*\*(.+?)\*\*|`([^`]+)`|\[([^\]]+)\]\((https?:\/\/[^)]+)\))/g
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index))
+    }
+    if (match[1].startsWith('**')) {
+      parts.push(<strong key={match.index}>{match[2]}</strong>)
+    } else if (match[1].startsWith('`')) {
+      parts.push(
+        <code
+          key={match.index}
+          className="px-1 py-0.5 text-xs rounded"
+          style={{
+            background: 'var(--color-bg-primary)',
+            border: '1px solid var(--color-border-light)',
+            fontFamily: 'monospace',
+            color: 'var(--color-accent-teal)',
+          }}
+        >
+          {match[3]}
+        </code>
+      )
+    } else if (match[1].startsWith('[')) {
+      parts.push(
+        <a
+          key={match.index}
+          href={match[5]}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'var(--color-accent-teal)', textDecoration: 'underline' }}
+        >
+          {match[4]}
+        </a>
+      )
+    }
+    lastIndex = match.index + match[0].length
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex))
+  }
+
+  return parts
+}
+
+function renderMarkdownBlock(block: string): React.ReactNode {
+  const lines = block.split('\n')
+
+  // Detect list blocks
+  const isOrdered = lines.every((l) => /^\d+\.\s/.test(l.trim()) || l.trim() === '')
+  const isUnordered = lines.every((l) => /^[-*]\s/.test(l.trim()) || l.trim() === '')
+
+  if (isOrdered && lines.some((l) => /^\d+\.\s/.test(l.trim()))) {
+    return (
+      <ol className="list-decimal ml-5 space-y-1">
+        {lines
+          .filter((l) => /^\d+\.\s/.test(l.trim()))
+          .map((l, i) => (
+            <li key={i} style={{ color: 'var(--color-text-secondary)' }}>
+              {renderInline(l.replace(/^\d+\.\s/, ''))}
+            </li>
+          ))}
+      </ol>
+    )
+  }
+
+  if (isUnordered && lines.some((l) => /^[-*]\s/.test(l.trim()))) {
+    return (
+      <ul className="list-disc ml-5 space-y-1">
+        {lines
+          .filter((l) => /^[-*]\s/.test(l.trim()))
+          .map((l, i) => (
+            <li key={i} style={{ color: 'var(--color-text-secondary)' }}>
+              {renderInline(l.replace(/^[-*]\s/, ''))}
+            </li>
+          ))}
+      </ul>
+    )
+  }
+
+  // Regular paragraph
+  return (
+    <p className="mb-2 whitespace-pre-line leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+      {renderInline(block)}
+    </p>
+  )
+}
+
+function renderMarkdown(content: string): React.ReactNode {
+  const blocks = content.split('\n\n').filter(Boolean)
+  return (
+    <>
+      {blocks.map((block, idx) => (
+        <React.Fragment key={idx}>{renderMarkdownBlock(block)}</React.Fragment>
+      ))}
+    </>
+  )
+}
+
 export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) {
   const [showWarnings, setShowWarnings] = useState(false)
   const [showTips, setShowTips] = useState(false)
@@ -76,16 +182,8 @@ export function StepCard({ step, isComplete, onToggleComplete }: StepCardProps) 
       </div>
 
       {/* Step Content */}
-      <div className="prose prose-sm max-w-none mb-4 pl-10">
-        {step.content.split('\n\n').map((paragraph, idx) => (
-          <p
-            key={idx}
-            className="mb-2 whitespace-pre-line leading-relaxed"
-            style={{ color: 'var(--color-text-secondary)' }}
-          >
-            {paragraph}
-          </p>
-        ))}
+      <div className="prose prose-sm max-w-none mb-4 pl-10 text-sm">
+        {renderMarkdown(step.content)}
       </div>
 
       {/* Required Tools */}

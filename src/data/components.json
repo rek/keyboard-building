@@ -1630,5 +1630,168 @@
       "compatibleWith": ["nice-nano", "wireless"],
       "incompatibleWith": ["pro-micro", "elite-c"]
     }
+  },
+  "stabilisers": {
+    "cherry-pcb-clip-in": {
+      "id": "cherry-pcb-clip-in",
+      "name": "Cherry-style PCB Clip-in",
+      "price": 0.5,
+      "image": "",
+      "specs": {
+        "mount": "PCB clip-in",
+        "sizes": ["2u", "6.25u"],
+        "wire": "0.6mm"
+      },
+      "complexity": 1,
+      "pros": [
+        "Cheapest option (~$0.50 each)",
+        "Widely available",
+        "Compatible with most MX PCBs"
+      ],
+      "cons": [
+        "Rattle-prone without lubing and clipping",
+        "Less consistent than screw-in",
+        "Can pop off under heavy use"
+      ],
+      "compatibleWith": ["mx"],
+      "incompatibleWith": ["choc-v1", "choc-v2"],
+      "vendors": [
+        {
+          "name": "AliExpress",
+          "url": "https://aliexpress.com/",
+          "price": 0.5,
+          "note": "Buy in packs of 6 or 10"
+        }
+      ]
+    },
+    "cherry-pcb-screw-in": {
+      "id": "cherry-pcb-screw-in",
+      "name": "Cherry-style PCB Screw-in",
+      "price": 1.5,
+      "image": "",
+      "specs": {
+        "mount": "PCB screw-in",
+        "sizes": ["2u", "6.25u"],
+        "wire": "0.6mm"
+      },
+      "complexity": 1,
+      "pros": [
+        "More stable than clip-in",
+        "Won't pop off during use",
+        "Still accepts lube and clipping mods"
+      ],
+      "cons": [
+        "Requires screw holes on PCB",
+        "Slightly more expensive"
+      ],
+      "compatibleWith": ["mx"],
+      "incompatibleWith": ["choc-v1", "choc-v2"],
+      "vendors": [
+        {
+          "name": "Keebio",
+          "url": "https://keeb.io/",
+          "price": 1.5
+        }
+      ]
+    },
+    "durock-v2": {
+      "id": "durock-v2",
+      "name": "Durock V2 Screw-in",
+      "price": 3.5,
+      "image": "",
+      "specs": {
+        "mount": "PCB screw-in",
+        "sizes": ["2u", "6.25u", "7u"],
+        "wire": "0.6mm",
+        "housing": "nylon"
+      },
+      "complexity": 1,
+      "pros": [
+        "Smooth nylon housing reduces rattle",
+        "Very popular in the enthusiast community",
+        "Excellent baseline feel — minimal modding needed",
+        "Gold-plated wire resists corrosion"
+      ],
+      "cons": [
+        "More expensive than generic alternatives",
+        "Still benefits from lubing"
+      ],
+      "compatibleWith": ["mx"],
+      "incompatibleWith": ["choc-v1", "choc-v2"],
+      "vendors": [
+        {
+          "name": "Divinikey",
+          "url": "https://divinikey.com/",
+          "price": 3.5
+        },
+        {
+          "name": "AliExpress",
+          "url": "https://aliexpress.com/",
+          "price": 2.0,
+          "note": "Genuine or clones — inspect carefully"
+        }
+      ]
+    },
+    "tx-stabilisers": {
+      "id": "tx-stabilisers",
+      "name": "TX Stabilisers",
+      "price": 5.0,
+      "image": "",
+      "specs": {
+        "mount": "PCB screw-in",
+        "sizes": ["2u", "6.25u", "7u"],
+        "wire": "0.6mm",
+        "housing": "PC (polycarbonate)"
+      },
+      "complexity": 1,
+      "pros": [
+        "Polycarbonate housing for a crisper sound profile",
+        "Long stem reduces wobble significantly",
+        "Very smooth out-of-the-box",
+        "Beloved by the enthusiast community"
+      ],
+      "cons": [
+        "Premium price",
+        "Limited availability — sells out quickly"
+      ],
+      "compatibleWith": ["mx"],
+      "incompatibleWith": ["choc-v1", "choc-v2"],
+      "vendors": [
+        {
+          "name": "TX Keyboards",
+          "url": "https://www.txkeyboards.com/",
+          "price": 5.0
+        }
+      ]
+    },
+    "choc-wire-stabiliser": {
+      "id": "choc-wire-stabiliser",
+      "name": "Choc Wire Stabiliser",
+      "price": 1.0,
+      "image": "",
+      "specs": {
+        "mount": "PCB",
+        "sizes": ["2u"],
+        "wire": "custom Choc format"
+      },
+      "complexity": 2,
+      "pros": [
+        "Required for Choc 2u+ keys (spacebar, thumb keys)",
+        "Low-profile design"
+      ],
+      "cons": [
+        "Limited availability compared to MX stabilisers",
+        "Harder to lube due to smaller housing"
+      ],
+      "compatibleWith": ["choc-v1", "choc-v2"],
+      "incompatibleWith": ["mx"],
+      "vendors": [
+        {
+          "name": "Typeractive",
+          "url": "https://typeractive.xyz/",
+          "price": 1.0
+        }
+      ]
+    }
   }
 }

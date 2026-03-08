@@ -1,0 +1,36 @@
+{
+  "methodComplexity": {
+    "handwired": 4,
+    "custom-pcb": 5,
+    "pcb-kit": 2,
+    "complete-kit": 1
+  },
+  "layoutComplexity": {
+    "ergonomic-3d": 5,
+    "flat-splay": 3,
+    "standard-split": 2
+  },
+  "firmwareComplexity": {
+    "qmk": 3,
+    "vial": 1,
+    "kmk": 2,
+    "zmk": 4
+  },
+  "methodTime": {
+    "handwired": 15,
+    "custom-pcb": 40,
+    "pcb-kit": 5,
+    "complete-kit": 1
+  },
+  "layoutTime": {
+    "ergonomic-3d": 20,
+    "flat-splay": 10,
+    "standard-split": 5
+  },
+  "firmwareTime": {
+    "qmk": 2,
+    "vial": 1,
+    "kmk": 2,
+    "zmk": 3
+  }
+}

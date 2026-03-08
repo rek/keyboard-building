@@ -133,6 +133,7 @@ export function exportAsText(
     { label: 'Features', amount: breakdown.features },
     { label: 'Connectivity', amount: breakdown.connectivity },
     { label: 'Shipping', amount: breakdown.shipping },
+    { label: 'Tools (one-time)', amount: breakdown.tools },
   ].filter((item) => item.amount > 0)
 
   costItems.forEach((item) => {

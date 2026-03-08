@@ -9,11 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as ComponentsRouteImport } from './routes/components'
 import { Route as BuilderRouteImport } from './routes/builder'
 import { Route as AssemblyRouteImport } from './routes/assembly'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ComponentsRoute = ComponentsRouteImport.update({
   id: '/components',
   path: '/components',
@@ -40,12 +52,16 @@ export interface FileRoutesByFullPath {
   '/assembly': typeof AssemblyRoute
   '/builder': typeof BuilderRoute
   '/components': typeof ComponentsRoute
+  '/glossary': typeof GlossaryRoute
+  '/tools': typeof ToolsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assembly': typeof AssemblyRoute
   '/builder': typeof BuilderRoute
   '/components': typeof ComponentsRoute
+  '/glossary': typeof GlossaryRoute
+  '/tools': typeof ToolsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,28 @@ export interface FileRoutesById {
   '/assembly': typeof AssemblyRoute
   '/builder': typeof BuilderRoute
   '/components': typeof ComponentsRoute
+  '/glossary': typeof GlossaryRoute
+  '/tools': typeof ToolsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assembly' | '/builder' | '/components'
+  fullPaths:
+    | '/'
+    | '/assembly'
+    | '/builder'
+    | '/components'
+    | '/glossary'
+    | '/tools'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assembly' | '/builder' | '/components'
-  id: '__root__' | '/' | '/assembly' | '/builder' | '/components'
+  to: '/' | '/assembly' | '/builder' | '/components' | '/glossary' | '/tools'
+  id:
+    | '__root__'
+    | '/'
+    | '/assembly'
+    | '/builder'
+    | '/components'
+    | '/glossary'
+    | '/tools'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +98,26 @@ export interface RootRouteChildren {
   AssemblyRoute: typeof AssemblyRoute
   BuilderRoute: typeof BuilderRoute
   ComponentsRoute: typeof ComponentsRoute
+  GlossaryRoute: typeof GlossaryRoute
+  ToolsRoute: typeof ToolsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/components': {
       id: '/components'
       path: '/components'
@@ -107,6 +154,8 @@ const rootRouteChildren: RootRouteChildren = {
   AssemblyRoute: AssemblyRoute,
   BuilderRoute: BuilderRoute,
   ComponentsRoute: ComponentsRoute,
+  GlossaryRoute: GlossaryRoute,
+  ToolsRoute: ToolsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

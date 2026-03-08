@@ -372,3 +372,48 @@ Format: JSON stringified UserChoices object
 4. Update cost calculation in `costCalculator.ts`
 5. Add pin requirement calculation if needed
 6. Update compatibility checker if it conflicts with anything
+
+### To Add a New Component Category
+
+A "component category" is a top-level key in `components.json` (e.g., `"stabilisers"`, `"cables"`). Follow these steps:
+
+1. **Add the category to `components.json`**
+   Add a new top-level key. Each value is a map of `componentId → ComponentEntry`. All entries must satisfy the base `ComponentEntry` schema (see above). Example:
+   ```json
+   {
+     "stabilisers": {
+       "durock-v2": {
+         "id": "durock-v2",
+         "name": "Durock V2 Screw-in",
+         "price": 3.5,
+         "image": "/images/components/stabilisers/durock-v2.webp",
+         "specs": { "mount": "PCB screw-in", "sizes": ["2u", "6.25u"] },
+         "complexity": 1,
+         "pros": ["Smooth nylon housing"],
+         "cons": ["More expensive than generic"],
+         "compatibleWith": ["mx"],
+         "incompatibleWith": ["choc-v1", "choc-v2"],
+         "vendors": [{ "name": "Divinikey", "url": "https://divinikey.com/", "price": 3.5 }]
+       }
+     }
+   }
+   ```
+
+2. **Add a category entry to `category-info.json`**
+   Controls how the category appears on the `/components` page:
+   ```json
+   {
+     "id": "stabilisers",
+     "title": "Stabilisers",
+     "description": "Prevent larger keys from wobbling.",
+     "icon": "move"
+   }
+   ```
+
+3. **Add images** to `public/images/components/<category>/`. Use `.webp` format at 400×300px.
+
+4. **Add pricing** to `cost-database.json` if the category feeds into build cost estimates.
+
+5. **Validate** with `npm run check` to ensure TypeScript and the build pass.
+
+> See `CONTRIBUTING.md` for the full contributor workflow.

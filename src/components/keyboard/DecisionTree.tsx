@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useUserChoices } from '../../contexts/UserChoicesContext'
 import { useCurrency } from '../../contexts/CurrencyContext'
 import { useAppSettings } from '../../contexts/AppSettingsContext'
@@ -32,6 +32,8 @@ export function DecisionTree() {
   const { settings } = useAppSettings()
   const [previewData, setPreviewData] = useState<ConsequencePreviewData | null>(null)
   const [selectedDecisionId, setSelectedDecisionId] = useState<string | null>(null)
+  const [tooltipOptionId, setTooltipOptionId] = useState<string | null>(null)
+  const tooltipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const steps: DecisionStep[] = decisionTreeData.steps
 
@@ -109,7 +111,7 @@ export function DecisionTree() {
           return (
             <div
               key={decision.id}
-              className="p-6"
+              className="glass-panel p-6"
               style={{
                 border: '3px solid var(--color-border)',
                 background: 'var(--color-bg-secondary)',
@@ -154,7 +156,17 @@ export function DecisionTree() {
                     <button
                       key={option.id}
                       onClick={() => handlePreview(decision, option)}
-                      className="relative text-left p-4 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                      onMouseEnter={() => {
+                        tooltipTimerRef.current = setTimeout(
+                          () => setTooltipOptionId(option.id),
+                          500
+                        )
+                      }}
+                      onMouseLeave={() => {
+                        if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current)
+                        setTooltipOptionId(null)
+                      }}
+                      className="glass-panel-light relative text-left p-4 border-2 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
                       style={{
                         borderColor: isSelected
                           ? 'var(--color-accent-orange)'
@@ -254,7 +266,7 @@ export function DecisionTree() {
                       </div>
 
                       {/* Skill Level Badge */}
-                      <div className="mt-2">
+                      <div className="mt-2 flex items-center gap-2">
                         <span
                           className="inline-block px-2 py-1 text-xs font-bold tracking-wide border-2"
                           style={{
@@ -266,7 +278,56 @@ export function DecisionTree() {
                         >
                           {option.skillLevel.toUpperCase()}
                         </span>
+                        <span
+                          className="text-xs"
+                          style={{ color: 'var(--color-text-secondary)' }}
+                          title="Hover for details"
+                        >
+                          ℹ️
+                        </span>
                       </div>
+
+                      {/* Hover Tooltip */}
+                      {tooltipOptionId === option.id &&
+                        option.downstreamEffects.length > 0 && (
+                          <div
+                            className="glass-panel absolute bottom-full left-0 right-0 mb-2 p-3 z-30 border-2 text-left"
+                            style={{
+                              background: 'var(--color-bg-secondary)',
+                              borderColor: 'var(--color-border)',
+                              boxShadow: '4px 4px 0 var(--color-border)',
+                            }}
+                            onMouseEnter={() => {
+                              if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current)
+                              setTooltipOptionId(option.id)
+                            }}
+                            onMouseLeave={() => setTooltipOptionId(null)}
+                          >
+                            <div
+                              className="text-xs font-bold tracking-wide mb-2"
+                              style={{
+                                fontFamily: 'var(--font-display)',
+                                color: 'var(--color-text-primary)',
+                              }}
+                            >
+                              WHAT_THIS_MEANS
+                            </div>
+                            <ul className="space-y-1">
+                              {option.downstreamEffects.slice(0, 4).map((effect, i) => (
+                                <li
+                                  key={i}
+                                  className="text-xs pl-2"
+                                  style={{
+                                    borderLeft: '2px solid var(--color-accent-teal)',
+                                    color: 'var(--color-text-secondary)',
+                                  }}
+                                >
+                                  {effect}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                     </button>
                   )
                 })}

@@ -22,28 +22,28 @@
 
 /* Dark theme: Terminal Night */
 [data-theme='dark'] {
-  --color-bg-primary: #0a0e14;
-  --color-bg-secondary: #12171e;
-  --color-text-primary: #e6e6e6;
-  --color-text-secondary: #8a8a8a;
-  --color-accent-orange: #ff8c42;
-  --color-accent-teal: #00d9ff;
-  --color-border: #e6e6e6;
-  --color-border-light: #2a2f38;
-  --color-grid: rgba(230, 230, 230, 0.08);
-}
+  --color-bg-primary: #050a05;
+  --color-bg-secondary: #0a140a;
+  --color-text-primary: #00ff41;
+  --color-text-secondary: #39a85a;
+  --color-accent-orange: #00ff41;
+  --color-accent-teal: #00e676;
+  --color-border: #00ff41;
+  --color-border-light: #0d2a0d;
+  --color-grid: rgba(0, 255, 65, 0.08);
 
-/* Blueprint theme: Technical Drawings */
-[data-theme='blueprint'] {
-  --color-bg-primary: #0c2d48;
-  --color-bg-secondary: #145da0;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #b1d4e0;
-  --color-accent-orange: #ffd700;
-  --color-accent-teal: #00fff5;
-  --color-border: #ffffff;
-  --color-border-light: #2e8bc0;
-  --color-grid: rgba(255, 255, 255, 0.1);
+  /* Glassmorphism variables */
+  --glass-bg: rgba(0, 20, 5, 0.55);
+  --glass-bg-secondary: rgba(0, 30, 8, 0.5);
+  --glass-bg-elevated: rgba(0, 40, 12, 0.6);
+  --glass-border: rgba(0, 255, 65, 0.35);
+  --glass-border-strong: rgba(0, 255, 65, 0.5);
+  --glass-blur: blur(20px);
+  --glass-blur-heavy: blur(28px);
+  --glass-shadow: 0 8px 32px rgba(0, 255, 65, 0.15), 0 0 1px rgba(0, 255, 65, 0.3);
+  --glass-glow: 0 0 24px rgba(0, 255, 65, 0.2), 0 0 4px rgba(0, 255, 65, 0.4);
+  --glass-glow-strong: 0 0 40px rgba(0, 255, 65, 0.3), 0 0 8px rgba(0, 255, 65, 0.5);
+  --glass-inset: inset 0 1px 0 rgba(0, 255, 65, 0.15), inset 0 0 20px rgba(0, 255, 65, 0.03);
 }
 
 /* Neumorphic theme: Soft UI */
@@ -200,6 +200,12 @@ pre {
   animation-delay: 0.6s;
 }
 
+/* Navigation link hover */
+.nav-link:hover {
+  border-color: var(--color-border) !important;
+  background: var(--color-bg-primary);
+}
+
 /* Keyboard key effect */
 .key-button {
   font-family: var(--font-display);
@@ -327,4 +333,155 @@ pre {
 [data-theme='neumorphic'] .key-button:active {
   box-shadow: var(--neu-shadow-inset);
   transform: none;
+}
+
+/* Glassmorphism overrides for dark/terminal theme */
+[data-theme='dark'] body {
+  background: radial-gradient(ellipse at top left, #001a00 0%, #000800 40%, #000000 100%);
+}
+
+[data-theme='dark'] body::before {
+  background-image: radial-gradient(circle at center, var(--color-grid) 1px, transparent 1px);
+  opacity: 0.6;
+}
+
+/* Scanline overlay for CRT feel */
+[data-theme='dark'] body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 65, 0.015) 0px,
+    rgba(0, 255, 65, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+[data-theme='dark'] header {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border-bottom: 1px solid var(--glass-border-strong) !important;
+  box-shadow: var(--glass-shadow), 0 1px 0 rgba(0, 255, 65, 0.2) !important;
+}
+
+[data-theme='dark'] aside {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border-right: 1px solid var(--glass-border-strong) !important;
+  box-shadow: 4px 0 32px rgba(0, 255, 65, 0.12), var(--glass-inset) !important;
+}
+
+[data-theme='dark'] .tech-card {
+  background: var(--glass-bg-secondary);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-inset);
+}
+
+[data-theme='dark'] .tech-card:hover {
+  background: var(--glass-bg-elevated);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-glow-strong), var(--glass-inset);
+  transform: translateY(-2px);
+}
+
+[data-theme='dark'] .tech-card::before {
+  background: rgba(0, 255, 65, 0.15);
+}
+
+[data-theme='dark'] .key-button {
+  background: var(--glass-bg-secondary);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-glow);
+}
+
+[data-theme='dark'] .key-button:hover {
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-glow-strong);
+}
+
+[data-theme='dark'] .key-button::after {
+  background: rgba(0, 255, 65, 0.2);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.15);
+}
+
+[data-theme='dark'] .key-button-primary {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: rgba(0, 255, 65, 0.6);
+  color: #00ff41;
+  box-shadow: var(--glass-glow-strong), inset 0 0 30px rgba(0, 255, 65, 0.08);
+}
+
+[data-theme='dark'] .key-button-primary:hover {
+  background: rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 50px rgba(0, 255, 65, 0.4), 0 0 12px rgba(0, 255, 65, 0.6),
+    inset 0 0 30px rgba(0, 255, 65, 0.1);
+}
+
+[data-theme='dark'] .key-button-primary::after {
+  background: rgba(0, 255, 65, 0.3);
+}
+
+/* Glass panels - general containers in dark theme */
+[data-theme='dark'] .glass-panel,
+[data-theme='dark'] [style*='border'][style*='background'][style*='--color-bg-secondary'] {
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+/* Glass inputs */
+[data-theme='dark'] input[type='text'],
+[data-theme='dark'] input[type='search'] {
+  background: var(--glass-bg-secondary) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-inset);
+}
+
+[data-theme='dark'] input[type='text']:focus,
+[data-theme='dark'] input[type='search']:focus {
+  border-color: var(--glass-border-strong) !important;
+  box-shadow: var(--glass-glow), var(--glass-inset);
+}
+
+/* Glass modals */
+[data-theme='dark'] [style*='rgba(0,0,0,0.7)'],
+[data-theme='dark'] [style*='rgba(0,0,0,0.8)'] {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Glass dropdown menus */
+[data-theme='dark'] [class*='absolute'][style*='--color-bg-secondary'] {
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+/* Glass progress bars */
+[data-theme='dark'] [style*='--color-accent-teal'][class*='h-full'],
+[data-theme='dark'] [style*='--color-accent-orange'][class*='h-full'] {
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+}
+
+/* Terminal glow on active/selected elements */
+@keyframes terminal-pulse {
+  0%, 100% { box-shadow: var(--glass-glow); }
+  50% { box-shadow: var(--glass-glow-strong); }
+}
+
+[data-theme='dark'] [style*='border-color'][style*='--color-accent-orange'] {
+  animation: terminal-pulse 3s ease-in-out infinite;
 }

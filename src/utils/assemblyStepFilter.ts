@@ -1,5 +1,9 @@
 import { type UserChoices } from '../contexts/UserChoicesContext'
-import { type AssemblyPhase, type AssemblyStep, type StepRequirements } from '../types/assembly'
+import {
+  type AssemblyPhase,
+  type AssemblyStep,
+  type ConditionValue,
+} from '../types/assembly'
 
 /**
  * Filters assembly steps based on user's build choices
@@ -110,12 +114,12 @@ function applyStepVariations(step: AssemblyStep, choices: UserChoices): Assembly
 
       // Add variation-specific warnings
       if (variation.warnings) {
-        enhancedStep.warnings = [...(enhancedStep.warnings || []), ...variation.warnings]
+        enhancedStep.warnings = [...(enhancedStep.warnings ?? []), ...variation.warnings]
       }
 
       // Add variation-specific tips
       if (variation.tips) {
-        enhancedStep.tips = [...(enhancedStep.tips || []), ...variation.tips]
+        enhancedStep.tips = [...(enhancedStep.tips ?? []), ...variation.tips]
       }
     }
   }
@@ -127,13 +131,16 @@ function applyStepVariations(step: AssemblyStep, choices: UserChoices): Assembly
  * Checks if a variation condition matches the user's choices
  * Supports nested property paths like "layout.formFactor"
  */
-function matchesCondition(condition: Record<string, any>, choices: UserChoices): boolean {
+function matchesCondition(
+  condition: Record<string, ConditionValue>,
+  choices: UserChoices
+): boolean {
   for (const [path, expectedValue] of Object.entries(condition)) {
     const actualValue = getNestedValue(choices, path)
 
     // Handle array values (condition can match any value in array)
     if (Array.isArray(expectedValue)) {
-      if (!expectedValue.includes(actualValue)) {
+      if (!expectedValue.includes(actualValue as string | boolean | number | null)) {
         return false
       }
     } else {
@@ -149,8 +156,16 @@ function matchesCondition(condition: Record<string, any>, choices: UserChoices):
  * Gets a nested property value from an object using dot notation
  * e.g., "layout.formFactor" -> choices.layout.formFactor
  */
-function getNestedValue(obj: any, path: string): any {
-  return path.split('.').reduce((acc, part) => acc?.[part], obj)
+function getNestedValue(
+  obj: unknown,
+  path: string
+): string | boolean | number | null | undefined {
+  return path.split('.').reduce((acc: unknown, part: string) => {
+    if (acc !== null && acc !== undefined && typeof acc === 'object') {
+      return (acc as Record<string, unknown>)[part]
+    }
+    return undefined
+  }, obj) as string | boolean | number | null | undefined
 }
 
 /**

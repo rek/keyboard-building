@@ -11,6 +11,8 @@ import {
   Settings,
   GraduationCap,
   Palette,
+  BookOpen,
+  Wrench,
 } from 'lucide-react'
 import { useCurrency, CURRENCY_CONFIG, type Currency } from '../contexts/CurrencyContext'
 import { useAppSettings } from '../contexts/AppSettingsContext'
@@ -42,7 +44,7 @@ export default function Header() {
       >
         <button
           onClick={() => setIsOpen(true)}
-          className="p-2 transition-all hover:bg-black hover:text-white"
+          className="p-2 transition-all hover:opacity-80"
           style={{
             border: '2px solid var(--color-border)',
             background: 'transparent',
@@ -104,7 +106,7 @@ export default function Header() {
           <h2 className="text-xl font-bold tracking-wide">NAVIGATION</h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 transition-all hover:bg-black hover:text-white"
+            className="p-2 transition-all hover:opacity-80"
             style={{
               border: '2px solid var(--color-border)',
               background: 'transparent',
@@ -119,7 +121,7 @@ export default function Header() {
           <Link
             to="/"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent hover:border-black hover:bg-black hover:text-white"
+            className="nav-link flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent"
             activeProps={{
               className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
               style: {
@@ -136,7 +138,7 @@ export default function Header() {
           <Link
             to="/builder"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent hover:border-black hover:bg-black hover:text-white"
+            className="nav-link flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent"
             activeProps={{
               className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
               style: {
@@ -153,7 +155,7 @@ export default function Header() {
           <Link
             to="/components"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent hover:border-black hover:bg-black hover:text-white"
+            className="nav-link flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent"
             activeProps={{
               className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
               style: {
@@ -165,6 +167,40 @@ export default function Header() {
           >
             <Network size={20} />
             <span className="font-semibold tracking-wide text-sm">COMPONENTS</span>
+          </Link>
+
+          <Link
+            to="/glossary"
+            onClick={() => setIsOpen(false)}
+            className="nav-link flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent"
+            activeProps={{
+              className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
+              style: {
+                borderColor: 'var(--color-accent-orange)',
+                background: 'var(--color-accent-orange)',
+                color: 'white',
+              },
+            }}
+          >
+            <BookOpen size={20} />
+            <span className="font-semibold tracking-wide text-sm">GLOSSARY</span>
+          </Link>
+
+          <Link
+            to="/tools"
+            onClick={() => setIsOpen(false)}
+            className="nav-link flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent"
+            activeProps={{
+              className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
+              style: {
+                borderColor: 'var(--color-accent-orange)',
+                background: 'var(--color-accent-orange)',
+                color: 'white',
+              },
+            }}
+          >
+            <Wrench size={20} />
+            <span className="font-semibold tracking-wide text-sm">TOOLS</span>
           </Link>
 
           {/* App Settings */}
@@ -221,7 +257,7 @@ export default function Header() {
             {/* Individual Toggles (when not in learning mode) */}
             {!settings.learningMode && (
               <div className="px-3 py-2 space-y-2">
-                <label className="flex items-center justify-between cursor-pointer p-2 transition-all hover:bg-gray-100">
+                <label className="flex items-center justify-between cursor-pointer p-2 transition-all hover:opacity-80">
                   <span className="text-xs font-semibold tracking-wide">SHOW PRICING</span>
                   <input
                     type="checkbox"
@@ -231,7 +267,7 @@ export default function Header() {
                     style={{ accentColor: 'var(--color-accent-orange)' }}
                   />
                 </label>
-                <label className="flex items-center justify-between cursor-pointer p-2 transition-all hover:bg-gray-100">
+                <label className="flex items-center justify-between cursor-pointer p-2 transition-all hover:opacity-80">
                   <span className="text-xs font-semibold tracking-wide">SHOW VENDORS</span>
                   <input
                     type="checkbox"

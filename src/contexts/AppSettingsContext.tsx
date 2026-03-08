@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 
-import { type Theme } from '../themes'
+import { THEMES, type Theme } from '../themes'
 export type { Theme }
 
 export interface AppSettings {
@@ -20,9 +20,9 @@ interface AppSettingsContextType {
 const AppSettingsContext = createContext<AppSettingsContextType | undefined>(undefined)
 
 const DEFAULT_SETTINGS: AppSettings = {
-  showPricing: true,
-  showVendors: true,
-  learningMode: false,
+  showPricing: false,
+  showVendors: false,
+  learningMode: true,
   theme: 'light',
 }
 
@@ -32,7 +32,10 @@ export function AppSettingsProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem('kb-app-settings')
       if (saved) {
         try {
-          return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) }
+          const parsed = { ...DEFAULT_SETTINGS, ...JSON.parse(saved) }
+          // Fallback removed themes to default
+          if (!(parsed.theme in THEMES)) parsed.theme = 'light'
+          return parsed
         } catch {
           return DEFAULT_SETTINGS
         }

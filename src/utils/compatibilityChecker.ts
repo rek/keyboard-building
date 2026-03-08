@@ -40,7 +40,14 @@ export function checkCompatibility(choices: UserChoices): CompatibilityWarning[]
   }
 
   // Check wireless compatibility
-  if (choices.connectivity === 'wireless' && choices.controller !== 'nice-nano') {
+  if (choices.connectivity === 'wireless' && choices.controller === 'elite-c') {
+    warnings.push({
+      severity: 'error',
+      message:
+        'Elite-C uses ATmega32U4 which has no Bluetooth hardware. Use nice!nano + ZMK for wireless builds.',
+      affectedChoices: ['controller', 'connectivity'],
+    })
+  } else if (choices.connectivity === 'wireless' && choices.controller !== 'nice-nano') {
     warnings.push({
       severity: 'error',
       message: 'Wireless connectivity requires nice!nano controller with ZMK firmware.',
@@ -53,6 +60,20 @@ export function checkCompatibility(choices: UserChoices): CompatibilityWarning[]
       severity: 'error',
       message: 'Wireless builds require ZMK firmware. QMK, Vial, and KMK do not support wireless.',
       affectedChoices: ['connectivity', 'firmware'],
+    })
+  }
+
+  // ZMK is designed for wireless — warn when used with wired connectivity
+  if (
+    choices.firmware === 'zmk' &&
+    choices.connectivity &&
+    choices.connectivity !== 'wireless'
+  ) {
+    warnings.push({
+      severity: 'warning',
+      message:
+        'ZMK is designed for wireless builds. For wired-only keyboards, QMK or Vial are better choices with broader community support.',
+      affectedChoices: ['firmware', 'connectivity'],
     })
   }
 
