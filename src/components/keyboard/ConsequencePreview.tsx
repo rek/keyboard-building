@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useCurrency } from '../../contexts/CurrencyContext'
 import { useAppSettings } from '../../contexts/AppSettingsContext'
 import { ComplexityDots } from '../ui/ComplexityDots'
@@ -58,9 +58,16 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
     <div
       className="glass-overlay fixed inset-0 flex items-center justify-center z-50 p-4"
       style={{ background: 'rgba(0,0,0,0.7)' }}
+      role="button"
+      tabIndex={0}
+      aria-label="Close"
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') onClose()
+      }}
     >
       <div
+        role="presentation"
         className="glass-panel max-w-2xl w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
         style={{

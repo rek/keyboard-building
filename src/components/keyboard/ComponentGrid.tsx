@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ComponentCard } from './ComponentCard'
 import componentsData from '../../data/components.json'
 import categoryInfo from '../../data/category-info.json'
@@ -10,6 +10,20 @@ type ComponentCategory =
   | 'connectivity'
   | 'firmware'
   | 'electronics'
+
+interface ComponentData {
+  id: string
+  name: string
+  price: number
+  priceUnit?: string
+  image: string
+  complexity: number
+  specs?: Record<string, unknown>
+  pros: string[]
+  cons: string[]
+  compatibleWith?: string[]
+  incompatibleWith?: string[]
+}
 
 export function ComponentGrid() {
   const [selectedCategory, setSelectedCategory] = useState<ComponentCategory>('controllers')
@@ -24,11 +38,11 @@ export function ComponentGrid() {
     { id: 'electronics', label: 'Electronics' },
   ]
 
-  const getComponents = (category: ComponentCategory) => {
-    const categoryData = componentsData[category]
+  const getComponents = (category: ComponentCategory): (ComponentData & { category: string })[] => {
+    const categoryData = componentsData[category] as Record<string, ComponentData> | undefined
     if (!categoryData) return []
 
-    return Object.values(categoryData).map((component: any) => ({
+    return Object.values(categoryData).map((component) => ({
       ...component,
       category,
     }))
@@ -119,7 +133,8 @@ export function ComponentGrid() {
                 letterSpacing: '0.03em',
               }}
             >
-              // {currentCategoryInfo.tagline}
+              {'// '}
+              {currentCategoryInfo.tagline}
             </p>
           </div>
 

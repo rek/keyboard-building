@@ -30,9 +30,19 @@ export function ImageModal({ src, alt, onClose }: ImageModalProps) {
       style={{
         background: 'rgba(0, 0, 0, 0.9)',
       }}
+      role="button"
+      tabIndex={0}
+      aria-label="Close image"
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') onClose()
+      }}
     >
-      <div className="relative max-w-7xl max-h-full" onClick={(e) => e.stopPropagation()}>
+      <div
+        role="presentation"
+        className="relative max-w-7xl max-h-full"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close button */}
         <button
           onClick={onClose}

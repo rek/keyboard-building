@@ -17,7 +17,7 @@ interface ComponentCardProps {
     priceUnit?: string
     image: string
     complexity: number
-    specs?: Record<string, any>
+    specs?: Record<string, unknown>
     pros: string[]
     cons: string[]
     compatibleWith?: string[]
@@ -34,7 +34,12 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') onClick?.()
+      }}
       className="cursor-pointer overflow-hidden transition-all tech-card group"
       style={{
         border: '3px solid var(--color-border)',
@@ -48,10 +53,19 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
       >
         {component.image ? (
           <div
+            role="button"
+            tabIndex={0}
+            aria-label="Enlarge image"
             className="w-full h-full relative cursor-zoom-in"
             onClick={(e) => {
               e.stopPropagation()
               setIsImageModalOpen(true)
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.stopPropagation()
+                setIsImageModalOpen(true)
+              }
             }}
           >
             <img
@@ -194,7 +208,7 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
         )}
 
         {/* Compatibility Tags */}
-        {(component.compatibleWith || component.incompatibleWith) && (
+        {(component.compatibleWith ?? component.incompatibleWith) && (
           <div
             className="flex flex-wrap gap-2 pt-3"
             style={{ borderTop: '2px solid var(--color-border-light)' }}

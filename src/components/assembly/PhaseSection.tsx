@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { type AssemblyPhase } from '../../types/assembly'
 import { StepCard } from './StepCard'
 

@@ -359,7 +359,11 @@ export function CostEstimator() {
 
           {showExportMenu && (
             <>
-              <div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
+              <div
+                aria-hidden="true"
+                className="fixed inset-0 z-10"
+                onClick={() => setShowExportMenu(false)}
+              />
               <div
                 className="glass-panel absolute bottom-full mb-2 left-0 right-0 border-2 z-20 overflow-hidden"
                 style={{

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 
 import { THEMES, type Theme } from '../themes'
 export type { Theme }
@@ -32,7 +32,7 @@ export function AppSettingsProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem('kb-app-settings')
       if (saved) {
         try {
-          const parsed = { ...DEFAULT_SETTINGS, ...JSON.parse(saved) }
+          const parsed = { ...DEFAULT_SETTINGS, ...(JSON.parse(saved) as Partial<AppSettings>) }
           // Fallback removed themes to default
           if (!(parsed.theme in THEMES)) parsed.theme = 'light'
           return parsed

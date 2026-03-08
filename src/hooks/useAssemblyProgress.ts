@@ -22,7 +22,7 @@ export function useAssemblyProgress(choices: UserChoices) {
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
       if (saved) {
-        const data: AssemblyProgressData = JSON.parse(saved)
+        const data = JSON.parse(saved) as AssemblyProgressData
 
         // Only restore progress if build plan hasn't changed
         if (data.buildHash === buildHash) {

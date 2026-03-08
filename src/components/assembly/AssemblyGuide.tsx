@@ -1,4 +1,3 @@
-import React from 'react'
 import { useUserChoices } from '../../contexts/UserChoicesContext'
 import { useAssemblySteps } from '../../hooks/useAssemblySteps'
 import { useAssemblyProgress } from '../../hooks/useAssemblyProgress'
@@ -34,7 +33,7 @@ export function AssemblyGuide() {
             letterSpacing: '0.03em',
           }}
         >
-          // Step-by-step instructions customized for your build configuration
+          {'// Step-by-step instructions customized for your build configuration'}
         </p>
       </div>
 
