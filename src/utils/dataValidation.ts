@@ -85,8 +85,7 @@ export function validateCostDatabase(data: unknown): ValidationResult {
   ]
 
   for (const key of requiredKeys) {
-    if (!(key in data))
-      return validate(false, `cost-database.json: missing required key "${key}"`)
+    if (!(key in data)) return validate(false, `cost-database.json: missing required key "${key}"`)
     if (!isRecord(data[key]))
       return validate(false, `cost-database.json: "${key}" must be an object`)
   }

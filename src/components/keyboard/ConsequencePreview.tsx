@@ -152,7 +152,9 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
               <SectionLabel className="mb-2">THIS_WILL_AFFECT</SectionLabel>
               <ul className="space-y-1">
                 {option.downstreamEffects.map((effect, index) => (
-                  <AccentedListItem key={index} accent="var(--color-border)">{effect}</AccentedListItem>
+                  <AccentedListItem key={index} accent="var(--color-border)">
+                    {effect}
+                  </AccentedListItem>
                 ))}
               </ul>
             </div>
@@ -174,7 +176,11 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
                   >
                     <div className="flex items-start gap-2">
                       <span className="text-lg">
-                        {warning.severity === 'error' ? '⛔' : warning.severity === 'warning' ? '⚠️' : 'ℹ️'}
+                        {warning.severity === 'error'
+                          ? '⛔'
+                          : warning.severity === 'warning'
+                            ? '⚠️'
+                            : 'ℹ️'}
                       </span>
                       <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
                         {warning.message}

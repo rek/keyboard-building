@@ -1643,11 +1643,7 @@
         "wire": "0.6mm"
       },
       "complexity": 1,
-      "pros": [
-        "Cheapest option (~$0.50 each)",
-        "Widely available",
-        "Compatible with most MX PCBs"
-      ],
+      "pros": ["Cheapest option (~$0.50 each)", "Widely available", "Compatible with most MX PCBs"],
       "cons": [
         "Rattle-prone without lubing and clipping",
         "Less consistent than screw-in",
@@ -1680,10 +1676,7 @@
         "Won't pop off during use",
         "Still accepts lube and clipping mods"
       ],
-      "cons": [
-        "Requires screw holes on PCB",
-        "Slightly more expensive"
-      ],
+      "cons": ["Requires screw holes on PCB", "Slightly more expensive"],
       "compatibleWith": ["mx"],
       "incompatibleWith": ["choc-v1", "choc-v2"],
       "vendors": [
@@ -1712,10 +1705,7 @@
         "Excellent baseline feel — minimal modding needed",
         "Gold-plated wire resists corrosion"
       ],
-      "cons": [
-        "More expensive than generic alternatives",
-        "Still benefits from lubing"
-      ],
+      "cons": ["More expensive than generic alternatives", "Still benefits from lubing"],
       "compatibleWith": ["mx"],
       "incompatibleWith": ["choc-v1", "choc-v2"],
       "vendors": [
@@ -1750,10 +1740,7 @@
         "Very smooth out-of-the-box",
         "Beloved by the enthusiast community"
       ],
-      "cons": [
-        "Premium price",
-        "Limited availability — sells out quickly"
-      ],
+      "cons": ["Premium price", "Limited availability — sells out quickly"],
       "compatibleWith": ["mx"],
       "incompatibleWith": ["choc-v1", "choc-v2"],
       "vendors": [
@@ -1775,10 +1762,7 @@
         "wire": "custom Choc format"
       },
       "complexity": 2,
-      "pros": [
-        "Required for Choc 2u+ keys (spacebar, thumb keys)",
-        "Low-profile design"
-      ],
+      "pros": ["Required for Choc 2u+ keys (spacebar, thumb keys)", "Low-profile design"],
       "cons": [
         "Limited availability compared to MX stabilisers",
         "Harder to lube due to smaller housing"

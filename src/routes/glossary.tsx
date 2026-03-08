@@ -84,7 +84,7 @@ const GLOSSARY_TERMS = [
   {
     term: 'KiCad',
     definition:
-      'Free, open-source PCB design software. The standard tool for custom keyboard PCB design. Has a large library of keyboard-specific footprints (e.g., ai03\'s MX library).',
+      "Free, open-source PCB design software. The standard tool for custom keyboard PCB design. Has a large library of keyboard-specific footprints (e.g., ai03's MX library).",
   },
   {
     term: 'KMK',
@@ -134,7 +134,7 @@ const GLOSSARY_TERMS = [
   {
     term: 'RP2040',
     definition:
-      'Raspberry Pi\'s dual-core ARM Cortex-M0+ microcontroller. Used in the Pi Pico and KB2040. Supported by QMK, Vial, and KMK. More powerful than AVR-based controllers.',
+      "Raspberry Pi's dual-core ARM Cortex-M0+ microcontroller. Used in the Pi Pico and KB2040. Supported by QMK, Vial, and KMK. More powerful than AVR-based controllers.",
   },
   {
     term: 'RGB',
@@ -239,10 +239,7 @@ function GlossaryPage() {
           </div>
         ))}
         {filtered.length === 0 && (
-          <p
-            className="text-sm text-center py-8"
-            style={{ color: 'var(--color-text-secondary)' }}
-          >
+          <p className="text-sm text-center py-8" style={{ color: 'var(--color-text-secondary)' }}>
             No terms match your search.
           </p>
         )}

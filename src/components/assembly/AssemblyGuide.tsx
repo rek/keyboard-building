@@ -332,4 +332,3 @@ export function AssemblyGuide() {
     </div>
   )
 }
-

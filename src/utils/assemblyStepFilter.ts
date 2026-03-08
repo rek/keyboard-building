@@ -1,9 +1,5 @@
 import { type UserChoices } from '../contexts/UserChoicesContext'
-import {
-  type AssemblyPhase,
-  type AssemblyStep,
-  type ConditionValue,
-} from '../types/assembly'
+import { type AssemblyPhase, type AssemblyStep, type ConditionValue } from '../types/assembly'
 
 /**
  * Filters assembly steps based on user's build choices
@@ -156,10 +152,7 @@ function matchesCondition(
  * Gets a nested property value from an object using dot notation
  * e.g., "layout.formFactor" -> choices.layout.formFactor
  */
-function getNestedValue(
-  obj: unknown,
-  path: string
-): string | boolean | number | null | undefined {
+function getNestedValue(obj: unknown, path: string): string | boolean | number | null | undefined {
   return path.split('.').reduce((acc: unknown, part: string) => {
     if (acc !== null && acc !== undefined && typeof acc === 'object') {
       return (acc as Record<string, unknown>)[part]
@@ -192,4 +185,3 @@ export function getBuildHash(choices: UserChoices): string {
 export function getTotalSteps(phases: AssemblyPhase[]): number {
   return phases.reduce((total, phase) => total + phase.steps.length, 0)
 }
-

@@ -8,7 +8,6 @@ Wraps the entire application (in `__root.tsx`) to provide global state.
 
 ```tsx
 import { UserChoicesProvider } from '../contexts/UserChoicesContext'
-
 ;<UserChoicesProvider>{children}</UserChoicesProvider>
 ```
 
@@ -18,7 +17,6 @@ Wraps the entire application (in `__root.tsx`) to provide currency management.
 
 ```tsx
 import { CurrencyProvider } from '../contexts/CurrencyContext'
-
 ;<CurrencyProvider>{children}</CurrencyProvider>
 ```
 
@@ -137,7 +135,6 @@ Main interactive decision flow component.
 
 ```tsx
 import { DecisionTree } from '../components/keyboard/DecisionTree'
-
 ;<DecisionTree />
 ```
 
@@ -166,7 +163,6 @@ Modal showing impact of a decision before confirming.
 
 ```tsx
 import { ConsequencePreview } from '../components/keyboard/ConsequencePreview'
-
 ;<ConsequencePreview
   data={previewData}
   onClose={() => setPreviewData(null)}
@@ -221,7 +217,6 @@ Real-time cost tracking sidebar.
 
 ```tsx
 import { CostEstimator } from '../components/keyboard/CostEstimator'
-
 ;<CostEstimator />
 ```
 
@@ -251,7 +246,6 @@ Component encyclopedia with filtering and search.
 
 ```tsx
 import { ComponentGrid } from '../components/keyboard/ComponentGrid'
-
 ;<ComponentGrid />
 ```
 
@@ -292,7 +286,6 @@ Individual component display card.
 
 ```tsx
 import { ComponentCard } from '../components/keyboard/ComponentCard'
-
 ;<ComponentCard component={componentData} category="controllers" onClick={() => handleClick()} />
 ```
 
@@ -457,7 +450,6 @@ Use TanStack Router's `Link` component:
 
 ```tsx
 import { Link } from '@tanstack/react-router'
-
 ;<Link to="/builder">Go to Builder</Link>
 ```
 

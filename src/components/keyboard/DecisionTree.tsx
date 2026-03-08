@@ -213,9 +213,11 @@ export function DecisionTree() {
 
                       {/* Option Image */}
                       <div className="mb-3">
-                        {option.image
-                          ? <ComponentImage src={getImageUrl(option.image)} alt={option.name} />
-                          : <ComponentImagePlaceholder />}
+                        {option.image ? (
+                          <ComponentImage src={getImageUrl(option.image)} alt={option.name} />
+                        ) : (
+                          <ComponentImagePlaceholder />
+                        )}
                       </div>
 
                       {/* Option Title */}
@@ -266,38 +268,39 @@ export function DecisionTree() {
                       </div>
 
                       {/* Hover Tooltip */}
-                      {tooltipOptionId === option.id &&
-                        option.downstreamEffects.length > 0 && (
-                          <div
-                            className="glass-panel absolute bottom-full left-0 right-0 mb-2 p-3 z-30 border-2 text-left"
-                            style={{
-                              background: 'var(--color-bg-secondary)',
-                              borderColor: 'var(--color-border)',
-                              boxShadow: '4px 4px 0 var(--color-border)',
-                            }}
-                            onMouseEnter={() => {
-                              if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current)
-                              setTooltipOptionId(option.id)
-                            }}
-                            onMouseLeave={() => setTooltipOptionId(null)}
-                          >
-                            <SectionLabel color="var(--color-text-primary)" className="mb-2">WHAT_THIS_MEANS</SectionLabel>
-                            <ul className="space-y-1">
-                              {option.downstreamEffects.slice(0, 4).map((effect, i) => (
-                                <li
-                                  key={i}
-                                  className="text-xs pl-2"
-                                  style={{
-                                    borderLeft: '2px solid var(--color-accent-teal)',
-                                    color: 'var(--color-text-secondary)',
-                                  }}
-                                >
-                                  {effect}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                      {tooltipOptionId === option.id && option.downstreamEffects.length > 0 && (
+                        <div
+                          className="glass-panel absolute bottom-full left-0 right-0 mb-2 p-3 z-30 border-2 text-left"
+                          style={{
+                            background: 'var(--color-bg-secondary)',
+                            borderColor: 'var(--color-border)',
+                            boxShadow: '4px 4px 0 var(--color-border)',
+                          }}
+                          onMouseEnter={() => {
+                            if (tooltipTimerRef.current) clearTimeout(tooltipTimerRef.current)
+                            setTooltipOptionId(option.id)
+                          }}
+                          onMouseLeave={() => setTooltipOptionId(null)}
+                        >
+                          <SectionLabel color="var(--color-text-primary)" className="mb-2">
+                            WHAT_THIS_MEANS
+                          </SectionLabel>
+                          <ul className="space-y-1">
+                            {option.downstreamEffects.slice(0, 4).map((effect, i) => (
+                              <li
+                                key={i}
+                                className="text-xs pl-2"
+                                style={{
+                                  borderLeft: '2px solid var(--color-accent-teal)',
+                                  color: 'var(--color-text-secondary)',
+                                }}
+                              >
+                                {effect}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </button>
                   )
                 })}

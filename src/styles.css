@@ -67,8 +67,8 @@
   --neu-shadow-raised: 6px 6px 14px #b8bec7, -6px -6px 14px #ffffff;
   --neu-shadow-inset: inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff;
   --neu-shadow-raised-sm: 3px 3px 7px #b8bec7, -3px -3px 7px #ffffff;
-  --neu-shadow-accent: 6px 6px 14px #b8bec7, -6px -6px 14px #ffffff,
-    inset 0 0 0 2px rgba(108, 126, 225, 0.3);
+  --neu-shadow-accent:
+    6px 6px 14px #b8bec7, -6px -6px 14px #ffffff, inset 0 0 0 2px rgba(108, 126, 225, 0.3);
 }
 
 * {
@@ -408,7 +408,8 @@ pre {
 }
 
 /* Neumorphic step number badges */
-[data-theme='neumorphic'] div[class*='border-2'][style*='--color-accent-teal'][style*='background'] {
+[data-theme='neumorphic']
+  div[class*='border-2'][style*='--color-accent-teal'][style*='background'] {
   border-color: transparent !important;
   border-radius: 12px;
 }
@@ -460,7 +461,9 @@ pre {
   backdrop-filter: var(--glass-blur-heavy);
   -webkit-backdrop-filter: var(--glass-blur-heavy);
   border-bottom: 1px solid var(--glass-border-strong) !important;
-  box-shadow: var(--glass-shadow), 0 1px 0 rgba(0, 255, 65, 0.2) !important;
+  box-shadow:
+    var(--glass-shadow),
+    0 1px 0 rgba(0, 255, 65, 0.2) !important;
 }
 
 [data-theme='dark'] aside {
@@ -468,7 +471,9 @@ pre {
   backdrop-filter: var(--glass-blur-heavy);
   -webkit-backdrop-filter: var(--glass-blur-heavy);
   border-right: 1px solid var(--glass-border-strong) !important;
-  box-shadow: 4px 0 32px rgba(0, 255, 65, 0.12), var(--glass-inset) !important;
+  box-shadow:
+    4px 0 32px rgba(0, 255, 65, 0.12),
+    var(--glass-inset) !important;
 }
 
 [data-theme='dark'] .tech-card {
@@ -512,12 +517,16 @@ pre {
   background: rgba(0, 255, 65, 0.2);
   border-color: rgba(0, 255, 65, 0.6);
   color: #00ff41;
-  box-shadow: var(--glass-glow-strong), inset 0 0 30px rgba(0, 255, 65, 0.08);
+  box-shadow:
+    var(--glass-glow-strong),
+    inset 0 0 30px rgba(0, 255, 65, 0.08);
 }
 
 [data-theme='dark'] .key-button-primary:hover {
   background: rgba(0, 255, 65, 0.3);
-  box-shadow: 0 0 50px rgba(0, 255, 65, 0.4), 0 0 12px rgba(0, 255, 65, 0.6),
+  box-shadow:
+    0 0 50px rgba(0, 255, 65, 0.4),
+    0 0 12px rgba(0, 255, 65, 0.6),
     inset 0 0 30px rgba(0, 255, 65, 0.1);
 }
 
@@ -566,7 +575,9 @@ pre {
 
 /* Glass progress bars glow */
 [data-theme='dark'] .glass-bar {
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 3px rgba(0, 255, 65, 0.8);
+  box-shadow:
+    0 0 10px rgba(0, 255, 65, 0.5),
+    0 0 3px rgba(0, 255, 65, 0.8);
 }
 
 /* Dark theme nav links */

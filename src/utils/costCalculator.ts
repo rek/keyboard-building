@@ -197,9 +197,8 @@ export function estimateBuildTime(choices: UserChoices): number {
   let hours = 0
 
   hours += choices.buildMethod
-    ? (buildComplexity.methodTime[
-        choices.buildMethod as keyof typeof buildComplexity.methodTime
-      ] ?? 0)
+    ? (buildComplexity.methodTime[choices.buildMethod as keyof typeof buildComplexity.methodTime] ??
+      0)
     : 0
 
   hours += choices.layout.formFactor

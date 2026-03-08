@@ -1114,11 +1114,7 @@
             "If an OLED shows garbled content on first boot, try a firmware reflash before assuming hardware failure",
             "QMK's RGB Matrix Test mode cycles through R, G, B individually — very useful for diagnosing per-channel failures"
           ],
-          "requiredTools": [
-            "USB cable",
-            "Computer",
-            "Good lighting for observing RGB colours"
-          ],
+          "requiredTools": ["USB cable", "Computer", "Good lighting for observing RGB colours"],
           "externalLinks": [
             {
               "title": "QMK RGB Matrix Documentation",
@@ -1406,7 +1402,11 @@
           "Step 6 — Test the switch off the PCB: if you can remove it (hot-swap or through-hole with desoldering), probe the two switch pins directly while pressing the switch. If it never beeps, the switch itself is dead — replace it",
           "Step 7 — Inspect the PCB trace: look under the solder joint for lifted copper or a visible scratch across the trace. A broken trace can be bridged with a short wire soldered between the two disconnected pads"
         ],
-        "relatedSteps": ["continuity-test-matrix", "inspect-solder-joints", "troubleshoot-dead-keys"]
+        "relatedSteps": [
+          "continuity-test-matrix",
+          "inspect-solder-joints",
+          "troubleshoot-dead-keys"
+        ]
       },
       {
         "id": "row-or-column-dead",
@@ -1429,7 +1429,12 @@
           "Step 7 — Repair a broken trace: clean the area around the break with IPA. Solder a short length of 30AWG wire from one side of the break to the other, bridging the gap. Insulate the wire with a small piece of Kapton tape if it crosses other traces",
           "Step 8 — If the controller pin itself is dead (measures correct voltage but produces no matrix scan activity): the GPIO may be damaged. Try remapping the row or column to a different pin in firmware and physically rewiring the connection to that pin"
         ],
-        "relatedSteps": ["continuity-test-matrix", "handwire-columns", "handwire-rows", "troubleshoot-dead-keys"]
+        "relatedSteps": [
+          "continuity-test-matrix",
+          "handwire-columns",
+          "handwire-rows",
+          "troubleshoot-dead-keys"
+        ]
       }
     ]
   }

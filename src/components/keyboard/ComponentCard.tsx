@@ -164,10 +164,14 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
         {/* Pros (top 2) */}
         {component.pros.length > 0 && (
           <div className="mb-3">
-            <SectionLabel color="var(--color-accent-teal)" className="mb-2">[+] PROS</SectionLabel>
+            <SectionLabel color="var(--color-accent-teal)" className="mb-2">
+              [+] PROS
+            </SectionLabel>
             <ul className="space-y-1.5">
               {component.pros.slice(0, 2).map((pro, index) => (
-                <AccentedListItem key={index} size="xs">{pro}</AccentedListItem>
+                <AccentedListItem key={index} size="xs">
+                  {pro}
+                </AccentedListItem>
               ))}
             </ul>
           </div>
@@ -176,10 +180,14 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
         {/* Cons (top 2) */}
         {component.cons.length > 0 && (
           <div className="mb-4">
-            <SectionLabel color="var(--color-accent-orange)" className="mb-2">[-] CONS</SectionLabel>
+            <SectionLabel color="var(--color-accent-orange)" className="mb-2">
+              [-] CONS
+            </SectionLabel>
             <ul className="space-y-1.5">
               {component.cons.slice(0, 2).map((con, index) => (
-                <AccentedListItem key={index} accent="var(--color-accent-orange)" size="xs">{con}</AccentedListItem>
+                <AccentedListItem key={index} accent="var(--color-accent-orange)" size="xs">
+                  {con}
+                </AccentedListItem>
               ))}
             </ul>
           </div>
@@ -192,10 +200,14 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
             style={{ borderTop: '2px solid var(--color-border-light)' }}
           >
             {component.compatibleWith?.slice(0, 3).map((item) => (
-              <PillTag key={item} variant="teal">{item.toUpperCase()}</PillTag>
+              <PillTag key={item} variant="teal">
+                {item.toUpperCase()}
+              </PillTag>
             ))}
             {component.incompatibleWith?.slice(0, 2).map((item) => (
-              <PillTag key={item} variant="incompatible">{item.toUpperCase()}</PillTag>
+              <PillTag key={item} variant="incompatible">
+                {item.toUpperCase()}
+              </PillTag>
             ))}
           </div>
         )}

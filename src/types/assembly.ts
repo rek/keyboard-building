@@ -36,12 +36,7 @@ export interface StepRequirements {
   features?: Partial<Record<keyof UserChoices['features'], boolean>> | null
 }
 
-export type ConditionValue =
-  | string
-  | boolean
-  | number
-  | null
-  | (string | boolean | number | null)[]
+export type ConditionValue = string | boolean | number | null | (string | boolean | number | null)[]
 
 export interface StepVariation {
   condition: Record<string, ConditionValue>

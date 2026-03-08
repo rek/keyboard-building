@@ -379,6 +379,7 @@ A "component category" is a top-level key in `components.json` (e.g., `"stabilis
 
 1. **Add the category to `components.json`**
    Add a new top-level key. Each value is a map of `componentId → ComponentEntry`. All entries must satisfy the base `ComponentEntry` schema (see above). Example:
+
    ```json
    {
      "stabilisers": {
@@ -401,6 +402,7 @@ A "component category" is a top-level key in `components.json` (e.g., `"stabilis
 
 2. **Add a category entry to `category-info.json`**
    Controls how the category appears on the `/components` page:
+
    ```json
    {
      "id": "stabilisers",

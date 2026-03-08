@@ -13,37 +13,43 @@ const TOOL_CATEGORIES = [
     tools: [
       {
         name: 'Soldering Iron',
-        notes: 'Temperature-controlled recommended. Hakko FX-888D or TS80P are popular choices. Budget: ~$25 for a passable iron, ~$80+ for a quality one.',
+        notes:
+          'Temperature-controlled recommended. Hakko FX-888D or TS80P are popular choices. Budget: ~$25 for a passable iron, ~$80+ for a quality one.',
         required: true,
         estimatedCost: '$25–$100',
       },
       {
         name: 'Solder (63/37 or 60/40)',
-        notes: '0.6–0.8mm rosin-core solder. 63/37 is eutectic (preferred) — it goes liquid-to-solid instantly with no pasty phase.',
+        notes:
+          '0.6–0.8mm rosin-core solder. 63/37 is eutectic (preferred) — it goes liquid-to-solid instantly with no pasty phase.',
         required: true,
         estimatedCost: '$8–$15',
       },
       {
         name: 'Flux',
-        notes: 'No-clean rosin flux pen or paste. Dramatically improves solder flow and joint quality on pads that have oxidised.',
+        notes:
+          'No-clean rosin flux pen or paste. Dramatically improves solder flow and joint quality on pads that have oxidised.',
         required: true,
         estimatedCost: '$6–$12',
       },
       {
         name: 'Flush Cutters / Wire Cutters',
-        notes: 'For trimming diode leads, wire ends, and zip-tie tails flush with the PCB. Japanese flush cutters (e.g., Hakko CHP-170) are excellent.',
+        notes:
+          'For trimming diode leads, wire ends, and zip-tie tails flush with the PCB. Japanese flush cutters (e.g., Hakko CHP-170) are excellent.',
         required: true,
         estimatedCost: '$10–$20',
       },
       {
         name: 'Multimeter',
-        notes: 'Essential for continuity testing (checking solder bridges, verifying switch matrix wiring, and diagnosing dead keys).',
+        notes:
+          'Essential for continuity testing (checking solder bridges, verifying switch matrix wiring, and diagnosing dead keys).',
         required: true,
         estimatedCost: '$15–$40',
       },
       {
         name: 'Tweezers (ESD-safe)',
-        notes: 'Fine-point anti-static tweezers for placing SMD components, diodes, and hot-swap sockets.',
+        notes:
+          'Fine-point anti-static tweezers for placing SMD components, diodes, and hot-swap sockets.',
         required: true,
         estimatedCost: '$8–$20',
       },
@@ -56,31 +62,36 @@ const TOOL_CATEGORIES = [
     tools: [
       {
         name: 'ESD Wrist Strap',
-        notes: 'Prevents electrostatic discharge that can silently damage controllers, LEDs, and OLED displays. A $5 precaution that protects a $100+ build.',
+        notes:
+          'Prevents electrostatic discharge that can silently damage controllers, LEDs, and OLED displays. A $5 precaution that protects a $100+ build.',
         required: false,
         estimatedCost: '$5–$10',
       },
       {
         name: 'Solder Wick / Desoldering Pump',
-        notes: 'For removing solder bridges and desoldering misplaced components. Wick (braid) is more controllable for keyboard work.',
+        notes:
+          'For removing solder bridges and desoldering misplaced components. Wick (braid) is more controllable for keyboard work.',
         required: false,
         estimatedCost: '$5–$15',
       },
       {
         name: 'Helping Hands / PCB Holder',
-        notes: 'Holds the PCB at a comfortable angle while soldering. Prevents burns and improves joint quality.',
+        notes:
+          'Holds the PCB at a comfortable angle while soldering. Prevents burns and improves joint quality.',
         required: false,
         estimatedCost: '$10–$25',
       },
       {
         name: 'Isopropyl Alcohol (IPA 90%+)',
-        notes: 'Cleans flux residue from PCB after soldering. Use with a soft-bristle brush (toothbrush works).',
+        notes:
+          'Cleans flux residue from PCB after soldering. Use with a soft-bristle brush (toothbrush works).',
         required: false,
         estimatedCost: '$5–$10',
       },
       {
         name: 'Tip Tinner / Brass Wool',
-        notes: 'Keeps your soldering iron tip clean and tinned, extending tip life and improving heat transfer.',
+        notes:
+          'Keeps your soldering iron tip clean and tinned, extending tip life and improving heat transfer.',
         required: false,
         estimatedCost: '$5–$10',
       },
@@ -93,19 +104,22 @@ const TOOL_CATEGORIES = [
     tools: [
       {
         name: 'Wire (28–30 AWG)',
-        notes: 'Thin solid-core or stranded wire for rows and columns. Solid-core is easier to route; stranded is more flexible. Different colours for rows/columns.',
+        notes:
+          'Thin solid-core or stranded wire for rows and columns. Solid-core is easier to route; stranded is more flexible. Different colours for rows/columns.',
         required: true,
         estimatedCost: '$8–$15',
       },
       {
         name: 'Wire Strippers',
-        notes: 'For stripping insulation cleanly without nicking the conductor. Adjustable automatic strippers are fastest for repetitive work.',
+        notes:
+          'For stripping insulation cleanly without nicking the conductor. Adjustable automatic strippers are fastest for repetitive work.',
         required: true,
         estimatedCost: '$10–$20',
       },
       {
         name: 'Diodes (1N4148 × 100+)',
-        notes: 'One diode per switch for the key matrix. Through-hole (TH) are easier to hand-solder; SMD (SOD-123) are smaller. Buy extras.',
+        notes:
+          'One diode per switch for the key matrix. Through-hole (TH) are easier to hand-solder; SMD (SOD-123) are smaller. Buy extras.',
         required: true,
         estimatedCost: '$2–$5 (pack of 100)',
       },
@@ -124,13 +138,15 @@ const TOOL_CATEGORIES = [
     tools: [
       {
         name: 'KiCad (free software)',
-        notes: 'Open-source PCB design suite. Use with ai03\'s MX keyboard switch library. Required for custom PCB design.',
+        notes:
+          "Open-source PCB design suite. Use with ai03's MX keyboard switch library. Required for custom PCB design.",
         required: true,
         estimatedCost: 'Free',
       },
       {
         name: 'SMD Soldering Kit',
-        notes: 'Fine-tip iron or hot air station for soldering USB connectors, SMD diodes, and LEDs. Your standard iron may work with practice.',
+        notes:
+          'Fine-tip iron or hot air station for soldering USB connectors, SMD diodes, and LEDs. Your standard iron may work with practice.',
         required: false,
         estimatedCost: '$30–$80',
       },
@@ -149,13 +165,15 @@ const TOOL_CATEGORIES = [
     tools: [
       {
         name: 'JST PH 2.0 Battery Connector',
-        notes: 'Matches the battery connector on nice!nano. Buy batteries with matching connectors, or verify polarity carefully before connecting.',
+        notes:
+          'Matches the battery connector on nice!nano. Buy batteries with matching connectors, or verify polarity carefully before connecting.',
         required: true,
         estimatedCost: '$1–$3',
       },
       {
         name: 'LiPo Battery (301230 or similar)',
-        notes: 'A small LiPo cell that fits in your case. Common sizes: 100–500mAh. Check your case design for dimensions.',
+        notes:
+          'A small LiPo cell that fits in your case. Common sizes: 100–500mAh. Check your case design for dimensions.',
         required: true,
         estimatedCost: '$5–$15',
       },
@@ -236,7 +254,9 @@ function ToolsPage() {
                   key={tool.name}
                   className="glass-panel-light p-4 border-2 flex items-start gap-4"
                   style={{
-                    borderColor: tool.required ? 'var(--color-border)' : 'var(--color-border-light)',
+                    borderColor: tool.required
+                      ? 'var(--color-border)'
+                      : 'var(--color-border-light)',
                     background: 'var(--color-bg-secondary)',
                   }}
                 >

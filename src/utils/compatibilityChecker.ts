@@ -64,11 +64,7 @@ export function checkCompatibility(choices: UserChoices): CompatibilityWarning[]
   }
 
   // ZMK is designed for wireless — warn when used with wired connectivity
-  if (
-    choices.firmware === 'zmk' &&
-    choices.connectivity &&
-    choices.connectivity !== 'wireless'
-  ) {
+  if (choices.firmware === 'zmk' && choices.connectivity && choices.connectivity !== 'wireless') {
     warnings.push({
       severity: 'warning',
       message:

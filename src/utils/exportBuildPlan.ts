@@ -197,4 +197,3 @@ export function exportAsText(
   a.click()
   URL.revokeObjectURL(url)
 }
-

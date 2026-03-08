@@ -96,7 +96,10 @@ function renderMarkdownBlock(block: string): React.ReactNode {
 
   // Regular paragraph
   return (
-    <p className="mb-2 whitespace-pre-line leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+    <p
+      className="mb-2 whitespace-pre-line leading-relaxed"
+      style={{ color: 'var(--color-text-secondary)' }}
+    >
       {renderInline(block)}
     </p>
   )
