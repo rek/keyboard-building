@@ -14,7 +14,8 @@
       "Bash(gh repo:*)",
       "Bash(gh label:*)",
       "Bash(gh issue:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(/usr/bin/git:*)"
     ]
   }
 }

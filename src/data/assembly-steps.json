@@ -137,9 +137,55 @@
       ]
     },
     {
+      "id": "esd-safety",
+      "title": "ESD Safety & Component Handling",
+      "order": 2,
+      "description": "Protect your components from electrostatic discharge before handling",
+      "icon": "shield",
+      "estimatedTime": "5-10 minutes",
+      "steps": [
+        {
+          "id": "esd-precautions",
+          "title": "Electrostatic Discharge Precautions",
+          "description": "Set up ESD protection before touching any electronic components",
+          "content": "Electrostatic discharge (ESD) is invisible but can permanently damage microcontrollers, diodes, LEDs, and OLED displays. A single undetected discharge can cause components to fail days or weeks after assembly. Spend five minutes on ESD precautions now to protect a build worth many hours of effort.\n\n**What is ESD?**\nYour body accumulates static charge simply by walking across carpet, pulling a shirt over your head, or sliding in a chair. That charge discharges through any conductive path — including sensitive semiconductor junctions. ICs can be damaged by voltages as low as 100V, well below the ~3,000V you need to feel a shock.\n\n**Setting up an ESD-safe workspace:**\n1. **Anti-static wrist strap** — Clip one end to your wrist and the other to an unpainted metal surface (chassis of a desktop PC, metal workbench, or a purpose-built ground point). This is the single most effective precaution\n2. **Anti-static mat** — Place a conductive mat on your work surface and connect it to the same ground point. Available cheaply from electronics suppliers\n3. **Anti-static bags** — Keep components in their original anti-static packaging until the moment you need them. Never place ICs or PCBs on ordinary plastic bags or Styrofoam\n4. **Touch ground frequently** — If you don't have a wrist strap, touch a grounded metal object before picking up every new component\n5. **Avoid synthetic clothing** — Natural fibres (cotton) generate less static than polyester or wool. Roll up loose sleeves before leaning over the board\n6. **Humidity** — ESD risk is highest in dry winter conditions or in air-conditioned rooms. A humidity level above 40% significantly reduces static build-up\n\n**Handling rules:**\n- Always pick up PCBs by their edges — fingertips on traces or component pads transfer oils and can scratch copper\n- Never touch microcontroller pins, IC legs, or LED pads with bare fingers unless you are grounded\n- When handing a PCB to someone else, both of you should touch the same grounded surface simultaneously before the handoff\n- Store unused PCBs and ICs in anti-static bags between sessions\n\n**Minimum viable precaution (if you have no ESD equipment):**\nTouch an unpainted metal pipe, radiator, or the metal chassis of a grounded desktop computer before every session, and again any time you leave the chair. This is far better than nothing.",
+          "order": 1,
+          "estimatedTime": "5-10 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "ESD damage is cumulative and often causes delayed failures — a component may appear to work initially but fail within days",
+            "RP2040 and ARM-based microcontrollers are more ESD-sensitive than older AVR chips",
+            "Never place OLED modules, RGB LEDs, or hot-swap sockets directly on cardboard or plastic bags"
+          ],
+          "tips": [
+            "A $5 anti-static wrist strap from any electronics supplier is the best investment for your build",
+            "Keep components in their anti-static bags until the exact moment of installation",
+            "If you must work without equipment, work quickly and touch ground before picking up each component"
+          ],
+          "requiredTools": [
+            "Anti-static wrist strap (strongly recommended)",
+            "Anti-static mat (recommended)",
+            "Grounded metal surface"
+          ],
+          "externalLinks": [
+            {
+              "title": "Understanding ESD — Adafruit",
+              "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/esd-precautions",
+              "type": "article",
+              "description": "Clear explanation of ESD risks and precautions for electronics hobbyists"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "build-matrix",
       "title": "Build Key Matrix",
-      "order": 2,
+      "order": 3,
       "description": "Wire or solder your switches into a matrix",
       "icon": "grid",
       "estimatedTime": "Varies by method: 3-15 hours",
@@ -385,9 +431,90 @@
       ]
     },
     {
+      "id": "pcb-inspection",
+      "title": "PCB Inspection & Continuity Testing",
+      "order": 4,
+      "description": "Inspect solder work and verify electrical continuity before firmware flash",
+      "icon": "search",
+      "estimatedTime": "30-60 minutes",
+      "steps": [
+        {
+          "id": "inspect-solder-joints",
+          "title": "Visual Inspection of All Solder Joints",
+          "description": "Examine every joint for cold solder, bridges, and damaged pads before powering on",
+          "content": "A thorough visual inspection now costs you 20 minutes. Discovering a shorted joint after you have flashed firmware and assembled the case costs you hours. Work methodically under good lighting and magnification.\n\n**What a good solder joint looks like:**\n- Shiny, smooth, concave fillet (volcano shape around the lead or pad)\n- Adheres cleanly to both the pad and the component leg\n- No dull grey or grainy texture (indicates a cold joint)\n- No cracks at the base of the fillet\n- No whisker-like spikes (indicates too-hot iron or contaminated tip)\n\n**Inspecting for cold solder joints:**\n1. Place the PCB under a bright LED desk lamp at a low angle — this creates shadows that make dull, grainy joints obvious\n2. Work row by row; inspect every diode, every switch pin, every TRRS jack pin, and every controller header\n3. Mark any suspicious joints with a small piece of blue painter's tape\n4. Return to marked joints and reflow: apply fresh flux, touch the iron for 2-3 seconds, feed a tiny amount of fresh solder if needed, remove iron cleanly\n5. Inspect reflowed joints again before removing the tape marker\n\n**Inspecting for solder bridges:**\nA bridge is a small blob of solder connecting two adjacent pads or pins that should be electrically separate. Bridges are especially common:\n- On SMD diodes where pads are very close together\n- On controller header pins where solder wicks between adjacent pins\n- On hot-swap socket pads\n\nTo find bridges:\n1. Use a jeweller's loupe (10×) or hold your phone camera 5cm away and zoom in\n2. Look along the row of pins from the side — bridges appear as a tiny horizontal blob\n3. Remove bridges with solder wick: apply flux, lay wick over the bridge, press with iron for 2-3 seconds, lift wick and iron together\n\n**Inspecting for damaged traces:**\n1. Look for scratches, cuts, or lifted pads — especially near areas where you used flush cutters to trim leads\n2. A lifted pad appears as a copper disc separated from the PCB surface — the fibreglass underneath will be visible\n3. Damaged traces can sometimes be repaired with a short wire bridge; lifted pads are harder to fix\n\n**Check component orientation (final pass):**\n- All diodes: cathode stripe matches PCB silkscreen marker direction\n- TRRS jack: verify correct footprint (some kits have both PJ-320A and Alps/Kailh variants on same board)\n- Controller: if socketed, pins aligned correctly before insertion",
+          "order": 1,
+          "estimatedTime": "15-20 minutes",
+          "requirements": {
+            "buildMethod": ["pcb-kit", "custom-pcb"]
+          },
+          "warnings": [
+            "Never skip visual inspection — it is the fastest way to catch most assembly errors",
+            "Inspect both sides of a double-sided PCB; through-hole leads soldered on the back can still bridge on the front",
+            "Do not power on the PCB until continuity testing is complete"
+          ],
+          "tips": [
+            "A USB desk microscope ($15-30) transforms SMD inspection — highly recommended for future builds",
+            "Good lighting matters more than magnification for most inspection tasks",
+            "Photograph problem areas with your phone camera; zoomed-in photos often reveal details invisible to the naked eye"
+          ],
+          "requiredTools": [
+            "Bright desk lamp",
+            "Jeweller's loupe or phone camera for magnification",
+            "Flux pen",
+            "Soldering iron",
+            "Solder wick",
+            "Painter's tape for marking"
+          ],
+          "externalLinks": [
+            {
+              "title": "Adafruit Guide to Excellent Soldering",
+              "url": "https://learn.adafruit.com/adafruit-guide-excellent-soldering/making-a-good-solder-joint",
+              "type": "article",
+              "description": "Photo guide to identifying good and bad solder joints"
+            }
+          ]
+        },
+        {
+          "id": "continuity-test-matrix",
+          "title": "Continuity Testing on Key Pads",
+          "description": "Use a multimeter to verify electrical continuity through every switch position",
+          "content": "Visual inspection catches physical defects; continuity testing catches electrical ones. These two tests together eliminate the vast majority of assembly faults before firmware is ever involved.\n\n**Multimeter setup:**\nSet your multimeter to continuity mode (the mode that beeps when a circuit is closed — usually marked with a diode symbol and a sound-wave icon). If your meter lacks a beeper, use the lowest resistance range and look for a reading near 0Ω.\n\n**Testing individual switch positions:**\nFor each switch position in turn:\n1. Place one probe on the row pad (the pad connected to the row trace, which connects through the diode)\n2. Place the other probe on the column pad (the pad connected directly to the column trace)\n3. Press and hold the switch\n4. The meter should beep (continuity) when the switch is pressed and be silent (open circuit) when released\n5. If it beeps in both states: solder bridge, or switch contacts welded\n6. If it never beeps: cold joint on switch pin, missing diode, or broken trace\n\n**Testing diode direction:**\n1. Place red probe (+) on the anode side of the diode (pad without the cathode stripe on the silkscreen)\n2. Place black probe (-) on the cathode side (pad with the stripe)\n3. Should beep or show low resistance (forward biased)\n4. Swap probes — should NOT beep (reverse biased)\n5. If it beeps in both directions: diode is shorted or replaced by a solder bridge\n6. If it never beeps: open circuit — check solder joints on both pads\n\n**Testing row and column traces:**\n1. Touch both probes to the two ends of each row trace (between the first and last switch pad in that row)\n2. Should show continuity (low resistance)\n3. Repeat for each column trace\n4. Then test each row against every other row — should NOT show continuity\n5. Test each column against every other column — should NOT show continuity\n\n**Testing controller connections (if controller is already installed):**\n1. One probe on the controller GPIO pin header (or test pad)\n2. Other probe at the corresponding row or column trace endpoint\n3. Should show continuity for every pin you have wired\n\n**Documenting your results:**\nCreate a simple grid (photo or sketch) and mark each position:\n- Tick: passes switch test\n- X: fails switch test (investigate)\n- D: diode fault (wrong orientation or open)\n- B: solder bridge found and fixed",
+          "order": 2,
+          "estimatedTime": "15-30 minutes",
+          "requirements": {
+            "buildMethod": ["pcb-kit", "custom-pcb", "handwired"]
+          },
+          "warnings": [
+            "Always disconnect from USB before probing — a live board can give false continuity readings and risks short-circuit damage",
+            "Pressing too hard with probes can scratch pads or lift them — use gentle contact",
+            "A failed diode test in both directions (always open) may indicate a completely missing diode or a cold joint on both pads"
+          ],
+          "tips": [
+            "Work through the matrix in a fixed order (top-left to bottom-right) to avoid missing positions",
+            "If an entire row or column fails, test the controller solder joint for that pin first — one bad joint explains every failure in that line",
+            "Keep a tally of faults found and fixed; if you find more than 3-4, do a full re-inspection rather than spot fixes"
+          ],
+          "requiredTools": [
+            "Multimeter with continuity mode",
+            "Fine-tipped probes (hook probes are ideal for PCB work)",
+            "Grid sketch or photo of PCB layout for recording results"
+          ],
+          "externalLinks": [
+            {
+              "title": "Multimeter Continuity Testing — SparkFun",
+              "url": "https://learn.sparkfun.com/tutorials/how-to-use-a-multimeter/continuity",
+              "type": "article",
+              "description": "How to use the continuity function effectively on any multimeter"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "flash-firmware",
       "title": "Flash Firmware",
-      "order": 3,
+      "order": 5,
       "description": "Install and configure keyboard firmware",
       "icon": "cpu",
       "estimatedTime": "1-3 hours (first time)",
@@ -672,7 +799,7 @@
     {
       "id": "testing",
       "title": "Testing & Troubleshooting",
-      "order": 4,
+      "order": 6,
       "description": "Verify your keyboard works correctly",
       "icon": "check-circle",
       "estimatedTime": "1-2 hours",
@@ -828,6 +955,186 @@
           ]
         }
       ]
+    },
+    {
+      "id": "case-foam-gasket",
+      "title": "Case Foam & Gasket Mounting",
+      "order": 7,
+      "description": "Add case foam and gasket strips before closing the case",
+      "icon": "layers",
+      "estimatedTime": "20-45 minutes",
+      "steps": [
+        {
+          "id": "case-foam-installation",
+          "title": "Install Case Foam",
+          "description": "Cut and fit foam layers inside the case to dampen sound and reduce vibration",
+          "content": "Case foam reduces the hollow, echo-heavy 'clack' produced by an empty case cavity. It also dampens high-frequency rattle from PCB flex and switch wobble. Even a simple layer of neoprene or PE foam makes a noticeable difference to acoustics.\n\n**Common foam types:**\n- **PE foam (polyethylene):** Dense, firm. Best for sound absorption and preventing PCB bounce. Often included in gasket-mount kits. Typical thickness: 3-5mm\n- **Poron (polyurethane):** Softer, more compliant. Adds tactile cushioning and absorbs vibration well. Used in high-end gasket builds. Typical thickness: 1-3mm\n- **Neoprene sheet:** Budget option. Works well for case-fill and switch dampening. Widely available\n- **Tempest mod foam (switch foam):** Thin sheets placed between the PCB and plate to eliminate switch wobble noise. Cut to match the plate cutout pattern\n\n**Cutting and fitting case foam:**\n1. **Template:** Place the bottom case half face-down on a sheet of foam and trace the interior outline with a felt-tip pen\n2. **Cut carefully:** Use sharp scissors or a craft knife with a steel ruler. Multiple light passes give cleaner edges than one hard cut\n3. **Test fit:** Drop the foam piece into the case bottom without adhesive first. It should sit flat without bunching or lifting at corners\n4. **Trim as needed:** Remove the foam, shave off any excess material that causes bunching, re-test\n5. **Adhesive (optional):** If the foam shifts during use, apply a thin strip of double-sided tape around the perimeter of the case bottom only — keep the centre free so the PCB-side surface remains flat\n6. **Middle layer (optional):** Some builds use a second thinner foam layer between the PCB and plate. This requires cutting switch and screw-hole openings\n\n**Case fill vs plate foam:**\n- Case fill foam goes in the bottom shell and absorbs resonance from the empty air cavity\n- Plate foam (or switch foam) sits between PCB and plate and suppresses per-switch rattle\n- Both can be used together for maximum sound dampening\n\n**Verify clearance:**\nAfter fitting foam, place the PCB assembly on top to verify it sits flat and that no foam is pressing against components or causing the PCB to tilt. Tall components (OLED modules, rotary encoders, TRRS jacks) need clearance from the foam edge.",
+          "order": 1,
+          "estimatedTime": "10-20 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Foam that is too thick will prevent the case from closing fully — test-fit with the case halves before committing to adhesive",
+            "Do not cover reset button access holes or TRRS/USB cutouts with foam",
+            "Avoid adhesive foam on the PCB side — it can be very difficult to remove during future repairs"
+          ],
+          "tips": [
+            "PE foam from packing material works surprisingly well as a budget case foam — cut a piece from a PC component box",
+            "Use a hobby punch set to cleanly cut circular holes for standoffs and screw holes",
+            "Slightly undersized foam cuts are easier to fix than oversized ones — cut conservatively, then trim"
+          ],
+          "requiredTools": [
+            "Foam sheet (PE, Poron, or neoprene — appropriate thickness for your case)",
+            "Sharp scissors or craft knife",
+            "Steel ruler",
+            "Cutting mat",
+            "Felt-tip pen for tracing",
+            "Double-sided tape (optional)"
+          ],
+          "externalLinks": [
+            {
+              "title": "Keyboard Foam Modding Guide",
+              "url": "https://www.keychron.com/blogs/news/how-to-modify-your-keyboard-with-foam",
+              "type": "article",
+              "description": "Overview of foam mod types and their acoustic effects"
+            }
+          ]
+        },
+        {
+          "id": "gasket-strip-mounting",
+          "title": "Mount Gasket Strips",
+          "description": "Install gasket strips on the plate or case for gasket-mount isolation",
+          "content": "Gasket mounting decouples the plate-PCB assembly from the case walls, allowing the typing surface to flex slightly on impact. This produces the soft, cushioned feel and 'thock' sound characteristic of gasket-mount keyboards.\n\n**How gasket mounting works:**\nInstead of the plate screwing directly into the case (top-mount) or sitting on a tray (tray-mount), the plate rests on small elastomer or silicone pads — the gaskets — that are glued to notches in both the top and bottom case halves. When a key is pressed, the plate compresses the gaskets and flexes slightly, then rebounds. The gaskets also prevent metal-on-metal contact, which eliminates the harsh high-frequency ping common in top-mount or tray-mount aluminium cases.\n\n**Types of gasket systems:**\n- **Kit-included gaskets:** Most gasket-mount PCB kits ship with pre-cut silicone or Poron strips matched to the case notch dimensions — use these first\n- **O-ring gaskets:** Some cases use large O-rings (typically 3×1mm or 4×1.5mm nitrile) placed in machined grooves — press-fit, no adhesive needed\n- **DIY gaskets:** If gaskets are missing or worn, 1-2mm Poron or silicone sheet cut into strips of the correct width works well\n\n**Installing pre-cut gasket strips:**\n1. **Identify notch positions:** Examine the top and bottom case halves. Gasket notches are small recessed ledges, typically 4-8 per half, evenly spaced around the perimeter\n2. **Clean notches:** Wipe notch surfaces with isopropyl alcohol to remove mould release agents or oils — these prevent adhesive from bonding\n3. **Peel and stick:** Gasket strips usually have a self-adhesive backing. Remove the backing film, align the strip with the notch (centre it if the strip is slightly narrower), and press firmly for 10 seconds\n4. **Verify seating:** The strip should be flat, not twisted or bunched. The outer face (the face that will contact the plate) should be flush with or very slightly above the notch surface\n5. **Repeat for all notches** — both top and bottom halves\n6. **Allow adhesive to cure:** Wait 5-10 minutes before placing the plate assembly onto the gaskets\n\n**Placing the plate assembly onto gaskets:**\n1. Lower the plate-PCB assembly into the bottom case half. Align the plate notches with the gasket strip positions\n2. The plate should rest on the gaskets and feel springy when pressed gently from above — this confirms gasket contact on all points\n3. Check that the plate is level — if one corner is higher, that gasket may be missing, misaligned, or compressed by debris\n4. Close the top case half. The top-half gaskets will contact the top edge of the plate\n5. Fasten case screws finger-tight first, then snug (do not over-torque — you should feel the gaskets compressing, not bottoming out)\n\n**Gasket compression tuning:**\nDifferent Poron durometers and thicknesses produce different feel:\n- Thicker / softer gaskets: more flex, deeper, softer feel\n- Thinner / harder gaskets: less flex, more direct, slightly firmer feel\nIf your build feels too bouncy or too rigid, gasket material is the primary variable to adjust.",
+          "order": 2,
+          "estimatedTime": "10-25 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Gasket-mount-specific step: skip this step entirely if your build uses top-mount, tray-mount, or sandwich-mount case construction",
+            "Do not over-compress gaskets by over-tightening case screws — this defeats the purpose of gasket isolation and can crack acrylic cases",
+            "If any gasket strip falls off during assembly, clean the notch with IPA and replace before closing the case"
+          ],
+          "tips": [
+            "3M VHB tape (1mm) is an excellent substitute adhesive if factory gasket backing loses tackiness",
+            "Test the 'thock' by gently pressing the plate with the case open before fully closing — you should feel even springiness across the whole plate",
+            "Take note of gasket durometer if you purchase aftermarket material — 20-40 Shore A is typical for a balanced gasket feel"
+          ],
+          "requiredTools": [
+            "Gasket strips (kit-supplied or aftermarket Poron/silicone)",
+            "Isopropyl alcohol (90%+) and cotton swab for surface prep",
+            "Tweezers for handling small strips",
+            "Precision screwdriver for case screws"
+          ],
+          "externalLinks": [
+            {
+              "title": "Keyboard Mount Styles Explained",
+              "url": "https://www.theremingoat.com/blog/a-beginners-guide-to-keyboard-masking",
+              "type": "article",
+              "description": "Overview of gasket, top, tray, and other mount types with acoustic comparisons"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "final-qc",
+      "title": "Final QC Checklist",
+      "order": 8,
+      "description": "Comprehensive quality control pass after full assembly",
+      "icon": "clipboard-check",
+      "estimatedTime": "30-45 minutes",
+      "steps": [
+        {
+          "id": "final-key-test",
+          "title": "Test Every Key After Assembly",
+          "description": "Verify all keys still register correctly now that the keyboard is fully assembled",
+          "content": "Case assembly can disturb solder joints, pinch wires, or shift the PCB enough to affect switch actuation. Run a full key test immediately after closing the case.\n\n**Why test again after case assembly?**\n- Screwing the case down can bow the PCB, lifting pads from solder joints\n- Wires or cables can get pinched between case halves, breaking connections\n- Switch alignment can shift when the plate is sandwiched between gaskets or standoffs\n- Controller sockets can unseat slightly when lateral pressure is applied\n\n**Full key test procedure:**\n1. Connect keyboard to computer via USB\n2. Open https://www.keyboardtester.com/ or https://keyboardchecker.com/ in a browser\n3. Press every key individually — confirm each one highlights on the on-screen layout\n4. Test base layer fully before moving to additional layers\n5. Test every layer defined in your firmware (use your layer-switch keys to cycle through)\n6. Test all modifier keys: Left and Right Shift, Ctrl, Alt, GUI/Meta\n7. For split keyboards: test both halves independently, then together with TRRS/wireless connected\n8. For wireless builds: test with USB cable removed and Bluetooth active\n\n**If a key that worked before assembly now fails:**\n- Open the case immediately — do not type through the problem\n- Inspect the PCB in the area of the failing key: look for a solder joint that has separated, a wire pinched by the case edge, or a switch that has been pushed out of its socket\n- Reflow the joint, re-seat the switch, or reroute the wire as required\n- Re-assemble and test again\n\n**Stabiliser feel check:**\nFor any stabilised keys (spacebar, shift, backspace, enter):\n1. Press and release each stabilised key slowly — it should not scrape or rattle\n2. Press each end of the stabilised key separately — both ends should actuate cleanly\n3. If you hear a high-pitched clack or rattle: the stabilisers need lubrication or the wire needs to be clipped\n   - Clip the small plastic teeth on the bottom of stabiliser stems (\"clipping\")\n   - Apply a thin layer of dielectric grease or Krytox 205g0 to stabiliser stems and wire\n4. If a stabilised key does not return fully: the wire is binding — re-seat the wire in its hooks",
+          "order": 1,
+          "estimatedTime": "10-15 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Do not skip this test because you already passed testing before assembly — case assembly is a common cause of regression faults",
+            "If more than 2-3 keys fail after case assembly, remove the PCB entirely and inspect the solder joints before re-assembling",
+            "For wireless keyboards: ensure the battery connector has not been disconnected during case assembly"
+          ],
+          "tips": [
+            "Type a pangram ('The quick brown fox...') at normal speed to catch intermittent connection issues that single-press testing misses",
+            "Press stabilised keys at the far left and far right corners to detect uneven actuation",
+            "If stabilisers were not lubed before assembly, now is a good time to disassemble and lube — it is much easier to do before the keycaps go on"
+          ],
+          "requiredTools": [
+            "USB cable",
+            "Computer with web browser",
+            "Keyboard tester site (keyboardtester.com or keyboardchecker.com)"
+          ],
+          "externalLinks": [
+            {
+              "title": "Keyboard Tester",
+              "url": "https://www.keyboardtester.com/",
+              "type": "tool",
+              "description": "Visual keyboard tester with key highlighting"
+            },
+            {
+              "title": "Stabiliser Tuning Guide",
+              "url": "https://www.youtube.com/watch?v=usNx1_d0HbQ",
+              "type": "video",
+              "description": "Step-by-step guide to clipping, lubing, and tuning stabilisers"
+            }
+          ]
+        },
+        {
+          "id": "final-rgb-oled-check",
+          "title": "Check RGB LEDs and OLED Display",
+          "description": "Verify optional features are working correctly in the final assembled state",
+          "content": "RGB LEDs and OLED displays are the optional features most likely to show problems at final assembly, since their connectors and solder joints are fragile.\n\n**RGB LED check:**\n\n1. **Power on the keyboard** — RGB LEDs should illuminate on startup if your firmware has a default lighting layer configured\n2. **Trigger RGB mode** — Use the firmware's RGB toggle shortcut (commonly QMK default: RGB_TOG bound to a Fn layer key). All LEDs should respond\n3. **Cycle through effects** — Use RGB_MOD to cycle animations. Watch for:\n   - Any LEDs that are completely dark (open circuit or dead LED)\n   - LEDs that show wrong colours (a specific colour channel open — e.g., blue LED always on means green channel failed)\n   - LEDs that flicker or strobe erratically (unstable data line — usually a cold solder joint on the DIN/DOUT pad of the preceding LED in the chain)\n4. **For split keyboards:** check RGB on both halves. If one half has no RGB, the data line between halves has failed — check the TRRS jack pins that carry the RGB data signal\n5. **Set all LEDs to solid white** — this drives all three colour channels simultaneously and is the most revealing test for mixed-colour faults\n\n**OLED display check:**\n\n1. **Power on** — the OLED should activate within 1-2 seconds of USB connection\n2. **Verify content is correct** — most OLED layouts show layer name, lock key states (Caps/Num/Scroll), or WPM counter\n3. **Check for partial display issues:**\n   - Half the OLED dark: SDA/SCL data lines intermittent — reflow the OLED solder joints\n   - Garbled or corrupt pixels: I²C address conflict or noise — check pull-up resistors if using a bare OLED module\n   - OLED flickers on movement: the OLED connector or its solder joints are intermittent — reinforce with a small drop of hot glue on the cable strain point\n4. **For split keyboards:** if one half has no OLED, check that OLED_ENABLE is set correctly in firmware and that the I²C address matches the module's physical address pins\n5. **Brightness test:** use OLED brightness controls if implemented (QMK OLED_BRIGHTNESS) — verify the display responds\n\n**USB connection verification:**\n\n1. **Physical connection:** plug and unplug the USB cable 3 times — verify the connector does not wobble or require precise angling to make contact\n2. **Cable retention:** a good USB-C connector grips the cable firmly; excessive play suggests the jack solder joints may need reinforcing\n3. **Device recognition:** disconnect and reconnect; verify the OS re-enumerates the device within 2 seconds with no error messages\n4. **Port variety test:** test on a USB 2.0 port and a USB 3.0 port to rule out port-specific issues",
+          "order": 2,
+          "estimatedTime": "10-15 minutes",
+          "requirements": {
+            "buildMethod": null,
+            "firmware": null,
+            "features": null
+          },
+          "warnings": [
+            "Never poke or press OLED screens directly — they crack easily and cannot be repaired",
+            "If RGB LEDs show incorrect colours, do not assume the LED is dead before checking the solder joints on that LED's data input pad",
+            "Do not bend or pull the OLED ribbon cable — always support the connector housing when disconnecting"
+          ],
+          "tips": [
+            "Set RGB to solid white for the most sensitive colour-channel fault test — any failed channel will make the LED appear cyan, magenta, or yellow instead of white",
+            "If an OLED shows garbled content on first boot, try a firmware reflash before assuming hardware failure",
+            "QMK's RGB Matrix Test mode cycles through R, G, B individually — very useful for diagnosing per-channel failures"
+          ],
+          "requiredTools": [
+            "USB cable",
+            "Computer",
+            "Good lighting for observing RGB colours"
+          ],
+          "externalLinks": [
+            {
+              "title": "QMK RGB Matrix Documentation",
+              "url": "https://docs.qmk.fm/#/feature_rgb_matrix",
+              "type": "docs",
+              "description": "RGB Matrix configuration and troubleshooting in QMK"
+            },
+            {
+              "title": "QMK OLED Driver Documentation",
+              "url": "https://docs.qmk.fm/#/feature_oled_driver",
+              "type": "docs",
+              "description": "OLED configuration and I²C troubleshooting in QMK"
+            }
+          ]
+        }
+      ]
     }
   ],
   "troubleshooting": {
@@ -941,6 +1248,188 @@
           "Test while gently flexing keyboard to identify mechanical issues"
         ],
         "relatedSteps": ["handwire-rows", "pcb-install-switches", "troubleshoot-dead-keys"]
+      },
+      {
+        "id": "split-half-not-recognised",
+        "symptom": "One half of the split keyboard is completely unrecognised by the computer or by the other half",
+        "possibleCauses": [
+          "TRRS cable not fully inserted — 4-conductor TRRS requires a firm click into both jacks",
+          "TRRS jack cold solder joint on the unrecognised half",
+          "Using a TRS (3-conductor, stereo audio) cable instead of a TRRS (4-conductor) cable",
+          "Wrong master/slave pin defined in firmware (MASTER_LEFT vs MASTER_RIGHT)",
+          "USB cable connected to the slave half instead of the master half",
+          "For wireless (ZMK): slave half not bonded, out of charge, or in an inconsistent pairing state",
+          "TRRS cable damage — a kinked or broken cable loses one conductor internally"
+        ],
+        "solutions": [
+          "Step 1 — Verify cable: plug and unplug the TRRS cable firmly in both jacks. You should feel/hear a definite click",
+          "Step 2 — Test with a known-good TRRS cable. Confirm it is 4-conductor (TRRS), not 3-conductor (TRS). A phone headset cable that has both mic and stereo audio is TRRS",
+          "Step 3 — Connect USB to the master half only. The master half is defined in firmware (MASTER_LEFT or MASTER_RIGHT in QMK config.h). The slave half must not be USB-connected during normal use",
+          "Step 4 — Inspect TRRS jack solder joints on both halves under magnification. Reflow any dull or blobby joints",
+          "Step 5 — In QMK, enable USE_SERIAL or USE_I2C and verify SOFT_SERIAL_PIN matches the pin you physically wired to the TRRS jack",
+          "Step 6 (wireless ZMK) — Clear the ZMK bond: hold the profile clear key combination on the slave half, then re-pair. Charge both halves fully before testing",
+          "Step 7 — Use a multimeter in continuity mode to verify that each conductor of the TRRS cable connects end-to-end. A broken internal conductor will show open circuit"
+        ],
+        "relatedSteps": ["qmk-configure", "zmk-setup", "initial-connection-test"]
+      },
+      {
+        "id": "stuck-in-bootloader",
+        "symptom": "Keyboard appears on computer as a bootloader device (RPI-RP2, CATERINA, DFU) and does not function as a keyboard",
+        "possibleCauses": [
+          "Firmware flash was interrupted mid-write, leaving the controller with corrupt or missing firmware",
+          "Reset button or reset key combination was accidentally activated, triggering the bootloader",
+          "For Pro Micro / Elite-C: the RST and GND pads were bridged by a stray solder splash or dropped tool",
+          "For RP2040: BOOTSEL button is physically held down by a component pressing against it inside the case",
+          "Firmware was compiled for the wrong controller type and the bootloader rejected the image silently",
+          "For QMK AVR controllers: 'double-tap reset' bootloader mode was triggered by a brief power interruption during startup"
+        ],
+        "solutions": [
+          "Step 1 — Reflash firmware: the controller is in bootloader mode, which means it is ready to receive new firmware. Open QMK Toolbox, select the correct .hex/.uf2 file, and flash. Do not disconnect during the flash",
+          "Step 2 — If flash succeeds but bootloader reappears on every boot: the firmware image is corrupt or compiled for the wrong MCU. Recompile from source with 'qmk compile -kb your_keyboard -km your_keymap' and verify the MCU value in rules.mk matches your physical controller",
+          "Step 3 — Inspect the reset circuit: use a multimeter to check continuity between RST and GND on the controller. They should NOT be connected at rest. A solder bridge here causes perpetual bootloader mode",
+          "Step 4 (RP2040): open the case and check that nothing is pressing the BOOTSEL button. If the button has been accidentally soldered while held down, desolder and resolder it in the open position",
+          "Step 5 — For Elite-C / Pro Micro: physically inspect the reset button for solder bridges and test that it is open-circuit at rest (use multimeter continuity mode — should NOT beep when button is not pressed)",
+          "Step 6 — If the controller cannot be flashed at all (no bootloader device appears): the controller may be bricked. For RP2040, hold BOOTSEL while connecting USB to force mass-storage bootloader mode"
+        ],
+        "relatedSteps": ["qmk-flash", "zmk-setup", "kmk-setup"]
+      },
+      {
+        "id": "key-chatter",
+        "symptom": "A key registers multiple times from a single press (double-triggering or chatter)",
+        "possibleCauses": [
+          "Switch contact bounce: all mechanical switches bounce slightly on actuation; firmware debounce is supposed to filter this, but settings may be too lenient",
+          "Firmware debounce time set too low (below 5ms) — aggressive typists can trigger sub-debounce bounces",
+          "Worn or damaged switch: the contact leaf inside the switch is damaged, causing erratic bounce well above the debounce window",
+          "Solder bridge between adjacent switch pads: the switch registers on both its own matrix position and the adjacent position simultaneously",
+          "Matrix ghosting: missing diode on the chattering key allows the signal to feed back through other switches",
+          "Electrical noise on the matrix caused by long unshielded column wires in handwired builds"
+        ],
+        "solutions": [
+          "Step 1 — Increase firmware debounce: in QMK, add '#define DEBOUNCE 10' to config.h (or increase from current value). Values of 10-15ms cure most switch bounce issues without perceptible input lag. Reflash and test",
+          "Step 2 — Isolate the chattering key: open a keyboard tester, press the problem key slowly and firmly. If it consistently double-fires even with 15ms debounce, the switch itself is the likely cause",
+          "Step 3 — Swap the switch: for hot-swap builds, simply pull the switch and insert a known-good replacement. For soldered builds, carefully desolder the switch (use solder wick and flux), replace, and reflow",
+          "Step 4 — Inspect for solder bridges on and around the chattering switch: use a loupe or phone camera. Look for solder fillets that are touching adjacent pads. Remove bridges with solder wick",
+          "Step 5 — Verify the diode is present and correctly oriented for that switch position: a reversed or missing diode allows the matrix scan to read the switch position through other paths, causing ghost registrations",
+          "Step 6 (handwired): ensure row and column wires are separated and not running parallel for long distances — add physical separation or use shielded wire if noise is suspected"
+        ],
+        "relatedSteps": ["handwire-diodes", "pcb-solder-diodes", "troubleshoot-dead-keys"]
+      },
+      {
+        "id": "oled-not-displaying",
+        "symptom": "OLED screen shows nothing, shows all white pixels, or shows garbled content",
+        "possibleCauses": [
+          "OLED feature not enabled in firmware: OLED_ENABLE = yes must be present in rules.mk",
+          "I²C address mismatch: most common OLED modules use address 0x3C, but some variants use 0x3D. If the address in firmware does not match the hardware, the display will be blank",
+          "Cold solder joint on VCC, GND, SDA, or SCL pin of the OLED module",
+          "SDA and SCL pins swapped: some OLED module breakouts have the pin order reversed relative to the PCB silkscreen",
+          "Missing or wrong I²C pull-up resistors: some PCB designs omit pull-ups, relying on the controller's internal pull-ups. If the internal pull-ups are not enabled in firmware, I²C will not work",
+          "Contrast / brightness set to 0 in firmware: the display is on but showing nothing visible",
+          "For split keyboards: OLED code compiled only for master half — slave half OLED never initialises"
+        ],
+        "solutions": [
+          "Step 1 — Verify firmware has OLED enabled: check rules.mk for 'OLED_ENABLE = yes'. Recompile and reflash if it is missing",
+          "Step 2 — Confirm the I²C address: check your OLED module's datasheet or silkscreen. Add or update '#define OLED_DISPLAY_ADDRESS 0x3C' (or 0x3D) in config.h",
+          "Step 3 — Inspect solder joints on all four OLED pins (VCC, GND, SCL, SDA) under magnification. Reflow any dull or blobby joints. Apply flux before reflowing to get clean results",
+          "Step 4 — Check pin order: compare the silkscreen on your OLED module against the PCB footprint. If SDA and SCL are swapped, carefully desolder the module, rotate 180°, and resolder (if the pin spacing is symmetrical) or use jumper wires",
+          "Step 5 — Enable internal I²C pull-ups in firmware if external resistors are absent: in QMK, add '#define I2C1_SCL_PAL_MODE 4' and the equivalent SDA line, or add 4.7kΩ pull-up resistors to VCC on the SDA and SCL lines",
+          "Step 6 — Check OLED contrast: add 'oled_set_brightness(128)' to your OLED init code to rule out a zero-brightness configuration",
+          "Step 7 (split): for slave OLED, ensure '#define SPLIT_OLED_ENABLE' is present in config.h (QMK 0.18+) and the slave keymap includes an oled_task_user implementation"
+        ],
+        "relatedSteps": ["qmk-configure", "final-rgb-oled-check"]
+      },
+      {
+        "id": "rgb-not-working-one-half",
+        "symptom": "RGB LEDs work on one half of the split keyboard but are completely off or showing wrong colours on the other half",
+        "possibleCauses": [
+          "The RGB data chain is broken between the last LED on the working half and the first LED on the non-working half",
+          "The DOUT pin of the last LED on the working half has a cold solder joint",
+          "The DIN pin of the first LED on the non-working half has a cold solder joint",
+          "The data signal travels through the TRRS cable on some builds — a broken TRRS conductor stops the RGB chain",
+          "Firmware RGB_SPLIT or RGBLED_SPLIT configuration is incorrect — the split point is set to the wrong LED index",
+          "The non-working half has LED power (VCC/GND) connected but data disconnected — LEDs appear as a single static colour rather than responding to animations",
+          "A dead LED in the chain: a single failed LED blocks all subsequent LEDs in the serial data chain"
+        ],
+        "solutions": [
+          "Step 1 — Identify the break point: set RGB to solid white. The LEDs will light up in chain order up to the point of failure. The first dark LED is either dead or has a broken data input",
+          "Step 2 — Inspect the DOUT solder joint of the last lit LED and the DIN solder joint of the first dark LED. These two pads are the most common failure points. Apply flux and reflow both",
+          "Step 3 — If the failure is at the half-to-half boundary, check the TRRS jack pins that carry the RGB data line. Reflow those pins",
+          "Step 4 — Test the TRRS cable for continuity on the data conductor: disconnect the cable, set multimeter to continuity, probe each conductor end-to-end. Replace the cable if any conductor fails",
+          "Step 5 — Verify RGBLED_SPLIT in config.h: this macro defines how many LEDs are on each half, e.g. '#define RGBLED_SPLIT { 27, 27 }' for 27 LEDs per half. An incorrect value causes colour desynchronisation between halves",
+          "Step 6 — Replace a suspected dead LED: for addressable LEDs (SK6812, WS2812), use a hot-air station at 280°C to remove the failed LED, clean the pads, and solder a replacement. Always handle RGB LEDs with ESD precautions — they are sensitive",
+          "Step 7 — Check LED power on the non-working half: measure voltage between VCC and GND on the LED strip or first LED pad. Should be 3.3V or 5V depending on your LED type. No voltage indicates a power trace fault unrelated to the data chain"
+        ],
+        "relatedSteps": ["final-rgb-oled-check", "troubleshoot-dead-keys", "inspect-solder-joints"]
+      },
+      {
+        "id": "firmware-flash-failing",
+        "symptom": "Firmware flash fails, times out, or the controller is not detected when attempting to flash",
+        "possibleCauses": [
+          "USB cable is charge-only and does not carry data — very common with cheap USB-C cables",
+          "Wrong COM port or wrong bootloader selected in QMK Toolbox / avrdude",
+          "Controller not entering bootloader mode correctly: reset button not pressed at the right time, or double-tap reset not triggering",
+          "Missing USB driver for the controller's bootloader (Windows: Caterina/LibUSB driver; Linux: udev rule not installed)",
+          "Antivirus or security software blocking access to the USB device (Windows Defender common offender)",
+          "For RP2040: controller not appearing as mass-storage device because BOOTSEL button was not held while plugging in",
+          "Firmware .hex file compiled for wrong MCU type (e.g., atmega32u4 firmware onto a RP2040 board)",
+          "USB port providing insufficient power — try a powered USB hub or a rear-panel port on a desktop"
+        ],
+        "solutions": [
+          "Step 1 — Try a different USB cable, preferably a cable you have confirmed carries data (e.g., one that you have used to sync a phone). Data-capable cables are required; charge-only cables will not work",
+          "Step 2 — Try a different USB port. USB 2.0 ports (often black) can be more reliable than USB 3.0 (often blue) for some bootloaders. Also try a port directly on the motherboard rather than a hub",
+          "Step 3 — Confirm bootloader entry: for Pro Micro, bridge RST to GND twice quickly (double-tap) with tweezers; for Elite-C, press the reset button; for RP2040, hold BOOTSEL while connecting USB. Watch QMK Toolbox yellow text for device detection",
+          "Step 4 (Windows) — Install correct drivers: open Zadig (https://zadig.akeo.ie/), select the bootloader device from the dropdown, install libusb-win32 or WinUSB driver. Re-attempt flash",
+          "Step 5 (Linux) — Install QMK udev rules: 'sudo cp qmk_firmware/util/udev/50-qmk.rules /etc/udev/rules.d/ && sudo udevadm control --reload-rules'. Disconnect and reconnect the controller",
+          "Step 6 — Verify MCU type: in your keyboard's rules.mk, confirm 'MCU = atmega32u4' (Pro Micro), 'MCU = at90usb1286' (Elite-C), or 'MCU = RP2040'. Recompile after correcting",
+          "Step 7 — Temporarily disable antivirus real-time protection during flash, or add the QMK Toolbox executable and firmware .hex file to the antivirus exclusion list",
+          "Step 8 — If none of the above work, try flashing from the QMK CLI instead of QMK Toolbox: 'qmk flash -kb your_keyboard -km your_keymap', then enter bootloader mode when prompted"
+        ],
+        "relatedSteps": ["qmk-flash", "zmk-setup", "kmk-setup", "stuck-in-bootloader"]
+      },
+      {
+        "id": "single-key-dead",
+        "symptom": "One specific key does not register at all, while all surrounding keys work correctly",
+        "possibleCauses": [
+          "Cold solder joint on one or both pins of that switch",
+          "Cold solder joint on the diode for that switch position",
+          "Diode installed backwards on that specific key position",
+          "Switch is defective — contact leaves inside the switch are not making contact when pressed",
+          "Switch pin bent or broken during installation — pins fold easily if force is applied at an angle",
+          "For hot-swap builds: switch pins not fully seated in the hot-swap socket",
+          "PCB pad lifted or trace broken near that switch position"
+        ],
+        "solutions": [
+          "Step 1 — Confirm the failure is hardware, not keymap: open QMK console or Vial's key tester, press the affected key, and observe whether any matrix event fires. If no event fires, the issue is hardware",
+          "Step 2 — Inspect the switch: for hot-swap builds, remove the switch and check that both pins are straight and undamaged. Re-insert firmly until you feel both pins click into the socket",
+          "Step 3 — Inspect solder joints on both switch pins and the diode under magnification. A cold joint has a dull, grainy appearance. Apply flux and reflow any suspicious joint",
+          "Step 4 — Check diode orientation: the cathode stripe on the diode body should match the silkscreen marker on the PCB. If the diode is backwards, carefully desolder it, flip it, and resolder",
+          "Step 5 — Continuity test the switch: set multimeter to continuity mode, place one probe on the row pad and one on the column pad, press the switch. Should beep when pressed and be silent when released",
+          "Step 6 — Test the switch off the PCB: if you can remove it (hot-swap or through-hole with desoldering), probe the two switch pins directly while pressing the switch. If it never beeps, the switch itself is dead — replace it",
+          "Step 7 — Inspect the PCB trace: look under the solder joint for lifted copper or a visible scratch across the trace. A broken trace can be bridged with a short wire soldered between the two disconnected pads"
+        ],
+        "relatedSteps": ["continuity-test-matrix", "inspect-solder-joints", "troubleshoot-dead-keys"]
+      },
+      {
+        "id": "row-or-column-dead",
+        "symptom": "All keys in one complete row or one complete column do not register, forming a straight line of dead keys",
+        "possibleCauses": [
+          "The row or column wire is not connected to the controller — missing or cold solder joint at the controller pin",
+          "The firmware pin assignment for that row or column does not match the physical wiring",
+          "The PCB trace connecting all pads in that row or column has a break",
+          "For handwired builds: the row or column wire has a break, or the wire was never soldered to the controller pin",
+          "The controller GPIO pin for that row or column is damaged (ESD or short-circuit damage)",
+          "A single diode is missing from the middle of the row, breaking the row trace at that point and causing all keys from that point onward to fail"
+        ],
+        "solutions": [
+          "Step 1 — Determine whether it is a row or column failure: a dead row means all keys that share a horizontal line fail; a dead column means all keys in a vertical line fail. This tells you which type of wire or trace to investigate",
+          "Step 2 — Locate the controller pin for the dead row or column: consult your firmware pin configuration (MATRIX_ROW_PINS / MATRIX_COL_PINS in config.h) and identify the physical pin on the controller",
+          "Step 3 — Inspect the solder joint at the controller pin: this is the most common failure point. Apply flux and reflow the joint. For socketed controllers, press the controller firmly into the socket",
+          "Step 4 — Continuity test the trace: place one probe on the controller pin (or its pad) and the other probe at the far end of the row or column trace (the last switch pad). Should show continuity. If not, there is a break somewhere in the trace",
+          "Step 5 — Walk the trace: move the probe from the controller pin toward the end of the trace, testing continuity at each switch pad. The break is between the last pad that shows continuity and the first pad that does not",
+          "Step 6 (handwired): probe each solder joint along the row or column wire. A cold joint at any point breaks the chain. Reflow all joints in the affected wire",
+          "Step 7 — Repair a broken trace: clean the area around the break with IPA. Solder a short length of 30AWG wire from one side of the break to the other, bridging the gap. Insulate the wire with a small piece of Kapton tape if it crosses other traces",
+          "Step 8 — If the controller pin itself is dead (measures correct voltage but produces no matrix scan activity): the GPIO may be damaged. Try remapping the row or column to a different pin in firmware and physically rewiring the connection to that pin"
+        ],
+        "relatedSteps": ["continuity-test-matrix", "handwire-columns", "handwire-rows", "troubleshoot-dead-keys"]
       }
     ]
   }
