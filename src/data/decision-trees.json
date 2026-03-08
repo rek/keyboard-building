@@ -206,7 +206,7 @@
           "id": "mx",
           "name": "Cherry MX / MX-compatible",
           "shortDesc": "Standard height, huge keycap selection",
-          "image": "/images/components/switches/mx-switch.svg",
+          "image": "/images/components/switches/cherry-mx.webp",
           "costDelta": 35,
           "complexityDelta": 1,
           "timeHours": 0,

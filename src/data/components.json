@@ -810,7 +810,7 @@
       "name": "Cherry MX / MX-compatible",
       "price": 0.35,
       "priceUnit": "per switch",
-      "image": "/images/components/switches/mx-switch.svg",
+      "image": "/images/components/switches/cherry-mx.webp",
       "specs": {
         "profile": "standard",
         "height": "18.5mm",

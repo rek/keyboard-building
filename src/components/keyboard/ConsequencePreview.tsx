@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
 import { useCurrency } from '../../contexts/CurrencyContext'
 import { useAppSettings } from '../../contexts/AppSettingsContext'
+import { ComplexityDots } from '../ui/ComplexityDots'
+import { SectionLabel } from '../ui/SectionLabel'
+import { PillTag } from '../ui/PillTag'
+import { AccentedListItem } from '../ui/AccentedListItem'
 
 export interface ConsequencePreviewData {
   decision: string
@@ -98,12 +102,7 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
           >
             {settings.showPricing && (
               <div>
-                <div
-                  className="text-xs font-bold mb-1 tracking-wide"
-                  style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-                >
-                  COST_IMPACT
-                </div>
+                <SectionLabel className="mb-1">COST_IMPACT</SectionLabel>
                 <div
                   className="text-xl font-bold"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent-orange)' }}
@@ -113,12 +112,7 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
               </div>
             )}
             <div>
-              <div
-                className="text-xs font-bold mb-1 tracking-wide"
-                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-              >
-                BUILD_TIME
-              </div>
+              <SectionLabel className="mb-1">BUILD_TIME</SectionLabel>
               <div
                 className="text-xl font-bold"
                 style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent-teal)' }}
@@ -127,69 +121,26 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
               </div>
             </div>
             <div>
-              <div
-                className="text-xs font-bold mb-1 tracking-wide"
-                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-              >
-                COMPLEXITY
-              </div>
-              <div className="flex items-center gap-1 mt-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-3 h-3 border"
-                    style={{
-                      borderColor: 'var(--color-border)',
-                      background:
-                        i < option.complexityDelta ? 'var(--color-accent-orange)' : 'transparent',
-                    }}
-                  />
-                ))}
+              <SectionLabel className="mb-1">COMPLEXITY</SectionLabel>
+              <div className="mt-1">
+                <ComplexityDots value={option.complexityDelta} />
               </div>
             </div>
           </div>
 
           {/* Skill Level */}
           <div className="mb-6">
-            <h3
-              className="font-bold mb-2 text-xs tracking-wide"
-              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-            >
-              SKILL_LEVEL
-            </h3>
-            <span
-              className="inline-block px-3 py-1 text-xs font-bold tracking-wide border-2"
-              style={{
-                borderColor: 'var(--color-accent-teal)',
-                color: 'var(--color-accent-teal)',
-                fontFamily: 'var(--font-display)',
-              }}
-            >
-              {option.skillLevel.toUpperCase()}
-            </span>
+            <SectionLabel className="mb-2">SKILL_LEVEL</SectionLabel>
+            <PillTag>{option.skillLevel.toUpperCase()}</PillTag>
           </div>
 
           {/* Required Tools */}
           {option.requiredTools.length > 0 && (
             <div className="mb-6">
-              <h3
-                className="font-bold mb-2 text-xs tracking-wide"
-                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-              >
-                YOU_WILL_NEED
-              </h3>
+              <SectionLabel className="mb-2">YOU_WILL_NEED</SectionLabel>
               <ul className="space-y-1">
                 {option.requiredTools.map((tool, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-2 text-sm pl-3"
-                    style={{
-                      borderLeft: '2px solid var(--color-accent-teal)',
-                      color: 'var(--color-text-secondary)',
-                    }}
-                  >
-                    {tool}
-                  </li>
+                  <AccentedListItem key={index}>{tool}</AccentedListItem>
                 ))}
               </ul>
             </div>
@@ -198,24 +149,10 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
           {/* Downstream Effects */}
           {option.downstreamEffects.length > 0 && (
             <div className="mb-6">
-              <h3
-                className="font-bold mb-2 text-xs tracking-wide"
-                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-              >
-                THIS_WILL_AFFECT
-              </h3>
+              <SectionLabel className="mb-2">THIS_WILL_AFFECT</SectionLabel>
               <ul className="space-y-1">
                 {option.downstreamEffects.map((effect, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-2 text-sm pl-3"
-                    style={{
-                      borderLeft: '2px solid var(--color-border)',
-                      color: 'var(--color-text-secondary)',
-                    }}
-                  >
-                    {effect}
-                  </li>
+                  <AccentedListItem key={index} accent="var(--color-border)">{effect}</AccentedListItem>
                 ))}
               </ul>
             </div>
@@ -224,12 +161,7 @@ export function ConsequencePreview({ data, onClose, onConfirm }: ConsequencePrev
           {/* Warnings */}
           {warnings.length > 0 && (
             <div className="mb-6">
-              <h3
-                className="font-bold mb-2 text-xs tracking-wide"
-                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-secondary)' }}
-              >
-                COMPATIBILITY_WARNINGS
-              </h3>
+              <SectionLabel className="mb-2">COMPATIBILITY_WARNINGS</SectionLabel>
               <div className="space-y-2">
                 {warnings.map((warning, index) => (
                   <div

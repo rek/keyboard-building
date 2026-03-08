@@ -3,9 +3,14 @@ import { useUserChoices } from '../../contexts/UserChoicesContext'
 import { useCurrency } from '../../contexts/CurrencyContext'
 import { useAppSettings } from '../../contexts/AppSettingsContext'
 import { ConsequencePreview, type ConsequencePreviewData } from './ConsequencePreview'
-import { checkCompatibility } from '../../utils/compatibilityChecker'
+import { checkCompatibility, getCompatibilityStatus } from '../../utils/compatibilityChecker'
 import decisionTreeData from '../../data/decision-trees.json'
 import { getImageUrl } from '../../utils/images'
+import { SelectedBadge, IncompatBadge, CautionBadge } from './OptionBadge'
+import { ComplexityDots } from '../ui/ComplexityDots'
+import { SectionLabel } from '../ui/SectionLabel'
+import { PillTag } from '../ui/PillTag'
+import { ComponentImage, ComponentImagePlaceholder } from '../ui/ComponentImage'
 
 interface DecisionStep {
   id: string
@@ -152,6 +157,13 @@ export function DecisionTree() {
                 {decision.options.map((option) => {
                   const isSelected = currentValue === option.id
 
+                  // Compute compatibility for this option against current choices
+                  const optionChoices = applyDecisionToChoices(choices, decision.id, option.id)
+                  const optionWarnings = checkCompatibility(optionChoices)
+                  const optionStatus = getCompatibilityStatus(optionWarnings)
+                  const hasErrors = optionStatus === 'errors'
+                  const hasWarnings = optionStatus === 'warnings'
+
                   return (
                     <button
                       key={option.id}
@@ -170,50 +182,40 @@ export function DecisionTree() {
                       style={{
                         borderColor: isSelected
                           ? 'var(--color-accent-orange)'
-                          : 'var(--color-border)',
+                          : hasErrors
+                            ? '#dc2626'
+                            : hasWarnings
+                              ? '#d97706'
+                              : 'var(--color-border)',
                         background: isSelected
                           ? 'var(--color-bg-primary)'
                           : 'var(--color-bg-secondary)',
+                        opacity: hasErrors && !isSelected ? 0.55 : 1,
                       }}
                     >
-                      {isSelected && (
-                        <div
-                          className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center font-bold text-xs"
-                          style={{
-                            background: 'var(--color-accent-orange)',
-                            color: 'white',
-                            fontFamily: 'var(--font-display)',
-                          }}
-                        >
-                          ✓
-                        </div>
+                      {isSelected && <SelectedBadge />}
+                      {!isSelected && hasErrors && (
+                        <IncompatBadge
+                          title={optionWarnings
+                            .filter((w) => w.severity === 'error')
+                            .map((w) => w.message)
+                            .join(' | ')}
+                        />
+                      )}
+                      {!isSelected && !hasErrors && hasWarnings && (
+                        <CautionBadge
+                          title={optionWarnings
+                            .filter((w) => w.severity === 'warning')
+                            .map((w) => w.message)
+                            .join(' | ')}
+                        />
                       )}
 
                       {/* Option Image */}
-                      <div
-                        className="w-full h-32 mb-3 flex items-center justify-center overflow-hidden border-2"
-                        style={{
-                          background: 'var(--color-bg-primary)',
-                          borderColor: 'var(--color-border-light)',
-                        }}
-                      >
-                        {option.image ? (
-                          <img
-                            src={getImageUrl(option.image)}
-                            alt={option.name}
-                            className="w-full h-full object-contain p-2"
-                          />
-                        ) : (
-                          <span
-                            className="text-xs font-bold tracking-wide"
-                            style={{
-                              fontFamily: 'var(--font-display)',
-                              color: 'var(--color-text-secondary)',
-                            }}
-                          >
-                            [IMG]
-                          </span>
-                        )}
+                      <div className="mb-3">
+                        {option.image
+                          ? <ComponentImage src={getImageUrl(option.image)} alt={option.name} />
+                          : <ComponentImagePlaceholder />}
                       </div>
 
                       {/* Option Title */}
@@ -246,38 +248,14 @@ export function DecisionTree() {
                             +{formatCurrency(option.costDelta)}
                           </span>
                         )}
-                        <div
-                          className={`flex items-center gap-1 ${!settings.showPricing ? 'ml-auto' : ''}`}
-                        >
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <div
-                              key={i}
-                              className="w-3 h-3 border"
-                              style={{
-                                borderColor: 'var(--color-border)',
-                                background:
-                                  i < option.complexityDelta
-                                    ? 'var(--color-accent-orange)'
-                                    : 'transparent',
-                              }}
-                            />
-                          ))}
+                        <div className={!settings.showPricing ? 'ml-auto' : ''}>
+                          <ComplexityDots value={option.complexityDelta} />
                         </div>
                       </div>
 
                       {/* Skill Level Badge */}
                       <div className="mt-2 flex items-center gap-2">
-                        <span
-                          className="inline-block px-2 py-1 text-xs font-bold tracking-wide border-2"
-                          style={{
-                            borderColor: 'var(--color-border-light)',
-                            background: 'transparent',
-                            color: 'var(--color-text-secondary)',
-                            fontFamily: 'var(--font-display)',
-                          }}
-                        >
-                          {option.skillLevel.toUpperCase()}
-                        </span>
+                        <PillTag variant="neutral">{option.skillLevel.toUpperCase()}</PillTag>
                         <span
                           className="text-xs"
                           style={{ color: 'var(--color-text-secondary)' }}
@@ -303,15 +281,7 @@ export function DecisionTree() {
                             }}
                             onMouseLeave={() => setTooltipOptionId(null)}
                           >
-                            <div
-                              className="text-xs font-bold tracking-wide mb-2"
-                              style={{
-                                fontFamily: 'var(--font-display)',
-                                color: 'var(--color-text-primary)',
-                              }}
-                            >
-                              WHAT_THIS_MEANS
-                            </div>
+                            <SectionLabel color="var(--color-text-primary)" className="mb-2">WHAT_THIS_MEANS</SectionLabel>
                             <ul className="space-y-1">
                               {option.downstreamEffects.slice(0, 4).map((effect, i) => (
                                 <li

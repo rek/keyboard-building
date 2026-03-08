@@ -3,6 +3,11 @@ import { useCurrency } from '../../contexts/CurrencyContext'
 import { useAppSettings } from '../../contexts/AppSettingsContext'
 import { ImageModal } from '../common/ImageModal'
 import { getImageUrl } from '../../utils/images'
+import { ComplexityDots } from '../ui/ComplexityDots'
+import { SectionLabel } from '../ui/SectionLabel'
+import { PillTag } from '../ui/PillTag'
+import { AccentedListItem } from '../ui/AccentedListItem'
+import { ComponentImagePlaceholder } from '../ui/ComponentImage'
 
 interface ComponentCardProps {
   component: {
@@ -39,10 +44,7 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
       {/* Image */}
       <div
         className="w-full h-48 flex items-center justify-center overflow-hidden relative group/image"
-        style={{
-          background: 'var(--color-bg-primary)',
-          borderBottom: '3px solid var(--color-border)',
-        }}
+        style={{ borderBottom: '3px solid var(--color-border)' }}
       >
         {component.image ? (
           <div
@@ -70,15 +72,7 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
             </div>
           </div>
         ) : (
-          <span
-            className="font-bold text-xs tracking-widest"
-            style={{
-              fontFamily: 'var(--font-display)',
-              color: 'var(--color-text-secondary)',
-            }}
-          >
-            [IMG_PLACEHOLDER]
-          </span>
+          <ComponentImagePlaceholder height="h-48" />
         )}
         {/* Category badge */}
         <div
@@ -129,28 +123,8 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
 
         {/* Complexity */}
         <div className="mb-4">
-          <div
-            className="text-xs mb-2 font-bold tracking-wide"
-            style={{
-              fontFamily: 'var(--font-display)',
-              color: 'var(--color-text-secondary)',
-            }}
-          >
-            COMPLEXITY
-          </div>
-          <div className="flex items-center gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="w-4 h-4 border-2 transition-colors"
-                style={{
-                  borderColor: 'var(--color-border)',
-                  background:
-                    i < component.complexity ? 'var(--color-accent-orange)' : 'transparent',
-                }}
-              />
-            ))}
-          </div>
+          <SectionLabel className="mb-2">COMPLEXITY</SectionLabel>
+          <ComplexityDots value={component.complexity} size="md" />
         </div>
 
         {/* Specs Preview */}
@@ -190,27 +164,10 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
         {/* Pros (top 2) */}
         {component.pros.length > 0 && (
           <div className="mb-3">
-            <div
-              className="text-xs font-bold mb-2 tracking-wide"
-              style={{
-                fontFamily: 'var(--font-display)',
-                color: 'var(--color-accent-teal)',
-              }}
-            >
-              [+] PROS
-            </div>
+            <SectionLabel color="var(--color-accent-teal)" className="mb-2">[+] PROS</SectionLabel>
             <ul className="space-y-1.5">
               {component.pros.slice(0, 2).map((pro, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-2 text-xs pl-3"
-                  style={{
-                    borderLeft: '2px solid var(--color-accent-teal)',
-                    color: 'var(--color-text-secondary)',
-                  }}
-                >
-                  <span>{pro}</span>
-                </li>
+                <AccentedListItem key={index} size="xs">{pro}</AccentedListItem>
               ))}
             </ul>
           </div>
@@ -219,27 +176,10 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
         {/* Cons (top 2) */}
         {component.cons.length > 0 && (
           <div className="mb-4">
-            <div
-              className="text-xs font-bold mb-2 tracking-wide"
-              style={{
-                fontFamily: 'var(--font-display)',
-                color: 'var(--color-accent-orange)',
-              }}
-            >
-              [-] CONS
-            </div>
+            <SectionLabel color="var(--color-accent-orange)" className="mb-2">[-] CONS</SectionLabel>
             <ul className="space-y-1.5">
               {component.cons.slice(0, 2).map((con, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-2 text-xs pl-3"
-                  style={{
-                    borderLeft: '2px solid var(--color-accent-orange)',
-                    color: 'var(--color-text-secondary)',
-                  }}
-                >
-                  <span>{con}</span>
-                </li>
+                <AccentedListItem key={index} accent="var(--color-accent-orange)" size="xs">{con}</AccentedListItem>
               ))}
             </ul>
           </div>
@@ -252,32 +192,10 @@ export function ComponentCard({ component, category, onClick }: ComponentCardPro
             style={{ borderTop: '2px solid var(--color-border-light)' }}
           >
             {component.compatibleWith?.slice(0, 3).map((item) => (
-              <span
-                key={item}
-                className="px-2 py-1 text-xs font-bold tracking-wide"
-                style={{
-                  border: '2px solid var(--color-accent-teal)',
-                  background: 'transparent',
-                  color: 'var(--color-accent-teal)',
-                  fontFamily: 'var(--font-display)',
-                }}
-              >
-                {item.toUpperCase()}
-              </span>
+              <PillTag key={item} variant="teal">{item.toUpperCase()}</PillTag>
             ))}
             {component.incompatibleWith?.slice(0, 2).map((item) => (
-              <span
-                key={item}
-                className="px-2 py-1 text-xs font-bold tracking-wide line-through opacity-50"
-                style={{
-                  border: '2px solid var(--color-border-light)',
-                  background: 'transparent',
-                  color: 'var(--color-text-secondary)',
-                  fontFamily: 'var(--font-display)',
-                }}
-              >
-                {item.toUpperCase()}
-              </span>
+              <PillTag key={item} variant="incompatible">{item.toUpperCase()}</PillTag>
             ))}
           </div>
         )}
