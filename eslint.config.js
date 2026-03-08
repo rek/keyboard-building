@@ -101,6 +101,14 @@ export default tseslint.config(
     },
   },
 
+  // Context files export both Provider components and hooks — this is intentional
+  {
+    files: ['src/contexts/**/*.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+
   // Config files - relaxed rules
   {
     files: ['*.config.{js,ts,mjs,mts}', 'vite.config.ts'],
