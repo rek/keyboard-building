@@ -10,6 +10,9 @@ Welcome to the Split Keyboard Builder Guide documentation. These guides will hel
 - **[Extending the Application](./EXTENDING.md)** - Step-by-step guides for adding features
 - **[Settings & Images](./SETTINGS_AND_IMAGES.md)** - Learning mode and image management
 - **[Image Sources](./IMAGE_SOURCES.md)** - Where to find and how to add component images
+- **[Developers Guide](./guide/developers.md)** - Local setup and deployment
+- **[AI Workflow](./guide/ai-workflow.md)** - Process for non-trivial AI-assisted work
+- **[Backlog](./backlog.md)** - Prioritized work items for agents
 
 ## For Agents
 
@@ -98,7 +101,11 @@ docs/
 ├── PROJECT_OVERVIEW.md        ← High-level project info
 ├── DATA_SCHEMAS.md            ← JSON data structure reference
 ├── COMPONENT_API.md           ← Component, hook, utility reference
-└── EXTENDING.md               ← How to add features
+├── EXTENDING.md               ← How to add features
+├── backlog.md                 ← Prioritized work items
+└── guide/
+    ├── developers.md          ← Local setup & deployment
+    └── ai-workflow.md         ← AI-assisted workflow
 
 src/
 ├── components/
