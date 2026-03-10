@@ -274,7 +274,7 @@ describe('calculateComplexity', () => {
 
   it('adds layout complexity (ergonomic-3d=5, /2=2.5 → rounds to 3)', () => {
     expect(
-      calculateComplexity({ ...base, layout: { formFactor: 'ergonomic-3d', keyCount: 60 } }),
+      calculateComplexity({ ...base, layout: { formFactor: 'ergonomic-3d', keyCount: 60 } })
     ).toBe(3)
   })
 
@@ -283,9 +283,9 @@ describe('calculateComplexity', () => {
   })
 
   it('adds feature complexity (trackball=4, /2 → 2)', () => {
-    expect(
-      calculateComplexity({ ...base, features: { ...base.features, trackball: true } }),
-    ).toBe(2)
+    expect(calculateComplexity({ ...base, features: { ...base.features, trackball: true } })).toBe(
+      2
+    )
   })
 
   it('combines all dimensions correctly (handwired=4 + ergonomic-3d=5 + qmk=3 = 12, /2 → 6)', () => {
@@ -295,7 +295,7 @@ describe('calculateComplexity', () => {
         buildMethod: 'handwired',
         layout: { formFactor: 'ergonomic-3d', keyCount: 60 },
         firmware: 'qmk',
-      }),
+      })
     ).toBe(6)
   })
 
@@ -315,7 +315,7 @@ describe('calculateComplexity', () => {
           trackball: true,
           wireless: true,
         },
-      }),
+      })
     ).toBe(10)
   })
 
@@ -339,7 +339,7 @@ describe('estimateBuildTime', () => {
 
   it('adds layout time (ergonomic-3d = 20h)', () => {
     expect(
-      estimateBuildTime({ ...base, layout: { formFactor: 'ergonomic-3d', keyCount: 60 } }),
+      estimateBuildTime({ ...base, layout: { formFactor: 'ergonomic-3d', keyCount: 60 } })
     ).toBe(20)
   })
 
@@ -352,7 +352,7 @@ describe('estimateBuildTime', () => {
       estimateBuildTime({
         ...base,
         features: { ...base.features, trackball: true, wireless: true },
-      }),
+      })
     ).toBe(13)
   })
 
@@ -363,7 +363,7 @@ describe('estimateBuildTime', () => {
         buildMethod: 'handwired',
         layout: { formFactor: 'ergonomic-3d', keyCount: 60 },
         firmware: 'qmk',
-      }),
+      })
     ).toBe(37)
   })
 

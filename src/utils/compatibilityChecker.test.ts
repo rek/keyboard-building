@@ -78,7 +78,10 @@ describe('checkCompatibility', () => {
       }
       const warnings = checkCompatibility(choices)
       const rule = warnings.find(
-        (w) => w.affectedChoices.includes('firmware') && w.affectedChoices.includes('controller') && w.message.includes('ZMK firmware requires'),
+        (w) =>
+          w.affectedChoices.includes('firmware') &&
+          w.affectedChoices.includes('controller') &&
+          w.message.includes('ZMK firmware requires')
       )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('error')
@@ -216,7 +219,9 @@ describe('checkCompatibility', () => {
         firmware: 'zmk',
       }
       const warnings = checkCompatibility(choices)
-      const genericRule = warnings.find((w) => w.message.includes('Wireless connectivity requires nice!nano controller with ZMK firmware'))
+      const genericRule = warnings.find((w) =>
+        w.message.includes('Wireless connectivity requires nice!nano controller with ZMK firmware')
+      )
       expect(genericRule).toBeUndefined()
     })
 
@@ -228,7 +233,9 @@ describe('checkCompatibility', () => {
         firmware: 'zmk',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Wireless connectivity requires nice!nano'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Wireless connectivity requires nice!nano')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('error')
       expect(rule!.affectedChoices).toContain('connectivity')
@@ -244,7 +251,9 @@ describe('checkCompatibility', () => {
         firmware: 'zmk',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Wireless connectivity requires nice!nano'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Wireless connectivity requires nice!nano')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('error')
     })
@@ -258,7 +267,9 @@ describe('checkCompatibility', () => {
       }
       const warnings = checkCompatibility(choices)
       const eliteCRule = warnings.find((w) => w.message.includes('Elite-C uses ATmega32U4'))
-      const genericRule = warnings.find((w) => w.message.includes('Wireless connectivity requires nice!nano'))
+      const genericRule = warnings.find((w) =>
+        w.message.includes('Wireless connectivity requires nice!nano')
+      )
       expect(eliteCRule).toBeUndefined()
       expect(genericRule).toBeUndefined()
     })
@@ -300,7 +311,7 @@ describe('checkCompatibility', () => {
       const wirelessErrors = warnings.filter(
         (w) =>
           w.severity === 'error' &&
-          (w.affectedChoices.includes('connectivity') || w.affectedChoices.includes('controller')),
+          (w.affectedChoices.includes('connectivity') || w.affectedChoices.includes('controller'))
       )
       expect(wirelessErrors).toHaveLength(0)
     })
@@ -318,7 +329,9 @@ describe('checkCompatibility', () => {
         // no extra features — 11 pins
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -330,7 +343,9 @@ describe('checkCompatibility', () => {
         // 11 + 1 = 12 pins — NOT > 12
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -342,7 +357,9 @@ describe('checkCompatibility', () => {
         // 11 + 1 (rgb) + 2 (oled) = 14 pins
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('warning')
       expect(rule!.affectedChoices).toContain('controller')
@@ -357,7 +374,9 @@ describe('checkCompatibility', () => {
         // 11 + 2 (oled) = 13 pins
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('warning')
     })
@@ -370,7 +389,9 @@ describe('checkCompatibility', () => {
         // 11 + 3 (encoder) = 14 pins
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('warning')
     })
@@ -383,7 +404,9 @@ describe('checkCompatibility', () => {
         // 11 + 2 (oled) = 13 pins
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('warning')
     })
@@ -392,10 +415,18 @@ describe('checkCompatibility', () => {
       const choices: UserChoices = {
         ...baseChoices,
         controller: 'rp2040',
-        features: { ...baseChoices.features, rgb: true, oled: true, encoder: true, trackball: true },
+        features: {
+          ...baseChoices.features,
+          rgb: true,
+          oled: true,
+          encoder: true,
+          trackball: true,
+        },
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -407,7 +438,9 @@ describe('checkCompatibility', () => {
         // 11 + 2 = 13 pins
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Pro Micro/Elite-C only have 12 usable pins'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Pro Micro/Elite-C only have 12 usable pins')
+      )
       expect(rule).toBeDefined()
       expect(rule!.message).toContain('13')
     })
@@ -424,7 +457,9 @@ describe('checkCompatibility', () => {
         controller: 'rp2040',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Trackball integration is extremely complex'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Trackball integration is extremely complex')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('warning')
       expect(rule!.affectedChoices).toContain('features')
@@ -439,7 +474,9 @@ describe('checkCompatibility', () => {
         controller: 'rp2040',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Trackball integration is extremely complex'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Trackball integration is extremely complex')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('warning')
     })
@@ -452,7 +489,9 @@ describe('checkCompatibility', () => {
         controller: 'rp2040',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Trackball integration is extremely complex'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Trackball integration is extremely complex')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -494,7 +533,9 @@ describe('checkCompatibility', () => {
         buildMethod: 'pcb-kit',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Ergonomic 3D layouts typically require custom 3D printed cases'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Ergonomic 3D layouts typically require custom 3D printed cases')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('info')
       expect(rule!.affectedChoices).toContain('layout')
@@ -508,7 +549,9 @@ describe('checkCompatibility', () => {
         buildMethod: 'custom-pcb',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Ergonomic 3D layouts typically require custom 3D printed cases'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Ergonomic 3D layouts typically require custom 3D printed cases')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -519,7 +562,9 @@ describe('checkCompatibility', () => {
         buildMethod: 'pcb-kit',
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Ergonomic 3D layouts typically require custom 3D printed cases'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Ergonomic 3D layouts typically require custom 3D printed cases')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -530,7 +575,9 @@ describe('checkCompatibility', () => {
         layout: { ...baseChoices.layout, formFactor: 'ergonomic-3d' },
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Choc v1 switches work great with 3D printed cases'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Choc v1 switches work great with 3D printed cases')
+      )
       expect(rule).toBeDefined()
       expect(rule!.severity).toBe('info')
       expect(rule!.affectedChoices).toContain('switchType')
@@ -544,7 +591,9 @@ describe('checkCompatibility', () => {
         layout: { ...baseChoices.layout, formFactor: 'tenkeyless' },
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Choc v1 switches work great with 3D printed cases'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Choc v1 switches work great with 3D printed cases')
+      )
       expect(rule).toBeUndefined()
     })
 
@@ -555,7 +604,9 @@ describe('checkCompatibility', () => {
         layout: { ...baseChoices.layout, formFactor: 'ergonomic-3d' },
       }
       const warnings = checkCompatibility(choices)
-      const rule = warnings.find((w) => w.message.includes('Choc v1 switches work great with 3D printed cases'))
+      const rule = warnings.find((w) =>
+        w.message.includes('Choc v1 switches work great with 3D printed cases')
+      )
       expect(rule).toBeUndefined()
     })
   })
@@ -727,9 +778,7 @@ describe('getCompatibilityStatus', () => {
   it('returns "ok" when there are only info-severity entries (info does not trigger "warnings")', () => {
     // getCompatibilityStatus only checks for 'warning' severity in its second branch;
     // 'info' falls through and returns 'ok'. This is the actual implementation behaviour.
-    const warnings = [
-      { severity: 'info' as const, message: 'some info', affectedChoices: ['a'] },
-    ]
+    const warnings = [{ severity: 'info' as const, message: 'some info', affectedChoices: ['a'] }]
     expect(getCompatibilityStatus(warnings)).toBe('ok')
   })
 
