@@ -123,10 +123,10 @@ export function calculateCost(choices: UserChoices): CostEstimate {
   // Shipping estimate
   if (choices.buildMethod === 'custom-pcb') {
     breakdown.shipping = costDatabase.shipping['international-pcb']
-  } else if (choices.buildMethod !== 'complete-kit') {
-    breakdown.shipping = costDatabase.shipping['international-parts']
-  } else {
+  } else if (choices.buildMethod === 'complete-kit') {
     breakdown.shipping = costDatabase.shipping.domestic
+  } else if (choices.buildMethod) {
+    breakdown.shipping = costDatabase.shipping['international-parts']
   }
 
   // One-time tools cost (basic soldering kit for builds that require it)
