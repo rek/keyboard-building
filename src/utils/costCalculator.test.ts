@@ -118,16 +118,16 @@ describe('calculateCost', () => {
       expect(r.breakdown.case).toBe(20)
     })
 
-    it('overwrites pcb-kit case cost when combined with ergonomic-3d layout', () => {
-      // BUG: pcb-kit sets case=$40, then ergonomic-3d overwrites it to $20.
-      // The kit-included case ($40) is silently dropped from the estimate.
-      // This test documents the current (incorrect) behaviour.
+    it('preserves pcb-kit case cost when combined with ergonomic-3d layout', () => {
+      // pcb-kit includes a case ($40); the ergonomic-3d 3D-print cost should not silently
+      // overwrite it. If the user wants a 3D case instead of the kit case they should pick
+      // a different build method.
       const r = calculateCost({
         ...base,
         buildMethod: 'pcb-kit',
         layout: { formFactor: 'ergonomic-3d', keyCount: 60 },
       })
-      expect(r.breakdown.case).toBe(20) // BUG: should be 40 (kit case replaced, not added)
+      expect(r.breakdown.case).toBe(40)
     })
   })
 
@@ -240,7 +240,7 @@ describe('calculateCost', () => {
         connectivity: 'trrs',
         firmware: 'qmk',
       })
-      const sumOfBreakdown = Object.values(r.breakdown).reduce((a, b) => a + b, 0)
+      const sumOfBreakdown = (Object.values(r.breakdown) as number[]).reduce((a, b) => a + b, 0)
       expect(r.total).toBeCloseTo(sumOfBreakdown)
     })
 

@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "kicad-export",
+    "title": "Exporting from KiCad",
+    "summary": "Generating Gerbers, drill files, plot SVGs/PDFs, and raster copper images from a KiCad PCB project — for fab houses, laser isolation, or CNC milling.",
+    "tags": ["kicad", "gerber", "export", "pcb", "fabrication"],
+    "stepIds": [
+      "kicad-gerber-export",
+      "kicad-drill-export",
+      "kicad-plot-svg-pdf",
+      "kicad-raster-copper"
+    ],
+    "componentIds": [],
+    "glossaryTerms": ["KiCad", "Gerbers", "Custom PCB", "Isolation routing"]
+  },
+  {
+    "slug": "laser-pcb",
+    "title": "Making PCBs with a Laser Engraver",
+    "summary": "Workflow for producing single- and double-sided keyboard PCBs at home using a diode/CO₂ laser. Covers KiCad export, isolation toolpaths, copper preparation, alignment, and post-processing.",
+    "tags": ["laser", "pcb", "diy", "isolation", "kicad", "flatcam"],
+    "stepIds": [
+      "kicad-plot-svg-pdf",
+      "kicad-raster-copper",
+      "laser-pcb-prep-copper",
+      "laser-pcb-isolation-toolpath",
+      "laser-pcb-double-sided-alignment",
+      "laser-pcb-post-process"
+    ],
+    "componentIds": [],
+    "glossaryTerms": ["Isolation routing", "FlatCAM", "pcb2gcode", "Custom PCB", "KiCad", "Gerbers"]
+  },
+  {
+    "slug": "flashing-firmware",
+    "title": "Flashing Firmware",
+    "summary": "Compile and flash QMK, Vial, ZMK, or KMK firmware onto your controller. Includes bootloader entry, build environment setup, and per-firmware quirks.",
+    "tags": ["firmware", "flashing", "qmk", "zmk", "vial", "kmk"],
+    "stepIds": ["qmk-setup", "qmk-configure", "qmk-flash", "vial-setup", "zmk-setup", "kmk-setup"],
+    "componentIds": [],
+    "glossaryTerms": [
+      "QMK (Quantum Mechanical Keyboard)",
+      "Vial",
+      "ZMK",
+      "KMK",
+      "Pro Micro",
+      "nice!nano",
+      "RP2040"
+    ]
+  },
+  {
+    "slug": "soldering-basics",
+    "title": "Soldering Basics & Inspection",
+    "summary": "ESD safety, solder joint quality, visual inspection for cold joints and bridges, and rework using flux and solder wick.",
+    "tags": ["soldering", "esd", "inspection", "rework"],
+    "stepIds": ["esd-precautions", "inspect-solder-joints"],
+    "componentIds": [],
+    "glossaryTerms": ["ESD (Electrostatic Discharge)", "Diode", "Hot-swap sockets"]
+  },
+  {
+    "slug": "troubleshooting",
+    "title": "Troubleshooting Dead Keys & Halves",
+    "summary": "Continuity testing, walking traces, diagnosing dead rows/columns, and fixing broken traces with jumper wires.",
+    "tags": ["troubleshooting", "continuity", "matrix", "repair"],
+    "stepIds": ["continuity-test-matrix", "troubleshoot-dead-keys"],
+    "componentIds": [],
+    "glossaryTerms": ["Diode", "TRRS", "Split keyboard"]
+  }
+]

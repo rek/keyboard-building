@@ -13,10 +13,12 @@ import {
   Palette,
   BookOpen,
   Wrench,
+  Layers,
 } from 'lucide-react'
 import { useCurrency, CURRENCY_CONFIG, type Currency } from '../contexts/CurrencyContext'
 import { useAppSettings } from '../contexts/AppSettingsContext'
 import { THEMES, type Theme } from '../themes'
+import SearchBar from './SearchBar'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -69,6 +71,9 @@ export default function Header() {
             [SPLIT_KB_GUIDE]
           </Link>
         </h1>
+        <div className="ml-auto flex items-center gap-2">
+          <SearchBar />
+        </div>
       </header>
 
       {/* Backdrop */}
@@ -167,6 +172,23 @@ export default function Header() {
           >
             <Network size={20} />
             <span className="font-semibold tracking-wide text-sm">COMPONENTS</span>
+          </Link>
+
+          <Link
+            to="/topics"
+            onClick={() => setIsOpen(false)}
+            className="nav-link flex items-center gap-3 p-3 transition-all mb-2 border-2 border-transparent"
+            activeProps={{
+              className: 'flex items-center gap-3 p-3 transition-all mb-2 border-2',
+              style: {
+                borderColor: 'var(--color-accent-orange)',
+                background: 'var(--color-accent-orange)',
+                color: 'white',
+              },
+            }}
+          >
+            <Layers size={20} />
+            <span className="font-semibold tracking-wide text-sm">TOPICS</span>
           </Link>
 
           <Link

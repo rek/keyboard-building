@@ -196,14 +196,18 @@ describe('isStepRelevant', () => {
     expect(result).toHaveLength(0)
   })
 
-  it('BUG: feature requirement of false is not enforced — step shows even when feature is enabled', () => {
+  it('hides step when feature requirement is false and feature is enabled', () => {
     // A requirement of { features: { hotswap: false } } means "only show if hotswap is NOT enabled".
-    // The current code skips false-valued requirements (if (required && ...)), so the step
-    // is incorrectly shown even when hotswap IS enabled.
     const choices: UserChoices = { ...base, features: { ...base.features, hotswap: true } }
     const step = makeStep({ requirements: { features: { hotswap: false } } })
     const result = getRelevantSteps(choices, [makePhase([step])])
-    // BUG: this should be 0 (step should be hidden) but returns 1
+    expect(result).toHaveLength(0)
+  })
+
+  it('shows step when feature requirement is false and feature is disabled', () => {
+    // base.features.hotswap is false → requirement satisfied
+    const step = makeStep({ requirements: { features: { hotswap: false } } })
+    const result = getRelevantSteps(base, [makePhase([step])])
     expect(result[0].steps).toHaveLength(1)
   })
 
@@ -387,14 +391,10 @@ describe('getBuildHash', () => {
     expect(a).not.toBe(b)
   })
 
-  it('BUG: hash does not change when switchType changes — progress will not reset', () => {
-    // switchType is missing from getBuildHash's relevantChoices object.
-    // Changing mx → choc-v1 changes which assembly steps are shown (isStepRelevant uses switchType),
-    // but the hash stays the same, so stored progress is incorrectly preserved.
+  it('returns a different hash when switchType changes', () => {
     const a = getBuildHash({ ...base, switchType: 'mx' })
     const b = getBuildHash({ ...base, switchType: 'choc-v1' })
-    // BUG: these should differ but they are equal
-    expect(a).toBe(b)
+    expect(a).not.toBe(b)
   })
 })
 

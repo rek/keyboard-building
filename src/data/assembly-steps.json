@@ -137,9 +137,345 @@
       ]
     },
     {
+      "id": "pcb-design-kicad",
+      "title": "PCB Design (KiCad → Fab or Laser)",
+      "order": 2,
+      "description": "Design the PCB in KiCad and export the right files for your fabrication route — JLCPCB Gerbers, laser-isolation SVGs, or raster copper images.",
+      "icon": "cpu",
+      "estimatedTime": "4-20 hours (first time)",
+      "steps": [
+        {
+          "id": "kicad-project-setup",
+          "title": "Set up the KiCad project",
+          "description": "Install KiCad 8+, install keyboard footprint libraries (ai03 MX, marbastlib for Choc), and create the project skeleton.",
+          "content": "KiCad is the standard tool for keyboard PCB design. Spend the time to set it up properly once and reuse the same footprint libraries across every future board.\n\n**Install KiCad:**\n1. Download KiCad 8 or newer from https://www.kicad.org/download/. Linux: prefer the official PPA (`sudo add-apt-repository ppa:kicad/kicad-8.0-releases`) over distro packages\n2. On first launch, accept the default global symbol/footprint paths\n3. Verify by running `kicad --version` from a terminal\n\n**Install keyboard footprint libraries:**\nKiCad ships with general-purpose libraries but no keyboard-specific footprints. The two libraries you almost certainly need are:\n\n- **ai03 MX library** — Cherry MX and clones, hot-swap variants. https://github.com/ai03-2725/MX_Alps_Hybrid\n- **marbastlib** — Kailh Choc v1 / v2, low-profile footprints. https://github.com/ebastler/marbastlib\n\nClone both into a libraries directory you control:\n```\nmkdir -p ~/kicad-libs && cd ~/kicad-libs\ngit clone https://github.com/ai03-2725/MX_Alps_Hybrid.git\ngit clone https://github.com/ebastler/marbastlib.git\n```\n\nIn KiCad: **Preferences → Manage Symbol Libraries → Project Specific Libraries → +** and add the `.kicad_sym` files. Repeat in **Manage Footprint Libraries** for the `.pretty` directories.\n\n**Create the project:**\n1. **File → New → Project** — pick a directory and a name (e.g. `mysplit-v1`). KiCad creates a folder with `.kicad_pro`, `.kicad_sch`, `.kicad_pcb` files\n2. Initialise git in that folder (`git init && git add . && git commit -m \"Initial project\"`) — every revision of a PCB design should be tracked, especially before sending Gerbers to a fab\n3. Open the schematic editor (the leftmost icon)\n\n**Decide MX vs Choc before drawing anything:**\nThe footprint dictates the physical pad layout, switch spacing, and case keep-out areas. Switching footprint libraries mid-design forces you to re-place every switch.\n- **MX (19.05mm × 19.05mm grid)** — standard mechanical, most keycap options, taller\n- **Choc v1 (18mm × 17mm grid)** — low-profile, shorter, less keycap variety\n- **Choc v2** — a hybrid; uses MX-like keycap stems with low-profile housings\n\nWrite your decision into the project README so future-you remembers.",
+          "order": 1,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "tips": [
+            "Pin the project libraries to a fixed git commit — silent footprint updates upstream can break clearances on a board you already sent to fab",
+            "KiCad project paths are stored relative to the .kicad_pro file when you use ${KIPRJMOD} — use that prefix so the project is portable across machines"
+          ],
+          "estimatedTime": "30-60 minutes",
+          "requiredTools": [
+            "Computer with KiCad 8+ installed",
+            "Git",
+            "Internet (to clone libraries)"
+          ],
+          "completionCriteria": [
+            "KiCad opens the project from a fresh terminal session",
+            "Footprint browser shows MX and Choc footprints under your custom libraries",
+            "Project directory is under git version control"
+          ]
+        },
+        {
+          "id": "kicad-schematic",
+          "title": "Draw the schematic (matrix + controller)",
+          "description": "Place switch symbols, one diode per key, the controller footprint, TRRS jack, reset button, and net the rows and columns.",
+          "content": "The schematic captures the electrical relationships before any physical layout decisions. Get it right here and the layout becomes mechanical work.\n\n**Matrix wiring — the core idea:**\nA keyboard matrix is rows × columns of switches with a diode at each intersection. The controller scans by driving one row line at a time and reading which column lines are pulled low. The diode prevents current from flowing backward and creating \"ghost\" key presses when three or more keys are pressed simultaneously.\n\n**Diode direction matters and must match the firmware:**\n- **`COL2ROW`** (most QMK builds) — diode anode on the column side, cathode (stripe) on the row side\n- **`ROW2COL`** — opposite\n\nPick one before placing any diodes. The QMK config (`config.h`: `#define DIODE_DIRECTION COL2ROW`) and the schematic must agree, or every key will read as the wrong key (or nothing).\n\n**Place per-switch units:**\nFor each physical key:\n1. Place an `SW_Push` symbol (or the keyboard-specific switch symbol if your library provides one)\n2. Place a `D` diode adjacent to it\n3. Wire one switch terminal to the diode anode, the other terminal to a column net (`Col0`, `Col1`, ...)\n4. Wire the diode cathode to a row net (`Row0`, `Row1`, ...)\n\nUse global labels named `Row0`...`RowN` and `Col0`...`ColN` so you do not need to draw long wires across the schematic. Hierarchical sheets are useful once you exceed ~30 keys.\n\n**Controller block:**\nPlace your controller symbol (Pro Micro, Elite-C, nice!nano, RP2040). Wire each row net and each column net to a GPIO pin. Note the assignment in a comment — you will need this exact mapping in the QMK matrix definition.\n- VCC → 5V or 3.3V depending on controller\n- GND → matrix common ground\n- Reset pin → through a tactile switch to GND, with a 100nF cap from RST to GND for noise rejection\n\n**TRRS jack (wired splits):**\n4 contacts — `Tip`, `Ring1`, `Ring2`, `Sleeve`. Typical wiring for split halves:\n- Tip → Data (D+ for serial, SCL for I2C)\n- Ring1 → second data line (D- or SDA)\n- Ring2 → VCC (5V from master half)\n- Sleeve → GND\n\nAdd two ESD protection diodes (e.g. PESD3V3L4UF) on the data lines and a 10kΩ pull-up on each — TRRS plugs short pins as they are inserted, which can latch up the controller.\n\n**Optional features (only if your build includes them):**\n- **RGB LEDs** — daisy-chain WS2812B/SK6812. One data line from a free GPIO, VCC = 5V, GND. Add a 470Ω resistor in series with the data line and a 1000μF cap across VCC/GND near the first LED\n- **OLED** — 4 pins (VCC, GND, SCL, SDA). Wire to the controller I2C pins. The display itself is socketed on the PCB later\n- **Encoder** — 5 pins (A, B, common, switch, switch-common). A and B go to two GPIOs, common to GND, switch to a third GPIO with the switch-common to GND\n\n**Annotate and run ERC:**\n1. **Tools → Annotate Schematic** — assigns reference designators (D1, D2, SW1, SW2, ...)\n2. **Inspect → Electrical Rules Checker** — must pass with zero errors. Common issues: unconnected pins (add `no-connect` flags on intentionally unused MCU pins), driver conflicts (two outputs on one net)",
+          "order": 2,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "2-6 hours (depends on key count)",
+          "requiredTools": ["KiCad schematic editor", "Datasheet for your chosen controller"],
+          "warnings": [
+            "If diode orientation in the schematic does not match the firmware's DIODE_DIRECTION, the matrix will not work correctly even if every solder joint is perfect"
+          ],
+          "tips": [
+            "Save the controller pin → row/column mapping as a comment block in the schematic. You will paste it into the QMK matrix definition later",
+            "Number rows and columns in the same order you scan them physically — left-to-right, top-to-bottom — to make debugging easier"
+          ],
+          "completionCriteria": [
+            "Every switch has a diode in the correct orientation",
+            "Every row and column has a global label connecting it to a controller GPIO",
+            "ERC passes with zero errors and only intentional warnings"
+          ]
+        },
+        {
+          "id": "kicad-footprint-assoc",
+          "title": "Assign footprints",
+          "description": "Map each schematic symbol to a physical footprint (PCB land pattern). The schematic is electrical; the footprint is geometry.",
+          "content": "Footprint assignment is where the schematic becomes a physical board. KiCad does not infer footprints from symbols — every part needs an explicit assignment.\n\n**Open the assignment tool:**\n**Tools → Assign Footprints** in the schematic editor. The dialog lists every component on the left and available footprints in the middle/right.\n\n**Switches — the most consequential choice:**\nPick consciously between four common variants:\n- **MX, soldered, 3-pin** — `MX_Alps_Hybrid:MXOnly-1U-NoLED` — cheapest, only 3 pads (no PCB-mount stabilising posts)\n- **MX, soldered, 5-pin** — `MX_Alps_Hybrid:MXOnly-1U` — adds two plastic-post holes for stability\n- **MX, hot-swap** — `MX_Alps_Hybrid:MX-Hotswap-1U` — Kailh socket on the back side, switch inserts from the front. Required if you want tool-less switch swapping\n- **Choc v1 hot-swap** — `marbastlib-choc:CHOC_V1_1U_HOTSWAP` — equivalent for low-profile builds\n\nMixing soldered and hot-swap on the same board is fine and sometimes useful (hot-swap for the alphas, soldered for thumb keys to save space).\n\n**Diodes — through-hole vs SMD:**\n- **Through-hole** — `Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal` — easy to solder, takes more board space, ugly under low-profile keycaps\n- **SMD SOD-123** — `Diode_SMD:D_SOD-123` — compact, tucks under switch, harder to solder by hand but doable with flux + tweezers\n\nFor a first PCB, through-hole is more forgiving. Once you have soldered SMD on something else, switch.\n\n**Controller footprint — choose by mounting style:**\n- **Pro Micro / Elite-C edge-mounted** — board has a rectangular cutout, controller solders in flush. Saves vertical space but the pinout is fixed\n- **Pro Micro on headers** — sockets the controller, lets you replace if it dies. Standard for first builds\n- **Direct-solder Pro Micro footprint on top of the PCB** — cheapest, but the USB connector then sits proud of the board\n\nThe socketed-on-headers footprint is usually `Pro_Micro:Pro_Micro_Sockets`. Make sure the footprint matches your physical headers (round Mill-Max sockets vs square pin headers) — pad spacing differs.\n\n**TRRS jack — confirm part number:**\nThe most common is `Connector_Audio:Jack_3.5mm_PJ320A`. Cheap clones from AliExpress sometimes use a slightly different footprint — check pad spacing against the physical part with calipers before ordering.\n\n**Run the netlist update:**\nAfter assigning footprints, open the PCB editor (**Tools → Switch to PCB Editor** or open the `.kicad_pcb` file) and **Tools → Update PCB from Schematic**. KiCad imports every part as a footprint into the layout area. They start in a pile in one corner — placement comes next.",
+          "order": 3,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "20-40 minutes",
+          "tips": [
+            "The footprint browser (Footprint Editor → File → Browse Library) shows the actual pad geometry — preview before assigning",
+            "When the same diode appears 60 times, assign once and use the right-pane \"apply to all components with same value\" — saves 59 clicks"
+          ],
+          "completionCriteria": [
+            "Every component in the schematic has a footprint assigned (no warnings about missing footprints)",
+            "Switch and diode footprints match the parts you actually have in hand"
+          ]
+        },
+        {
+          "id": "kicad-layout",
+          "title": "Lay out the PCB",
+          "description": "Place switches per the keyboard layout, route copper, add silkscreen, define the board edge.",
+          "content": "Layout is the longest single step in a custom PCB project. The goal is a board where every component sits where it must, no traces cross, and the edge cuts match what your case expects.\n\n**Start from a layout file, not from scratch:**\nMost split keyboards begin life as a Keyboard Layout Editor (http://www.keyboard-layout-editor.com) JSON file or an Ergogen YAML. Both can be converted to a KiCad PCB skeleton:\n- **KLE → KiCad** — use https://github.com/adamws/keyboard-tools or `kbplacer` (https://github.com/adamws/kbplacer) to read a KLE JSON and place every switch footprint at the correct coordinates with one click\n- **Ergogen** — generates a `.kicad_pcb` with switches and outlines already placed; you import diodes/controller manually after\n\nIf you place switches by hand, work in 1U increments (19.05mm MX, 18mm Choc) and use the **Edit → Move Exactly** dialog with absolute coordinates. Eyeballing leaves keycap collisions you only discover after etching.\n\n**Group placement:**\nFor each switch, place its diode within ~5mm and on the same layer. A common pattern for through-hole diodes:\n- Diode body sits between two adjacent switches on the row axis\n- Cathode pad is closer to the row trace, anode pad is closer to the column trace\n\nFor SMD diodes, tuck them between the two PCB-mount post holes on the back side of each switch — invisible from the top, no extra board area.\n\n**Routing — single-layer vs two-layer:**\nIf your fabrication target is a fab house (JLCPCB), routing on two layers (rows on F.Cu, columns on B.Cu, vias to switch) is straightforward.\n\nIf you are etching at home with a laser, you almost certainly want **single-layer with jumpers**:\n- Route everything you can on one copper layer (usually B.Cu)\n- Where a row and column would cross, leave a gap and add a wire jumper or a 0Ω resistor on top\n- Resist the urge to do double-sided home etching as a first project — alignment is the failure mode that wastes the most boards\n\n**Trace width and clearance:**\n- **Fab house (JLCPCB-style):** trace width 0.25mm, clearance 0.2mm is well within tolerance\n- **Laser isolation:** trace width 0.4mm minimum, clearance 0.4mm minimum. The laser kerf and the resist edge raggedness eat ~0.15mm on each side\n\nSet defaults in **File → Board Setup → Design Rules → Net Classes** before routing.\n\n**Edge cuts — define the board outline:**\nUse the **Edge.Cuts** layer. Common shapes:\n- Rectangular for plate-mount cases\n- Following the key layout outline for plateless / sandwich cases\n- Rounded corners (1-3mm fillet) — sharper corners chip during V-cutting at the fab\n\nAdd at least 4 mounting holes (M2 or M3) at the corners and standoff positions defined by your case. KiCad: place a `MountingHole` footprint or draw a circle on Edge.Cuts.\n\n**Silkscreen — version, name, orientation markers:**\n- Board name and revision (e.g. `MYSPLIT v1.2`) on F.Silkscreen — front-facing and obvious\n- A small triangle or dot indicating diode orientation near the first diode footprint — pays for itself the first time you assemble in low light\n- A \"L\" / \"R\" mark indicating which half of the split this PCB is\n- USB / TRRS connector labels\n\n**Mirroring for the second half:**\nMost split keyboards use the same PCB for both halves, with the controller socketed on the underside of one and the topside of the other. Verify your design supports this before sending to fab — it cuts your PCB cost in half.",
+          "order": 4,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "3-12 hours (first time)",
+          "requiredTools": [
+            "KiCad PCB editor",
+            "Layout source (KLE JSON or Ergogen YAML)",
+            "Calipers (for mechanical sanity checking)"
+          ],
+          "warnings": [
+            "Two-layer home etching is significantly harder than single-layer with jumpers. If this is your first PCB, do single-layer.",
+            "V-cut and routed corners on a fab board chip if the radius is below 0.5mm. Round corners explicitly."
+          ],
+          "tips": [
+            "Place the controller, TRRS, and reset button first. They have fixed mechanical positions; switches have flexibility",
+            "Use the 3D viewer (Alt+3) regularly to check for component collisions and case fit"
+          ],
+          "completionCriteria": [
+            "Every net is routed (no unrouted ratlines visible)",
+            "No clearance violations at the chosen design rules",
+            "3D view matches the case envelope",
+            "Edge.Cuts forms a single closed polygon"
+          ]
+        },
+        {
+          "id": "kicad-drc",
+          "title": "Run DRC and ERC",
+          "description": "Run the Design Rules Check and Electrical Rules Check before exporting any fabrication files.",
+          "content": "DRC and ERC are your last automated catch before money or copper-clad is on the line. Treat any violation as a board you would have to scrap.\n\n**Set the rules to match your fabrication target:**\nOpen **File → Board Setup → Design Rules → Constraints** and **→ Net Classes**.\n\n**For a fab house (JLCPCB / PCBWay defaults):**\n- Minimum trace width: 0.15mm (you should be using ≥0.25mm)\n- Minimum clearance: 0.15mm (use ≥0.2mm)\n- Minimum drill size: 0.3mm\n- Minimum annular ring: 0.13mm\n\n**For laser isolation routing (home):**\n- Minimum trace width: 0.4mm\n- Minimum clearance: 0.4mm (this is the critical one — the laser cannot reliably cut a thin gap)\n- Drill diameters: round to whatever bit sizes you actually have (commonly 0.8mm and 1.0mm)\n\n**Run DRC:**\n**Inspect → Design Rules Checker → Run DRC**. Common findings:\n- **Clearance violation** — a trace or pad is too close to another. Re-route or move\n- **Unconnected items** — a net was supposed to be routed but is not. Check the ratsnest (the white \"rubber band\" lines)\n- **Hole-to-hole clearance** — two through-holes are touching. Most common with closely-packed diode pads\n- **Footprint courtyard overlap** — two parts physically overlap. Means the case will not assemble\n\nFix every error. Warnings — read each one and decide; do not blanket-ignore.\n\n**Run ERC again on the schematic:**\nLayout edits sometimes change net assignments (e.g. you re-routed a wire and inadvertently broke a net). Re-running ERC catches this.\n\n**Run the connectivity check:**\n**Inspect → Show Board Statistics → Connectivity** — confirms every net in the netlist has at least one segment of copper. A net with zero copper is silently broken.\n\n**Visual sanity passes:**\n- Toggle each layer on/off (`Alt+number`) — confirm no surprises (a stray polygon on F.Cu, an annotation on the wrong layer)\n- 3D view — rotate and look for components clipping through the case outline\n- Front and back render — confirm silkscreen is on the right side and not mirrored\n\n**Check fabrication-house specific rules:**\nIf you are sending to JLCPCB, run their online \"DRC\" check after uploading the Gerbers — they catch things KiCad does not (panelisation tabs, V-cut clearance, fiducial placement on assembled boards). Do this BEFORE paying.",
+          "order": 5,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "15-30 minutes",
+          "completionCriteria": [
+            "DRC passes with zero errors",
+            "ERC passes with zero errors",
+            "Every net is fully connected (zero unrouted)",
+            "Visual scan of each layer shows nothing out of place"
+          ]
+        },
+        {
+          "id": "kicad-gerber-export",
+          "title": "Export Gerbers for a fab house",
+          "description": "Generate the standard set of Gerber files (copper, mask, silkscreen, edge) for JLCPCB / PCBWay / OSHPark.",
+          "content": "Gerbers are the de facto industry standard for PCB fabrication. Every fab house accepts them; the only variation is which subset of layers to include and whether to ZIP them.\n\n**Open the plot dialog:**\n**File → Plot** (in the PCB editor).\n\n**Layers to enable for a typical 2-layer keyboard PCB:**\n- `F.Cu` — front copper\n- `B.Cu` — back copper\n- `F.Mask` — front soldermask (where copper is exposed)\n- `B.Mask` — back soldermask\n- `F.Silkscreen` — front silkscreen text/graphics\n- `B.Silkscreen` — back silkscreen\n- `F.Paste` — front solder paste stencil (only if you are getting an SMT stencil)\n- `B.Paste` — back solder paste stencil\n- `Edge.Cuts` — board outline\n\nDo not enable courtyard, fabrication, or comment layers — fab houses ignore them at best, get confused at worst.\n\n**Plot format settings:**\n- **Plot format:** Gerber (not PostScript, PDF, etc.)\n- **Output directory:** create a `gerbers/` subfolder in your project\n- **Use Protel filename extensions:** ON for OSHPark, OFF (use `.gbr`) for JLCPCB and PCBWay. Check the fab house docs\n- **Generate Gerber job file:** ON (the `.gbrjob` describes the layer stack-up)\n- **Subtract soldermask from silkscreen:** ON (prevents silk under exposed pads)\n- **Use extended X2 format:** ON for modern fabs (JLCPCB, PCBWay), OFF only for legacy fabs that explicitly do not support X2\n\nClick **Plot**.\n\n**Generate drill files in the same dialog:**\nClick **Generate Drill Files** at the bottom of the Plot dialog. See the next step for drill-specific settings.\n\n**ZIP for upload:**\nMost fabs require a single ZIP containing all Gerbers + drill files at the top level (no subdirectory). From a terminal:\n```\ncd gerbers\nzip mysplit-v1-gerbers.zip *.gbr *.drl *.gbrjob\n```\n\n**Verify before paying:**\nUpload the ZIP to the fab house portal — they all show a render of what they will manufacture. Check:\n- Board outline matches your edge cuts\n- Soldermask exposes the right pads\n- Silkscreen is on the side you expect and is readable\n- Drill holes appear in every position you expect\n- Layer count matches what you ordered (a 2-layer order with 4 copper layer files will be flagged)\n\nIf the render looks wrong, it will manufacture wrong. Stop, fix in KiCad, re-export.",
+          "order": 6,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "15-30 minutes",
+          "requiredTools": [
+            "KiCad PCB editor",
+            "Account at JLCPCB / PCBWay / OSHPark / preferred fab"
+          ],
+          "tips": [
+            "Save the exact plot settings as a project preset — every revision should use identical settings to avoid surprise differences",
+            "Diff the new Gerber ZIP against the previous revision before ordering. https://gerber-viewer.ucamco.com renders side by side"
+          ],
+          "completionCriteria": [
+            "gerbers/ directory contains the expected layer files plus a .drl file",
+            "Fab house preview matches your KiCad 3D render",
+            "No layer count or layer naming warnings from the fab portal"
+          ]
+        },
+        {
+          "id": "kicad-drill-export",
+          "title": "Export drill files",
+          "description": "Generate Excellon drill files (.drl) — required by fab houses, used by FlatCAM/pcb2gcode for through-hole drilling.",
+          "content": "Excellon is the standard format for drill data. KiCad generates it from the same Plot dialog as Gerbers.\n\n**Open the dialog:**\n**File → Fabrication Outputs → Drill Files** (or click **Generate Drill Files** at the bottom of the Plot dialog).\n\n**Settings for a fab house:**\n- **Drill file format:** Excellon\n- **Mirror Y axis:** OFF\n- **Minimal header:** OFF (the fab wants the full header)\n- **PTH and NPTH in single file:** OFF — produce two files. PTH = plated through-holes (vias, switch pins). NPTH = non-plated (mounting holes for screws)\n- **Oval holes drill mode:** Use route command (G00)\n- **Map file format:** PDF (a human-readable map of every drill position, useful for the fab to sanity-check)\n- **Drill origin:** Absolute (matches the Gerber origin)\n- **Drill units:** Millimeters\n- **Zeros format:** Decimal format (most modern Excellon parsers handle this; some older fab tools want \"Suppress leading zeros\")\n\nClick **Generate Drill File**.\n\nYou should see at least:\n- `mysplit-PTH.drl` — plated holes\n- `mysplit-NPTH.drl` — non-plated holes (mounting holes)\n- `mysplit-drl_map.pdf` — the visual drill map\n\n**Settings for FlatCAM / pcb2gcode (laser or CNC):**\nSame as above with one change: **Zeros format → Suppress leading zeros**. Older CAM toolchains crash on the decimal form.\n\nFor CNC milling, also produce a separate Excellon for each drill diameter — pcb2gcode can then assign each tool to the right drill size automatically.\n\n**Verify the drill map:**\nOpen the PDF map. Every hole should:\n- Appear at a position you expect (no orphan holes from a deleted footprint)\n- Have a sensible drill diameter (no 0.1mm holes — that is a configuration error)\n- Be labelled with a tool number that matches the count in the .drl file\n\nIf the map shows holes in the wrong place, re-check the Plot dialog drill origin setting. Mismatched origins between Gerber and Excellon mean the fab drills holes in the wrong locations.",
+          "order": 7,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "5-10 minutes",
+          "completionCriteria": [
+            "PTH and NPTH .drl files exist",
+            "Drill map PDF shows holes only where you expect them",
+            "No drill diameter is suspiciously small (<0.3mm) or large (>3mm)"
+          ]
+        },
+        {
+          "id": "kicad-plot-svg-pdf",
+          "title": "Plot SVG / PDF for laser isolation",
+          "description": "Export each copper layer as an SVG or PDF — the simplest input for many laser PCB workflows.",
+          "content": "For laser etching at home, the lowest-friction path is a vector image of each copper layer that you load directly into LightBurn or Inkscape. SVG is the better choice — clean vectors, scales without aliasing, easy to inspect.\n\n**Open the plot dialog:**\n**File → Plot** in the PCB editor.\n\n**Settings for a single-layer SVG (back copper, looking through the board):**\n- **Plot format:** SVG\n- **Output directory:** `laser/` subfolder\n- **Layers:** select **only** `B.Cu`. Uncheck everything else\n- **Plot border and title block:** OFF\n- **Plot footprint values:** OFF\n- **Plot footprint references:** OFF (silk and references should not appear in copper output)\n- **Force plotting of invisible values/references:** OFF\n- **Mirrored plot:** **ON** — when you look at the back layer through the top of the board, it appears mirrored. Mirror at export so the laser etches the correct side\n- **Negative plot:** OFF (we want copper-to-keep as black, copper-to-remove as white. Inverting comes later if your laser software needs the opposite)\n- **Plot reference designators:** OFF\n- **Sketch pads on fab layers:** OFF\n- **Use Aux origin:** OFF (use the page origin)\n\nClick **Plot**.\n\n**Export the front layer:**\nSame dialog, deselect `B.Cu`, select `F.Cu`, **Mirrored plot: OFF** (front layer is already viewed from the front).\n\n**Export an alignment / drill reference layer:**\nFor double-sided boards, you need registration marks the laser can find on both sides. Add them to your KiCad design as small (1mm) drill holes at three corners, then plot the **Edge.Cuts + drill positions** to a third SVG. This becomes your alignment template.\n\nIn KiCad: there is no direct \"drill positions only\" plot. Two options:\n- Open the drill PDF map and screen-grab the alignment marks\n- Add three named footprints (`AlignMark_TL`, `AlignMark_TR`, `AlignMark_BR`) on the F.Silkscreen layer; plot F.Silkscreen to SVG\n\n**Verify in Inkscape before lasering:**\n1. Open each SVG\n2. Confirm the dimensions match your board outline (use the ruler)\n3. Confirm no extraneous text/marks slipped through\n4. Confirm the back-layer SVG is mirrored relative to the front (you should see \"REV 1.2\" reading backwards on B.Cu)\n5. Save as a copy with a clear filename: `mysplit-v1-bcu-mirrored.svg`\n\n**PDF as an alternative:**\nIf your laser software prefers PDF:\n- Same plot dialog, **Plot format: PDF**\n- Same layer/mirror settings\n- One PDF per layer\n\nPDF is harder to inspect for unexpected content; prefer SVG when possible.",
+          "order": 8,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "15-30 minutes",
+          "requiredTools": ["KiCad", "Inkscape (for verification and any post-processing)"],
+          "warnings": [
+            "Forgetting to mirror the B.Cu plot is the most common laser-PCB mistake. Etch the wrong-handed board and the controller will sit on the wrong side."
+          ],
+          "tips": [
+            "Add a small visible \"F\" or \"B\" text in copper near the edge of each layer in KiCad. After exporting, you can confirm at a glance which file is which side.",
+            "Save the SVG export settings as a KiCad project preset — re-doing them every revision is where mistakes creep in"
+          ],
+          "completionCriteria": [
+            "F.Cu and B.Cu SVGs exist; B.Cu is mirrored",
+            "Visual inspection in Inkscape confirms correct content and dimensions",
+            "Alignment marks are visible on both files at identical absolute positions"
+          ]
+        },
+        {
+          "id": "kicad-raster-copper",
+          "title": "Export copper as a raster image (PNG)",
+          "description": "For laser engravers driven by a raster image (LightBurn, LaserGRBL): export each copper layer as a high-DPI PNG.",
+          "content": "Some laser workflows want a raster bitmap rather than vectors — typically when you are using laser-printer toner transfer or when your laser controller only accepts images. The reliable path is **KiCad → SVG → Inkscape → high-DPI PNG**.\n\n**Step 1 — Plot to SVG (per the previous step):**\nUse the same SVG export procedure. The vector source preserves all detail; rasterising is one-shot.\n\n**Step 2 — Open in Inkscape and prepare:**\n1. **File → Open** the SVG\n2. **Edit → Select All** (`Ctrl+A`)\n3. **Object → Object Properties** — confirm dimensions match the physical board\n4. **File → Document Properties → Page → Resize page to drawing or selection** — crops the page to just the artwork\n5. (Optional) **Object → Fill and Stroke** — set fill to pure black, stroke to none. This guarantees the raster is binary and the laser does not waste passes on grey\n\n**Step 3 — Export PNG at high DPI:**\n1. **File → Export** (`Ctrl+Shift+E`)\n2. **Export area:** Page\n3. **Image size — DPI:** **1000 DPI** for diode lasers (50W and below). **2000+ DPI** for fibre or CO₂ lasers with smaller spot sizes\n4. **Image size — Width/Height** — confirm these match the physical board dimensions in pixels (e.g. 100mm board × 1000 DPI = ~3937 pixels wide)\n5. **Bit depth:** 1-bit (true black/white). Avoids any anti-aliasing\n6. **Filename:** include the layer and orientation: `mysplit-v1-bcu-mirrored-1000dpi.png`\n7. Click **Export**\n\n**Step 4 — Invert if your workflow needs it:**\nThe convention varies:\n- **Laser ablates the resist where the image is BLACK** (most LightBurn workflows) — keep copper as black\n- **Laser ablates the resist where the image is WHITE** (some LaserGRBL setups) — invert the image. In Inkscape: `Filters → Color → Invert`. Or in GIMP: `Colors → Invert`\n\nName the inverted file explicitly: `mysplit-v1-bcu-mirrored-INVERTED.png`. Do not assume next-week-you will remember which convention.\n\n**Step 5 — Drill mark layer:**\nExport the alignment / drill positions as a separate raster. The laser will burn small registration dots first, then you align the copper-clad to them before the main pass. Same DPI as the copper layer so the coordinates match.\n\n**Sanity checks before lasering:**\n- Open the PNG in an image viewer and zoom to 1:1. Trace edges should be sharp and uniform — no jagged stair-stepping (means DPI is too low) and no grey halos (means anti-aliasing slipped through)\n- Measure a known-width feature (e.g. a 1mm trace) using the image viewer ruler. Width in pixels ÷ DPI should equal the physical width in inches\n- Open in your laser software and preview — confirm the work area dimensions match the physical board",
+          "order": 9,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "15-30 minutes",
+          "requiredTools": [
+            "KiCad",
+            "Inkscape (or comparable vector → raster tool)",
+            "Image viewer with pixel measurement"
+          ],
+          "tips": [
+            "Diode lasers are noisy — features below 0.3mm get lost. Bump trace width to ≥0.5mm in KiCad before exporting if you have any 0.4mm traces",
+            "Export the PNG at the same physical scale as the laser will burn. Resizing in the laser software introduces interpolation artefacts"
+          ],
+          "completionCriteria": [
+            "PNG dimensions in pixels = board dimensions × DPI",
+            "Image is true 1-bit (no greys)",
+            "Filename clearly states layer, mirror state, and invert state"
+          ]
+        },
+        {
+          "id": "laser-pcb-prep-copper",
+          "title": "Prepare the copper-clad board",
+          "description": "Sand, clean, and apply the resist layer your laser will burn or ablate.",
+          "content": "The laser does not etch copper directly — it ablates a thin resist layer on top of the copper. Whatever the laser exposes will be eaten by the etchant in a later step. Resist preparation is where most home PCB attempts succeed or fail.\n\n**Source the copper-clad board:**\n- **FR4 + 1oz copper** — standard, ~35μm copper. Etches in 5-15 minutes\n- **FR4 + 2oz copper** — twice as thick, useful for higher-current builds. Doubles etch time\n- **Single-sided** vs **double-sided** — pick to match your design. Single-sided is significantly easier to align and etch\n- Cut to size with a hacksaw, scoring tool, or paper cutter (for thin material). Leave 5-10mm border around the design for handling\n\n**Surface prep — non-negotiable:**\nAny oxide, oil, or fingerprint under the resist will lift during etching, leaving pinholes in your traces.\n\n1. **Wet-sand** with 600-800 grit silicon carbide paper under running water. Sand until the entire surface is uniformly matte and pink-red. No mirror spots, no dark patches\n2. **Rinse** with clean water\n3. **Acetone wipe** with a lint-free cloth — removes any residual oils\n4. **Final rinse** with isopropyl alcohol (IPA) — leaves the surface ready for resist\n5. **Do not touch the copper with bare fingers** after this point. Hold the board by the edges only\n\n**Apply the resist — three common methods:**\n\n**Method 1 — Spray paint (easiest, most forgiving):**\n1. Use cheap matte black spray paint (e.g. Rust-Oleum 2X). Thin coats are critical\n2. Spray 3-4 light coats with 5-10 minutes between each, in a well-ventilated area or outdoors\n3. Dry overnight (24h is safer; the paint cures, not just dries)\n4. The laser will ablate the paint where the image is, exposing the copper. Etchant attacks only the exposed copper\n5. Best for diode lasers and for first-time laser PCB makers\n\n**Method 2 — Laser-printed toner transfer (no laser ablation, but worth knowing):**\nNot a laser-engraver method — uses a regular laser printer + iron. Skip if you are committed to laser ablation.\n\n**Method 3 — Photoresist + laser as UV source:**\n1. Apply pre-sensitised photoresist board (sold as such) or coat raw copper with liquid photoresist in a darkroom\n2. Use a UV laser (405nm or shorter) to expose the resist where the image is\n3. Develop in sodium carbonate solution\n4. Highest resolution but most equipment-dependent\n\n**Drying and storage:**\n- Allow the resist to fully cure before lasering. Spray paint that is touch-dry can still smudge under the laser head\n- Store unused coated boards in a sealed container away from light (especially for photoresist)\n\n**Pre-laser inspection:**\n- Hold the board to a strong light at a low angle\n- Look for thin spots, drips, dust, or fingerprints in the resist\n- Any defect here becomes a defect in the final board\n- Re-coat or sand and start over if in doubt — five minutes of sanding beats a wasted etch run",
+          "order": 10,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "30-45 minutes (plus drying time)",
+          "requiredTools": [
+            "Copper-clad FR4 board",
+            "Wet-or-dry sandpaper (600-800 grit)",
+            "Acetone",
+            "Isopropyl alcohol",
+            "Lint-free cloth",
+            "Resist material (matte black spray paint, photoresist, etc.)",
+            "Well-ventilated area or fume extraction"
+          ],
+          "warnings": [
+            "Spray paint and acetone fumes are flammable and toxic — work in a well-ventilated area away from ignition sources",
+            "Bare fingers transfer oils that cause etchant lift-off. Always handle by edges or wear nitrile gloves"
+          ],
+          "tips": [
+            "Cure spray paint at least 24 hours, ideally with mild heat (a heated cabinet at 40°C). Under-cured paint smears under the laser",
+            "Practice the laser settings on a piece of scrap-coated board first, every time you change batches of paint or board stock"
+          ],
+          "completionCriteria": [
+            "Surface is uniformly coated with no pinholes, drips, or dust visible at low-angle light",
+            "Resist is fully cured (touch test on a corner — no smudge, no fingerprint)",
+            "Board has not been touched on the coated face since cleaning"
+          ]
+        },
+        {
+          "id": "laser-pcb-isolation-toolpath",
+          "title": "Generate the isolation toolpath",
+          "description": "Use FlatCAM or pcb2gcode to convert the Gerber/SVG into the laser path that ablates resist around traces.",
+          "content": "Isolation routing removes the resist (and later, the copper) only around traces, leaving the rest of the copper plane intact. This is the dominant home-PCB technique because it avoids the chemistry, time, and waste of full-area etching.\n\n**FlatCAM workflow (recommended for first-timers):**\n\nFlatCAM is open-source CAM software that reads Gerbers and produces G-code or laser paths. Download from http://flatcam.org.\n\n**Step 1 — Load the Gerber:**\n1. **File → Open Gerber** → select `mysplit-v1-B_Cu.gbr` (or your back-copper Gerber)\n2. The board renders in the project view\n3. Confirm dimensions and orientation\n\n**Step 2 — Generate the isolation geometry:**\n1. Select the Gerber object in the Project tab\n2. **Selected → Isolation Routing**\n3. **Tool diameter:** set to your laser kerf — typically **0.1-0.2mm** for diode lasers. Measure your kerf on a scrap test piece if uncertain\n4. **Passes:** 2-4. More passes = wider isolation channel = more reliable separation but more laser time. Start with 2\n5. **Pass overlap:** 25-50%. Higher overlap = smoother edges\n6. **Combine passes:** ON\n7. **Generate Geometry**\n\n**Step 3 — Convert geometry to a laser job:**\n1. Select the new geometry object\n2. **Selected → CNC Job**\n3. **Tool dia:** same as isolation step\n4. **Travel Z** and **Cut Z:** for a laser, set both to 0 (the laser is a 2D operation; Z is irrelevant)\n5. **Feed rate:** start at 600 mm/min for a 5W diode laser, 1500 mm/min for 20W+. Tune on test pieces\n6. **Spindle speed:** the laser power. 100% for resist ablation on most diode lasers\n7. **Generate**\n\n**Step 4 — Export G-code:**\n1. Select the CNC Job object\n2. **Selected → Export G-Code**\n3. **Postprocessor:** GRBL_laser (most common for hobby lasers)\n4. Save as `mysplit-v1-bcu-iso.gcode`\n\n**pcb2gcode alternative (command-line):**\n```\npcb2gcode --back mysplit-v1-B_Cu.gbr \\\n  --back-output mysplit-v1-bcu.ngc \\\n  --offset 0.1 \\\n  --mill-diameters 0.2 \\\n  --mill-feed 600 \\\n  --metric \\\n  --postamble \"M5\\nG0 X0 Y0\\nM30\"\n```\n\nFaster for repeated runs once you settle on parameters; harder to inspect.\n\n**LightBurn alternative (raster-based):**\nIf you exported a high-DPI PNG instead of a Gerber:\n1. **File → Import** the PNG\n2. Set the image to **Threshold** mode (no greyscale)\n3. Select the image; create a new layer with **Mode: Fill**\n4. Speed: 600-1500 mm/min, Power: 100%\n5. Confirm the work envelope matches the board, click **Frame** to trace the outline before firing\n\n**Simulate before burning:**\nFlatCAM and LightBurn both have a path simulator. Watch the full job play through. Look for:\n- Travel moves crossing copper that should not be cut\n- Missed traces (a gap where there should be a path)\n- Spurious paths outside the board outline\n\nA single missed isolation pass leaves a copper bridge between traces — short circuit on first power-up.",
+          "order": 11,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "30-90 minutes (first time)",
+          "requiredTools": ["FlatCAM, pcb2gcode, or LightBurn", "Laser engraver"],
+          "warnings": [
+            "A laser kerf wider than the actual cut leaves bridges between traces. Calibrate kerf on a scrap test piece for every new batch of resist"
+          ],
+          "tips": [
+            "Save FlatCAM project files (`.flatcam_prj`) per board — re-tuning every revision wastes time",
+            "Run a 5×5mm test square at full power and feed before the real job. Confirms focus, kerf, and ablation completeness"
+          ],
+          "completionCriteria": [
+            "G-code or laser job loads in your laser software without errors",
+            "Path simulation shows isolation around every trace",
+            "Test cut on scrap material confirms full resist removal in the cut path"
+          ]
+        },
+        {
+          "id": "laser-pcb-double-sided-alignment",
+          "title": "Double-sided alignment",
+          "description": "Get the front and back copper layers aligned within the laser's tolerance.",
+          "content": "Double-sided alignment is the single hardest part of laser PCB making. Misalignment of 0.2mm or more turns vias into dead ends and shifts pads off their components. If this is your first board, **strongly consider redesigning to single-layer with jumper wires** — every hour you save in design pays for itself in successful etches.\n\n**The core problem:**\nYou laser one side of the board, flip it over, and need to laser the other side at exactly the right position relative to the first side. Drift comes from:\n- Movement when flipping\n- Slight rotation during re-mounting\n- Z-axis variation across the bed\n- Thermal expansion of the resist\n\n**The two reliable techniques:**\n\n**Technique 1 — Drilled registration holes (best for separate layers):**\n\n1. In KiCad, add **3 small (1.0mm) holes** on the Edge.Cuts layer at known positions. Place them outside the board outline if possible, otherwise in mounting hole positions. Use 3 (not 2) so orientation cannot be flipped\n2. Export the front and back copper SVGs/Gerbers as usual\n3. Print the front and back PNG/SVG at 1:1 on regular paper\n4. Tape the back-layer print face-up to a flat surface\n5. Tape the front-layer print face-down on top, aligned by the registration holes (use a backlight to see through the paper)\n6. If they line up on paper, your KiCad design is consistent. If not, the issue is in export (probably mirror direction)\n7. Now drill the 3 registration holes through the actual copper-clad board BEFORE coating with resist\n8. Build a jig: a flat baseboard with 3 locating pins (1.0mm brass rod or drill bit shanks) at the matching positions. The board drops onto the jig in exactly one orientation\n9. Laser side 1, lift, flip the board, drop onto the jig flipped. Laser side 2\n\n**Technique 2 — Book / fold-over (double-sided in one pass):**\n\nFor small boards (under ~50mm), you can laser both sides without unmounting:\n1. Tape a sheet of paper or thin cardboard to the laser bed as a sacrificial layer\n2. Place the coated copper-clad board on the bed; tape one edge firmly\n3. Laser the front (top) layer\n4. Without moving the laser bed coordinates, lift the board, fold it over along the taped edge like a book. The fold becomes a perfect axis of symmetry\n5. Re-tape the now-flipped board\n6. Laser the back layer using the SAME G-code file (the bed coordinates have not moved; the board has flipped, so the mirroring is automatic)\n7. Requires that your KiCad mirror settings are off for both sides (the physical fold does the mirroring)\n\n**Pre-laser alignment verification:**\nBefore firing the laser, use the laser at 1% power (visible, non-cutting) to \"trace\" the perimeter of the cut on the board. Hold a piece of white paper above to see where the beam is hitting. If the trace runs off the board edge or skips a registration mark, stop and re-mount.\n\n**After lasering — confirm with a backlight:**\nHold the etched board (before chemical etching) up to a strong light. The two copper patterns should align. Vias should appear as continuous holes from front to back, not crescents.\n\n**Failure mode handling:**\nIf alignment is off by less than the trace clearance (typically 0.4mm), the board may still work but with reduced via reliability. If off by more, sand off both sides, re-coat, and redo. Do not try to \"fix\" misaligned isolation passes by lasering more on top — you will only widen the original cuts.",
+          "order": 12,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "30-60 minutes (or skip entirely by going single-layer)",
+          "requiredTools": [
+            "Drill press or hand drill with 1.0mm bit",
+            "Backlight or window for visual alignment check",
+            "Tape (low-residue painter tape)",
+            "Optional: jig with locating pins"
+          ],
+          "warnings": [
+            "Single-layer with jumpers is dramatically more reliable than double-sided home etching. Reconsider before committing to double-sided"
+          ],
+          "tips": [
+            "For boards larger than ~80mm, the fold-over technique fails because the fold axis introduces slight rotation. Use the registration-hole jig instead",
+            "Mark which side is \"front\" with a tiny scratch on the board edge — once both sides are coated and partly burned, they look identical"
+          ],
+          "completionCriteria": [
+            "Backlit board shows aligned via positions on both sides",
+            "Isolation passes on both sides are continuous (no gaps where alignment drifted)",
+            "No more than 0.2mm offset between front and back features"
+          ]
+        },
+        {
+          "id": "laser-pcb-post-process",
+          "title": "Etch, drill, and verify",
+          "description": "Etch unmasked copper, drill through-holes, electrically test the board before populating with components.",
+          "content": "After lasering, the board has resist removed only where copper should be removed. The chemistry phase converts that pattern into actual cleared copper.\n\n**Choose an etchant — pros and cons:**\n\n- **Ferric chloride (FeCl₃)** — traditional, slow, brown stains everything, hard to dispose of. Reliable\n- **Cupric chloride (CuCl₂)** — regenerable (you make more from used etchant + HCl + peroxide), green-blue, etches faster than FeCl₃\n- **Vinegar + hydrogen peroxide + salt** — household chemistry. Slowest, weakest, but disposable. Good for one-off boards\n- **Sodium persulfate** — clear solution (you can watch the etch), slow, requires heating\n\nFor a first board, **ferric chloride** is the path of least surprise.\n\n**Etch setup:**\n1. **Wear nitrile gloves and safety glasses.** All etchants attack skin and eyes\n2. **Work in a well-ventilated area** over a sink or a plastic tray with a paper towel base — spills will happen\n3. **Pre-warm the etchant** to 35-45°C (in a water bath or on low on a hot plate). Cold etchant works but takes 4× longer\n4. **Place the board copper-side-up in a shallow plastic tray** of etchant. The board should be just submerged\n5. **Agitate continuously** by gently rocking the tray. Stagnant etchant develops a depleted layer at the copper surface and stops working\n\n**Etch time and monitoring:**\n- 1oz copper at 40°C in fresh ferric chloride: 8-15 minutes\n- Check every 2-3 minutes by lifting the board out with plastic tweezers and rinsing under water\n- The etch is complete when **all** exposed copper is dissolved — no pink or copper-coloured patches remain in the field\n- Over-etching for 30-60 seconds beyond visible completion is fine; it slightly under-cuts the resist edges and rounds the trace corners\n- Massive over-etching (5+ minutes beyond completion) eats under the resist and narrows your traces below their design width\n\n**Stop and rinse:**\n1. Lift the board out, rinse with copious cold water for 30 seconds\n2. Dry with paper towel\n3. Inspect under bright light — every trace and pad should be cleanly defined with no copper bridges or breaks\n4. **If you see bridges:** carefully scrape with a hobby knife or re-etch for 1-2 more minutes\n5. **If you see breaks:** repair with a thin solder bridge or a short jumper wire after assembly\n\n**Dispose of used etchant safely:**\n- Never down the drain\n- Neutralise FeCl₃ with sodium hydroxide (lye) until pH 7, then take to a household hazardous waste facility\n- Cupric chloride: regenerate or take to hazardous waste\n- Vinegar + peroxide + salt: dilute heavily and dispose per local regulation (still not down the drain — the dissolved copper is toxic)\n\n**Remove the resist:**\n- Spray paint: scrub with acetone and a paper towel until copper shines\n- Photoresist: use the manufacturer-recommended stripper, often acetone or 5% sodium hydroxide\n\n**Drill through-holes:**\n1. Use the drill map PDF as a reference\n2. Drill diameters: 0.7mm for diode leads, 0.8-1.0mm for switch through-pins, 1.0-3.0mm for mounting holes\n3. A small drill press is far better than a hand drill — even a few degrees of tilt cracks the trace pads\n4. Drill from the copper side; the bit exits through the FR4. Back the board with a piece of scrap wood to prevent breakout\n5. Take it slowly — these bits are fragile (carbide, often <$0.50 each, but they break with the slightest side load)\n\n**Continuity-test the board BEFORE soldering anything:**\n1. Set multimeter to continuity (beep mode)\n2. Test every row trace end-to-end\n3. Test every column trace end-to-end\n4. Test row-to-row and column-to-column — should NOT beep (no shorts)\n5. Test row-to-column at every switch position — should NOT beep (open circuit until a switch is pressed)\n6. Test power and ground rails for shorts to any signal trace\n\n**Mark and document:**\n- Number the board (e.g. write \"v1.2 #1\" on a non-copper area with permanent marker)\n- Photograph both sides for your build log\n- Note any hand-repaired bridges or jumpers — they may fail later and you will need to remember where to look",
+          "order": 13,
+          "requirements": {
+            "buildMethod": ["custom-pcb"]
+          },
+          "estimatedTime": "1-3 hours (etch + drill + test)",
+          "requiredTools": [
+            "Etchant (ferric chloride or alternative)",
+            "Plastic tray (large enough for the board)",
+            "Nitrile gloves and safety glasses",
+            "Hot water bath or hot plate (low setting)",
+            "Plastic tweezers",
+            "Acetone (for resist removal)",
+            "Drill press with PCB-suitable carbide bits",
+            "Multimeter with continuity mode"
+          ],
+          "warnings": [
+            "Etchants are corrosive and toxic. Use full PPE and work in a ventilated area. Never pour etchant down a drain",
+            "Carbide PCB drill bits snap with even a small side load. Use a press, not a hand drill, where possible",
+            "Continuity-test the bare board before soldering. Finding a short after assembling 60 switches turns a 2-minute fix into a 4-hour rework"
+          ],
+          "tips": [
+            "Save spent ferric chloride in a glass jar for reuse — it loses potency but a few rounds of warming and agitating extend its life by 3-5 boards",
+            "For a first board, etch in batch with a known-good test pattern (a comb of 0.4mm and 0.8mm parallel traces). Confirms etchant strength before risking your real board"
+          ],
+          "completionCriteria": [
+            "All exposed copper is fully cleared",
+            "No bridges or breaks in any trace under magnification",
+            "All through-holes are clean and the right diameter",
+            "Continuity test passes: rows continuous, columns continuous, no row/col shorts, no power/signal shorts"
+          ]
+        }
+      ]
+    },
+    {
       "id": "esd-safety",
       "title": "ESD Safety & Component Handling",
-      "order": 2,
+      "order": 3,
       "description": "Protect your components from electrostatic discharge before handling",
       "icon": "shield",
       "estimatedTime": "5-10 minutes",
@@ -185,7 +521,7 @@
     {
       "id": "build-matrix",
       "title": "Build Key Matrix",
-      "order": 3,
+      "order": 4,
       "description": "Wire or solder your switches into a matrix",
       "icon": "grid",
       "estimatedTime": "Varies by method: 3-15 hours",
@@ -433,7 +769,7 @@
     {
       "id": "pcb-inspection",
       "title": "PCB Inspection & Continuity Testing",
-      "order": 4,
+      "order": 5,
       "description": "Inspect solder work and verify electrical continuity before firmware flash",
       "icon": "search",
       "estimatedTime": "30-60 minutes",
@@ -514,7 +850,7 @@
     {
       "id": "flash-firmware",
       "title": "Flash Firmware",
-      "order": 5,
+      "order": 6,
       "description": "Install and configure keyboard firmware",
       "icon": "cpu",
       "estimatedTime": "1-3 hours (first time)",
@@ -799,7 +1135,7 @@
     {
       "id": "testing",
       "title": "Testing & Troubleshooting",
-      "order": 6,
+      "order": 7,
       "description": "Verify your keyboard works correctly",
       "icon": "check-circle",
       "estimatedTime": "1-2 hours",
@@ -959,7 +1295,7 @@
     {
       "id": "case-foam-gasket",
       "title": "Case Foam & Gasket Mounting",
-      "order": 7,
+      "order": 8,
       "description": "Add case foam and gasket strips before closing the case",
       "icon": "layers",
       "estimatedTime": "20-45 minutes",
@@ -1045,7 +1381,7 @@
     {
       "id": "final-qc",
       "title": "Final QC Checklist",
-      "order": 8,
+      "order": 9,
       "description": "Comprehensive quality control pass after full assembly",
       "icon": "clipboard-check",
       "estimatedTime": "30-45 minutes",

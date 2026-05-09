@@ -13,36 +13,23 @@ At the end: update design doc status → Implemented, update specs to match what
 
 review builder page. do available options change when i make selections? hiding incompatiable things?
 
-## 2 — Bug: `getBuildHash` omits `switchType`
+## 2 — Project / profile model (multi-build saves)
 
-`src/utils/assemblyStepFilter.ts` — `getBuildHash()` does not include `switchType` in the hash it computes. Changing switch type changes which assembly steps are shown (via `isStepRelevant`), but the hash stays the same, so saved progress is incorrectly preserved across the change instead of being reset.
+`src/contexts/UserChoicesContext.tsx` currently stores a single `UserChoices` blob under one localStorage key (`kb-choices`). Refactor to support multiple named projects so a returning user can keep separate "Corne wireless", "Sofle handwired", etc. and jump back into any of them.
 
-Fix: add `switchType: choices.switchType` to the `relevantChoices` object in `getBuildHash`.
+Suggested shape:
 
-Test to update: `assemblyStepFilter.test.ts` → `getBuildHash > BUG: hash does not change when switchType changes` — flip the assertion from `toBe` to `not.toBe` once fixed.
+- `ProjectsContext` storing `{ projects: Record<projectId, UserChoices>, activeProjectId }`
+- Migrate the existing single-build localStorage key into a default project on first load
+- Add `/projects` index route (list, create, rename, delete, switch)
+- Existing `/builder` and `/assembly` read/write the active project
 
-## 3 — Bug: `isStepRelevant` ignores feature requirements of `false`
+## 3 — Fill PCB-from-scratch content
 
-`src/utils/assemblyStepFilter.ts` — Feature requirements expressed as `false` (e.g. `{ features: { hotswap: false } }`, meaning "only show this step if hotswap is NOT enabled") are silently skipped. The guard `if (required && ...)` short-circuits on `false`, so the step is shown regardless of whether the feature is enabled.
+Phase `pcb-design-kicad` exists in `src/data/assembly-steps.json` with 13 step skeletons (each marked `TODO — fill in later`). Replace each `content` string with the real walkthrough. Steps:
 
-Fix: change the guard to check both directions — hide the step if `required === true` and the feature is off, or if `required === false` and the feature is on.
+- `kicad-project-setup`, `kicad-schematic`, `kicad-footprint-assoc`, `kicad-layout`, `kicad-drc`
+- `kicad-gerber-export`, `kicad-drill-export`, `kicad-plot-svg-pdf`, `kicad-raster-copper`
+- `laser-pcb-prep-copper`, `laser-pcb-isolation-toolpath`, `laser-pcb-double-sided-alignment`, `laser-pcb-post-process`
 
-Test to update: `assemblyStepFilter.test.ts` → `isStepRelevant > BUG: feature requirement of false is not enforced` — change `toHaveLength(1)` to `toHaveLength(0)` once fixed.
-
-## 4 — Bug: `pcb-kit` case cost overwritten by `ergonomic-3d` layout
-
-`src/utils/costCalculator.ts` — When `buildMethod === 'pcb-kit'` and `layout.formFactor === 'ergonomic-3d'`, the kit's included case cost ($40) is set first then silently overwritten to $20 by the ergonomic-3d check. The $40 drops out of the estimate without trace.
-
-Decide intended behaviour: if the 3D layout requires a custom case that replaces the kit case, the overwrite is correct but should use `+=` or be made explicit. If the kit case cost should be preserved, guard the ergonomic-3d block with `if (!breakdown.case)`.
-
-Test to update: `costCalculator.test.ts` → `calculateCost > case cost — ergonomic-3d layout > overwrites pcb-kit case cost` — update the expected value and remove the `// BUG` comment once resolved.
-
-## 2
-
-[vite:css][postcss] @import must precede all other statements (besides @charset or empty @layer)
-1170 | }
-1171 | }
-1172 | @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wg...
-| ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-1173 | :root {
-1174 | --color-bg-primary: #f5f3ee;
+Topics that link these steps already exist (`/topics/kicad-export`, `/topics/laser-pcb`).

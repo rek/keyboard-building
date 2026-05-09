@@ -78,12 +78,12 @@ function isStepRelevant(step: AssemblyStep, choices: UserChoices): boolean {
     }
   }
 
-  // Check features
+  // Check features — required can be true (must be on) or false (must be off)
   if (req.features !== null && req.features !== undefined) {
     for (const [feature, required] of Object.entries(req.features)) {
-      if (required && !choices.features[feature as keyof UserChoices['features']]) {
-        return false
-      }
+      const actual = choices.features[feature as keyof UserChoices['features']]
+      if (required === true && !actual) return false
+      if (required === false && actual) return false
     }
   }
 
@@ -171,6 +171,7 @@ export function getBuildHash(choices: UserChoices): string {
     buildMethod: choices.buildMethod,
     layout: choices.layout.formFactor,
     controller: choices.controller,
+    switchType: choices.switchType,
     firmware: choices.firmware,
     connectivity: choices.connectivity,
     features: choices.features,

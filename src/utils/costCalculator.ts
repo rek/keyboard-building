@@ -85,8 +85,8 @@ export function calculateCost(choices: UserChoices): CostEstimate {
     breakdown.pcb = costDatabase.buildMethodExtras['complete-kit'].keyboard
   }
 
-  // Case costs for 3D layouts
-  if (choices.layout.formFactor === 'ergonomic-3d') {
+  // Case costs for 3D layouts — only set if a kit hasn't already provided a case
+  if (choices.layout.formFactor === 'ergonomic-3d' && !breakdown.case) {
     breakdown.case = costDatabase.case['3d-print-diy']
   }
 
